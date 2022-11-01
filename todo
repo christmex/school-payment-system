@@ -1,0 +1,5 @@
+# cek semua filter search yg ada relation di model, biasanya klo ada relations dengan tabel lain maka fungsi search tidak bekerja dengan baik, jadi silahkan cek satu"
+
+# buat tombol bayar invoice di menu invoice sama di menu students
+
+# buat tombol / operation untuk buat invoice taruh tombolnya di students
