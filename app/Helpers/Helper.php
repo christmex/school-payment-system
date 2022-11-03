@@ -2,10 +2,14 @@
 
 namespace App\Helpers;
 
+
 class Helper {
 
+    // DO NOT CHANGE EVERYTHING FROM HERE
+    static $max_school_year_month = 12;
     static $school_year_month_start = 7;
     static $school_year_month_end = 6;
+    // DO NOT CHANGE EVERYTHING FROM HERE
 
     public static function Months(){
         return [
@@ -31,5 +35,10 @@ class Helper {
 
     public static function moneyFormat($value){
         return "RP. ".number_format($value, 0);
+    }
+
+    public static function getActiveSchoolYear(){
+        $data = \App\Models\SchoolYear::where('is_active', true)->first();
+        return $data->id;
     }
 }

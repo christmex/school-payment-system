@@ -22,31 +22,33 @@ class Student extends Model
         'student_name',
         // 'sex',
         'student_phone_number',
-        'teacher_classroom_id',
-        'spp_master_id',
-        'personal_discount',
-        'join_month',
-        'school_year_id'
+        // 'teacher_classroom_id',
+        // 'spp_master_id',
+        // 'personal_discount',
+        // 'join_month',
+        // 'school_year_id'
     ];
 
-    // accessors-and-mutators
-    protected function personalDiscount(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => Helper::moneyFormat($value),
-        );
-    }
 
-    protected function sppMasterId(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value,
-        );
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+    
+    // public function getMonthById(){
+    //     // dd($this);
+    //     return Helper::getMonthById($this->join_month);
+    // }
 
-    public function TeacherClassroom()
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+    public function Classroom()
     {
-        return $this->belongsTo('App\Models\TeacherClassroom', 'teacher_classroom_id','id');
+        return $this->belongsTo('App\Models\Classroom', 'teacher_classroom_id','id');
     }
 
     public function SppMaster()
@@ -63,9 +65,56 @@ class Student extends Model
         return $this->belongsTo('App\Models\SchoolYear', 'school_year_id','id');
     }
 
-    public function getMonthById(){
-        // dd($this);
-        return Helper::getMonthById($this->join_month);
+    // public function StudentHistory(){
+    //     return $this->hasMany(StudentSchoolHistory::class, 'student_id', 'id');
+    // }
+
+    public function StudentSchoolHistory()
+    {
+        return $this->hasMany(StudentSchoolHistory::class)->where('school_year_id', Helper::getActiveSchoolYear());
     }
+
+    public function StudentFundingDetail()
+    {
+        return $this->hasMany(StudentFundingDetail::class)->with('SppMaster')->where('school_year_id', Helper::getActiveSchoolYear());
+    }
+
+    // public function getStudentFundingDetail()
+    // {
+    //     $data = $this->StudentFundingDetail()->with('SppMaster')->first();
+    //     return $data->SppMaster->amount;
+    // }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+        // protected function personalDiscount(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => Helper::moneyFormat($value),
+    //     );
+    // }
+
+    // protected function sppMasterId(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => $value,
+    //     );
+    // }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
     
 }

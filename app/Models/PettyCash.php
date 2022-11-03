@@ -19,12 +19,12 @@ class PettyCash extends Model
     protected $fillable = [
         'petty_cash_code',
         'petty_cash_title',
-        'petty_cash_type',
+        // 'petty_cash_type',
         'debit',
         'credit',
         'description',
         'student_id',
-        'user_id',
+        // 'user_id',
         'trx_date'
     ];
 }

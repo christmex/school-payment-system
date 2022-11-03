@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SppMasterRequest extends FormRequest
+class StudentFundingDetailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +25,7 @@ class SppMasterRequest extends FormRequest
     public function rules()
     {
         return [
-            'spp_name' => [
-                'required',
-                Rule::unique('spp_masters')->ignore(request()->id)
-            ],
-            'amount' => 'required|integer|min:1',
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 

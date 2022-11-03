@@ -13,16 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('student_name');
-            // $table->boolean('sex');
-            $table->string('student_phone_number')->nullable();
+            $table->string('invoice_number');
+            $table->foreignId('student_id')->nullable()->constrained()->nullOnDelete();
             // $table->foreignId('teacher_classroom_id')->nullable()->constrained()->nullOnDelete();
-            // $table->foreignId('spp_master_id')->nullable()->constrained()->nullOnDelete();
-            // $table->Integer('personal_discount')->nullable()->default(0);
-            // $table->tinyInteger('join_month');
-            // $table->foreignId('school_year_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('school_year_id')->nullable()->constrained()->nullOnDelete();
+            $table->tinyInteger('payment_for_month');
+            $table->Integer('amount');
+            $table->Integer('fine_amount');
+            $table->Integer('personal_discount');
+            $table->Integer('fine_discount');
+            $table->date('fine_date')->nullable()->default(NULL);
+            $table->date('paid_date')->nullable()->default(NULL);
+            $table->text('description')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
@@ -36,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('invoices');
     }
 };

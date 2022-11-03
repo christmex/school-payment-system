@@ -40,7 +40,9 @@ class SppMasterCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::column('spp_name');
-        CRUD::column('amount');
+        CRUD::column('AmountMoneyFormat')->label('Amount');
+        // CRUD::column('amount');
+        $this->crud->removeButton('delete');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:

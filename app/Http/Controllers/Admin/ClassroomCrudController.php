@@ -49,7 +49,7 @@ class ClassroomCrudController extends CrudController
             "attribute" => "school_level"
         ]);
         CRUD::column('classroom_name');
-        // CRUD::column('teacher_id');
+        CRUD::column('teacher_id');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -76,12 +76,12 @@ class ClassroomCrudController extends CrudController
         ]);
         CRUD::field('classroom_name');
         // CRUD::field('teacher_id');
-        // $this->crud->addField([
-        //     'type' => 'select',
-        //     'name' => 'teacher_id', // the relationship name in your Migration
-        //     'entity' => 'Teacher', // the relationship name in your Model
-        //     'attribute' => 'teacher_name', // attribute that is shown to admin
-        // ]);
+        $this->crud->addField([
+            'type' => 'select',
+            'name' => 'teacher_id', // the relationship name in your Migration
+            'entity' => 'Teacher', // the relationship name in your Model
+            'attribute' => 'teacher_name', // attribute that is shown to admin
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

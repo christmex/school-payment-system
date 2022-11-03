@@ -19,7 +19,7 @@ class Classroom extends Model
     protected $fillable = [
         'school_level_id',
         'classroom_name',
-        // 'teacher_id'
+        'teacher_id'
     ];
 
     public function SchoolLevel()
@@ -27,8 +27,8 @@ class Classroom extends Model
         return $this->belongsTo('App\Models\SchoolLevel', 'school_level_id','id');
     }
 
-    // public function Teacher()
-    // {
-    //     return $this->belongsTo('App\Models\Teacher', 'teacher_id','id');
-    // }
+    public function Teacher()
+    {
+        return $this->belongsTo('App\Models\Teacher', 'teacher_id','id');
+    }
 }

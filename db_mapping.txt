@@ -1,0 +1,152 @@
+Fitur
+- Naik kelas
+	- Naik kelas ada kenaikan spp ?
+	-
+- Buat payment
+- Fitur Bayar invoice
+- Fitur print pembayaran
+- Fitur export data
+- Fitur cash keluar
+- Fitur cash masuk
+- Fitur siswa bisa login ke platform ini trus cek nomor virtual account dan lihat payment, masukkan va_spp,va_book di tabel transactional tabel
+- Fitur undo , untuk case salah bayar, lihat pertanyaan nomor 3
+- Fitur Bulk buat tagihan spp, jadikan select bulan di invoide multiple
+- Fitur bulk pay
+- Fitur buat tombol activate school year
+- Translate semua error
+
+Pertanyaan
+#Kalo yg langsung bayar 2/3 bulan spp, itu di program gmna ? kan tagihan di va bisa tuh lngsung tagihan banya, nah di program spp gmna ?
+-
+#denda dan bayar spp masuk ke cash masuk kan (debit)?, klo personal discount dan denda discount cash keluar kan (kredit)?
+-
+#gimana kalo salah bayar,semisalny salah pilih, jadi duit yang masuk kas masuk harus di keluarkan dengan cara buat kash keluar trus kasih keterangan salah bayar ?
+
+Reminder
+- saat mau buat invoice baru check dulu, apakah bulan,school_year dan student id yg dituju sudh ada ?
+- invoice hanya bisa di edit oleh super admn, itupun jika kesalahan semisal salah pilih siswa, ternyata siswa tersebut belum bayar 
+- cek before di school year, tidak bisa buat tahun ajaran di bawah tahun ini, semisal ini tahun 2022, maka tidak bisa buat school year start di tahun 2021
+- Mungkin bakal ada masalah saat tombol pay invoice di klik, akan mengarahkanke halaman costum, disitu ada 
+"trans('backpack::program_costum.pay')" -> resource/views/vendor/backpack/crud/operations/pay_invoice.blade.php , untuk referensi silahkan lihat [https://backpackforlaravel.com/docs/5.x/base-how-to#customize-the-translated-strings-aka-overwrite-the-language-file]
+
+>Transactional Tabel
+#Invoice -> masukkan kesini setiap kali nambah siswa baru, juga saat create bulk invoice or single invoice
+- id
+- invoice_number - generate automatis
+- student_id
+- student_year_id
+- payment_for_month ?
+//- final_amount -> kosongkan ini saat pertama kali buat invoice, update setelah di bayar hitung semuanya di invoice detail kemudian masukkan kesini
+- amount
+- fine_amount
+- personal_discount
+- fine_discount
+- fine_date
+- paid_date
+- created_by
+- updated_by
+- laravel_timestamp
+
+#Invoice Detail (pikirkan kembali untuk pakai ini)
+- id
+- invoice_id
+- amount
+- fine_amount
+- personal_discount
+- fine_discount
+- created_by
+- updated_by
+- laravel_timestamp
+
+
+#Petty Cash -> masukkan kesini setiap invoice yg sudah terbayar, jika bayar
+- id
+- amount
+- petty_cash_type ['credit','debit']
+- created_by
+- updated_by
+- laravel_timestamp
+
+>Relation Tabel
+#Student Funding Detail -> masukkan kesini setiap tambah siswa baru, juga setiap kenaikan kelas
+- id
+- student_id
+- school_year_id
+- spp_master_id
+- personal_discount
+- created_by
+- updated_by
+- laravel_timestamp
+
+#Student School History -> masukkan kesini setiap tambah siswa baru, juga setiap kenaikan kelas
+- id
+- student_id
+- school_year_id
+- classroom_id
+- created_by
+- updated_by
+- laravel_timestamp
+
+>Master Tabel
+#School Years
+- id
+- school_year_name
+- school_year_start
+//- school_year_month_start
+- school_year_end
+//- school_year_month_end
+- date_of_fine
+- fine_amount
+- is_active
+- created_by
+- updated_by
+- laravel_timestamp
+
+#SPP Master
+- id
+- spp_name
+- amount
+- created_by
+- updated_by
+- laravel_timestamp
+
+#School Levels
+- id
+- school_level
+- created_by
+- updated_by
+- laravel_timestamp
+
+#Students
+- id
+- fullname
+- phone_number
+- created_by
+- updated_by
+- laravel_timestamp
+
+#Teachers
+- id
+- teacher_name
+- phone_number
+- created_by
+- updated_by
+- laravel_timestamp
+
+#Classroom
+- id
+- school_level_id
+- classroom_name
+- teacher_id
+- created_by
+- updated_by
+- laravel_timestamp
+
+#Payment Way
+- id
+- payment_way
+- created_by
+- updated_by
+- laravel_timestamp
+
+

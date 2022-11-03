@@ -3,7 +3,6 @@
 
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice') }}"><i class="nav-icon la la-cash-register"></i> Invoices</a></li>
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('payment') }}"><i class="nav-icon la la-cash-register"></i> Payments</a></li> -->
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('student') }}"><i class="nav-icon la la-user-graduate"></i> Students</a></li>
 <!-- Petty cash -->
 <!-- <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-cog"></i> Petty Cashes</a>
@@ -22,7 +21,16 @@
         <li class="nav-item"><a class="nav-link" href="{{ backpack_url('payment-way') }}"><i class="nav-icon la la-credit-card"></i> Payment ways</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ backpack_url('classroom') }}"><i class="nav-icon la la-chalkboard"></i> Classrooms</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ backpack_url('teacher') }}"><i class="nav-icon la la-chalkboard-teacher"></i> Teachers</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('teacher-classroom') }}"><i class="nav-icon la la-hashtag"></i> Teacher classrooms</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('teacher-classroom') }}"><i class="nav-icon la la-hashtag"></i> Teacher classrooms</a></li> -->
+    </ul>
+</li>
+<!-- Setting -->
+<li class="nav-item nav-dropdown">
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-cog"></i> Students</a>
+    <ul class="nav-dropdown-items">
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('student') }}"><i class="nav-icon la la-user-graduate"></i> Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('student-funding-detail') }}"><i class="nav-icon la la-hand-holding-usd"></i> Student funding details</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('student-school-history') }}"><i class="nav-icon la la-history"></i> Student school histories</a></li>
     </ul>
 </li>
 
@@ -37,3 +45,5 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('student') }}"><i class="nav-icon la la-question"></i> Students</a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('teacher') }}"><i class="nav-icon la la-question"></i> Teachers</a></li> -->
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('teacher-classroom') }}"><i class="nav-icon la la-question"></i> Teacher classrooms</a></li> -->
+
+<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice') }}"><i class="nav-icon la la-question"></i> Invoices</a></li> -->

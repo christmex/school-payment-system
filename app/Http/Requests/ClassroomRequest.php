@@ -31,7 +31,7 @@ class ClassroomRequest extends FormRequest
                 'required',
                 Rule::unique('classrooms')->ignore(request()->id)
             ],
-            // 'teacher_id' => 'required|integer',
+            'teacher_id' => 'required|integer',//buat unique jika tidak mau ada guru yg sama menghandle 2 kelas sebagai wali kelas
         ];
     }
 

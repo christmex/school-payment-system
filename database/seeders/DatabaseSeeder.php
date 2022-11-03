@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-
+        // USERS
         \App\Models\User::create([
             'name' => 'Super Admin',
             'email' => 'super@admin.com',
@@ -39,7 +39,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'juli@admin.com',
             'password' => bcrypt('mantapjiwa00')
         ]);
+        // USERS
 
+        // PAYMENT WAYS
         \App\Models\PaymentWay::create([
             'payment_way' => 'VA',
         ]);
@@ -51,7 +53,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\PaymentWay::create([
             'payment_way' => 'EDC BCA',
         ]);
+        // PAYMENT WAYS
 
+        // SCHOOL LEVELS
         \App\Models\SchoolLevel::create([
             'school_level' => 'SD - Kelas 1',
         ]);
@@ -88,12 +92,16 @@ class DatabaseSeeder extends Seeder
         \App\Models\SchoolLevel::create([
             'school_level' => 'SMA - Kelas 3',
         ]);
+        // SCHOOL LEVELS
 
+        // SETTINGS
         \App\Models\Setting::create([
             'meta_key' => 'is_fine_of_amount_active',
             'meta_value' => 0,
         ]);
+        // SETTINGS
 
+        // SCHOOL YEARS
         \App\Models\SchoolYear::create([
             'school_year_name' => '2022/2023',
             'school_year_start' => 2022,
@@ -102,7 +110,9 @@ class DatabaseSeeder extends Seeder
             'fine_amount' => 5000,
             'is_active' => 1
         ]);
+        // SCHOOL YEARS
 
+        // SPP MASTERS
         \App\Models\SppMaster::create([
             'spp_name' => 'SPP Umum',
             'amount' => 600000
@@ -111,18 +121,19 @@ class DatabaseSeeder extends Seeder
         \App\Models\Teacher::create([
             'teacher_name' => 'Parlan'
         ]);
+        // SPP MASTERS
 
         \App\Models\Classroom::create([
             'school_level_id' => 1,
             'classroom_name' => 'Matthew 1',
-            // 'teacher_id' => 1
-        ]);
-
-        \App\Models\TeacherClassroom::create([
-            'classroom_id' => 1,
-            'school_year_id' => 1,
             'teacher_id' => 1
         ]);
+
+        // \App\Models\TeacherClassroom::create([
+        //     'classroom_id' => 1,
+        //     'school_year_id' => 1,
+        //     'teacher_id' => 1
+        // ]);
 
         
     }

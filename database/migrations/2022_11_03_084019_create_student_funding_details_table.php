@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('student_funding_details', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_invoice');
-            $table->foreignId('student_id')->nullable()->constrained()->nullOnDelete();
-            $table->Integer('cost');
-            $table->foreignId('teacher_classroom_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('school_year_id')->nullable()->constrained()->nullOnDelete();
-            $table->tinyInteger('payment_for_month');
-            $table->text('description')->nullable();
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('school_year_id')->constrained()->onDelete('cascade');
+            $table->foreignId('spp_master_id')->constrained()->onDelete('cascade');
+            $table->Integer('personal_discount');
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('student_funding_details');
     }
 };

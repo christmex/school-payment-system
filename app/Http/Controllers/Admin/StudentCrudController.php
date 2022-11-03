@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
 use App\Models\Invoice;
+use App\Models\Student;
 use App\Models\SppMaster;
 use App\Http\Requests\StudentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -17,8 +18,8 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class StudentCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    // use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -35,11 +36,11 @@ class StudentCrudController extends CrudController
         CRUD::setEntityNameStrings('student', 'students');
     }
 
-    public function store(){
+    // public function store(){
         // $this->crud->getRequest()->request->add(['user_id'=> backpack_user()->id]);
         // dd('SPP'.date('ymd'));
         // dd($this->crud->getRequest()->request->get('student_name'));
-        $response = $this->traitStore();
+        // $response = $this->traitStore();
 
     //     "student_name" => "kiki"
     // "student_phone_number" => "089"
@@ -65,21 +66,21 @@ class StudentCrudController extends CrudController
         //     'payment_way_id' => ,
         //     'user_id' => backpack_user()->id
         // ]);
-        $spp = SppMaster::find($this->data['entry']->spp_master_id);
-        $invoice = Invoice::create([
-            'payment_invoice' => 'SPP'.date('Ymd').'-',
-            'student_id' => $this->data['entry']->id,
-            'cost' => $spp->amount,
-            'teacher_classroom_id' => $this->data['entry']->teacher_classroom_id,
-            'school_year_id' => $this->data['entry']->school_year_id,
-            'payment_for_month' => $this->data['entry']->join_month,
-            'description' => NULL,
-        ]);
+        // $spp = SppMaster::find($this->data['entry']->spp_master_id);
+        // $invoice = Invoice::create([
+        //     'payment_invoice' => 'SPP'.date('Ymd').'-',
+        //     'student_id' => $this->data['entry']->id,
+        //     'cost' => $spp->amount,
+        //     'teacher_classroom_id' => $this->data['entry']->teacher_classroom_id,
+        //     'school_year_id' => $this->data['entry']->school_year_id,
+        //     'payment_for_month' => $this->data['entry']->join_month,
+        //     'description' => NULL,
+        // ]);
 
         
         // do something after save
-        return $response;
-    }
+        // return $response;
+    // }
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -88,17 +89,34 @@ class StudentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // dd(Student::with('StudentHistory')->get());
         CRUD::column('student_name');
         CRUD::column('student_phone_number');
         // CRUD::column('classroom_id');
         CRUD::addColumn([
-            "name" => "teacher_classroom_id",
-            "label" => "TeacherClassroom",
-            "entity" => "TeacherClassroom.Classroom",
-            "model" => "App\Models\TeacherClassroom",
+            "label" => "Classroom",
+            "entity" => "StudentSchoolHistory.Classroom",
+            "model" => "App\Models\StudentSchoolHistory",
             "type" => "select",
             "attribute" => "classroom_name"
         ]);
+        CRUD::addColumn([
+            "label" => "SPP",
+            "entity" => "StudentFundingDetail.SppMaster",
+            "model" => "App\Models\StudentFundingDetail",
+            "type" => "select",
+            "attribute" => "AmountMoneyFormat"
+        ]);
+
+        // Bisa pakai ini jga
+        // CRUD::addColumn([
+        //     'label'  => 'Spp',
+        //     'type'  => 'model_function',
+        //     'function_name' => 'getStudentFundingDetail',
+        //     'limit' => 1000
+        // ]);
+
+
         // CRUD::addColumn([
         //     "name" => "spp_master_id",
         //     "label" => "SPP",
@@ -107,27 +125,28 @@ class StudentCrudController extends CrudController
         //     "type" => "select",
         //     "attribute" => "amount"
         // ]);
-        CRUD::addColumn([
-            'name' => 'spp_master_id',
-            'type'  => 'model_function',
-            'function_name' => 'SppMasterGet'
-        ]);
+        // CRUD::addColumn([
+        //     'name' => 'student_history',
+        //     'type'  => 'model_function',
+        //     'function_name' => 'StudentHistory'
+        // ]);
         // CRUD::column('personal_discount')->type('money_format');
-        CRUD::column('personal_discount');
-        CRUD::addColumn([
-            'name' => 'join_month',
-            'type'  => 'model_function',
-            'function_name' => 'getMonthById'
-        ]);
-        CRUD::addColumn([
-            "name" => "school_year_id",
-            "label" => "School Year",
-            "entity" => "SchoolYear",
-            "model" => "App\Models\SchoolYear",
-            "type" => "select",
-            "attribute" => "school_year_name"
-        ]);
+        // CRUD::column('personal_discount');
+        // CRUD::addColumn([
+        //     'name' => 'join_month',
+        //     'type'  => 'model_function',
+        //     'function_name' => 'getMonthById'
+        // ]);
+        // CRUD::addColumn([
+        //     "name" => "school_year_id",
+        //     "label" => "School Year",
+        //     "entity" => "SchoolYear",
+        //     "model" => "App\Models\SchoolYear",
+        //     "type" => "select",
+        //     "attribute" => "school_year_name"
+        // ]);
         $this->crud->enableBulkActions();
+        $this->crud->removeButton('delete');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -150,29 +169,30 @@ class StudentCrudController extends CrudController
         $this->crud->addField([
             'type' => 'select',
             'label' => 'Classroom',
-            'name' => 'teacher_classroom_id', // the relationship name in your Migration
-            'entity' => 'TeacherClassroom.Classroom', // the relationship name in your Model
+            'name' => 'classroom_id', // the relationship name in your Migration
+            'entity' => 'Classroom', // the relationship name in your Model
             'attribute' => 'classroom_name', // attribute that is shown to admin
         ]);
         $this->crud->addField([
             'type' => 'select',
             'name' => 'spp_master_id', // the relationship name in your Migration
             'entity' => 'SppMaster', // the relationship name in your Model
-            'attribute' => 'amount', // attribute that is shown to admin
+            // 'attribute' => 'amount', // attribute that is shown to admin
+            'attribute' => 'AmountMoneyFormat', // attribute that is shown to admin
         ]);
         CRUD::field('personal_discount')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
-        $this->crud->addField([
-            // 'type' => 'month',
-            'name' => 'join_month', // the relationship name in your Migration
-            // 'attributes' => [
-            //     'min' => '2022-01',
-            //     'max'       => '2022-12',
-            //   ], // change the HTML attributes of your input
+        // $this->crud->addField([
+        //     // 'type' => 'month',
+        //     'name' => 'join_month', // the relationship name in your Migration
+        //     // 'attributes' => [
+        //     //     'min' => '2022-01',
+        //     //     'max'       => '2022-12',
+        //     //   ], // change the HTML attributes of your input
 
-            'type'        => 'select_from_array',
-            'options' => Helper::Months(),
-            'allows_null' => true,
-        ]);
+        //     'type'        => 'select_from_array',
+        //     'options' => Helper::Months(),
+        //     'allows_null' => true,
+        // ]);
         $this->crud->addField([
             'type' => 'select',
             'name' => 'school_year_id', // the relationship name in your Migration
@@ -199,5 +219,9 @@ class StudentCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+        $this->crud->removeField('classroom_id');
+        $this->crud->removeField('spp_master_id');
+        $this->crud->removeField('personal_discount');
+        $this->crud->removeField('school_year_id');
     }
 }

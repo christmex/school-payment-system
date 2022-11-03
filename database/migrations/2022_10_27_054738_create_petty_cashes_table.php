@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('petty_cash_code'); //SPP*tahun*bulan*tanggal*Auto increment id
             $table->string('petty_cash_title');//BAYAR SPP/DISCOUNT SPP/BAYAR DENDA/DISCOUNT DENDA jonathan tahun aaran bulan ksjdnak bla bla
-            $table->enum('petty_cash_type',['IN','OUT']);
+            // $table->enum('petty_cash_type',['IN','OUT']);
             $table->Integer('debit')->default(0);
             $table->Integer('credit')->default(0);
             $table->longText('description')->nullable();
             $table->foreignId('student_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            // $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->date('trx_date');
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();

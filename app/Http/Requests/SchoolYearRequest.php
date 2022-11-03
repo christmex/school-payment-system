@@ -33,6 +33,7 @@ class SchoolYearRequest extends FormRequest
             'school_year_start' => [
                 'required',
                 'integer',
+                'min:'.date('Y'),
                 'digits:4',
                 Rule::unique('school_years')->ignore(request()->id)
             ],
@@ -68,7 +69,7 @@ class SchoolYearRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            // 'school_year_start.min' => 'school year minimal '.date('Y')
         ];
     }
 }

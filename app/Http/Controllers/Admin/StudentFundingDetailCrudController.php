@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Helper;
-use App\Http\Requests\InvoiceRequest;
+use App\Http\Requests\StudentFundingDetailRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class InvoiceCrudController
+ * Class StudentFundingDetailCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class InvoiceCrudController extends CrudController
+class StudentFundingDetailCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-
-    use \App\Http\Controllers\Admin\Operations\PayInvoiceOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -29,9 +26,9 @@ class InvoiceCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Invoice::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/invoice');
-        CRUD::setEntityNameStrings('invoice', 'invoices');
+        CRUD::setModel(\App\Models\StudentFundingDetail::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/student-funding-detail');
+        CRUD::setEntityNameStrings('student funding detail', 'student funding details');
     }
 
     /**
@@ -42,24 +39,7 @@ class InvoiceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('payment_invoice');
-        CRUD::addColumn([
-            "name" => "student_id",
-            "label" => "Student Name",
-            "entity" => "Student",
-            "model" => "App\Models\Student",
-            "type" => "select",
-            "attribute" => "student_name"
-        ]);
-        CRUD::column('cost')->type('money_format');
-        CRUD::addColumn([
-            "name" => "teacher_classroom_id",
-            "label" => "Classroom",
-            "entity" => "TeacherClassroom.Classroom",
-            "model" => "App\Models\TeacherClassroom",
-            "type" => "select",
-            "attribute" => "classroom_name"
-        ]);
+        CRUD::column('student_id');
         CRUD::addColumn([
             "name" => "school_year_id",
             "label" => "School Year",
@@ -68,17 +48,21 @@ class InvoiceCrudController extends CrudController
             "type" => "select",
             "attribute" => "school_year_name"
         ]);
-        // CRUD::column('payment_for_month');
+        // CRUD::addColumn([
+        //     'name' => 'spp_master_id',
+        //     'type'  => 'model_function',
+        //     'function_name' => 'SppMasterGet'
+        // ]);
         CRUD::addColumn([
-            'name' => 'payment_for_month',
-            'type'  => 'model_function',
-            'function_name' => 'getMonthById'
+            "name" => "spp_master_id",
+            "label" => "SPP",
+            "entity" => "SppMaster",
+            "model" => "App\Models\SppMaster",
+            "type" => "select",
+            "attribute" => "AmountMoneyFormat"
         ]);
-        CRUD::column('description');
-        // $this->crud->removeAllButtonsFromStack('line');
-        // $this->crud->removeAllButtons();
-        // $this->crud->addButtonFromView('line', 'PayInvoice', 'pay-invoice', 'beginning');
-        // $this->crud->addButton('line', 'PayInvoice','view','pay-invoice','beginning');
+        CRUD::column('personal_discount')->type('money_format');
+        $this->crud->removeButton('delete');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -94,24 +78,9 @@ class InvoiceCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(InvoiceRequest::class);
+        CRUD::setValidation(StudentFundingDetailRequest::class);
 
-        // CRUD::field('payment_invoice');
         CRUD::field('student_id');
-        $this->crud->addField([
-            'type' => 'select',
-            'name' => 'cost', // the relationship name in your Migration
-            'entity' => 'SppMaster', // the relationship name in your Model
-            'attribute' => 'amount', // attribute that is shown to admin
-            'allows_null' => true,
-        ]);
-        CRUD::field('costum_cost')->type('number')->attributes(['min' => 0]);
-        $this->crud->addField([
-            'type' => 'select',
-            'name' => 'teacher_classroom_id', // the relationship name in your Migration
-            'entity' => 'TeacherClassroom.Classroom', // the relationship name in your Model
-            'attribute' => 'classroom_name', // attribute that is shown to admin
-        ]);
         $this->crud->addField([
             'type' => 'select',
             'name' => 'school_year_id', // the relationship name in your Migration
@@ -121,14 +90,13 @@ class InvoiceCrudController extends CrudController
             // after insert data siswa baru buat tagihan di bulan mendaftar
             // Gimananya caranya buat tagihan automatis
         ]);
-        CRUD::field('payment_for_month');
         $this->crud->addField([
-            'name' => 'payment_for_month',
-            'type'        => 'select_from_array',
-            'options' => Helper::Months(),
-            'allows_null' => true,
+            'type' => 'select',
+            'name' => 'spp_master_id', // the relationship name in your Migration
+            'entity' => 'SppMaster', // the relationship name in your Model
+            'attribute' => 'amount', // attribute that is shown to admin
         ]);
-        CRUD::field('description');
+        CRUD::field('personal_discount')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -147,10 +115,4 @@ class InvoiceCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-
-    protected function setupPayInvoiceOperation(){
-        CRUD::field('student_id');
-        // dd($this->crud->getRequest()->request);
-    }
-
 }

@@ -13,19 +13,32 @@ class Invoice extends Model
     use \App\Traits\CreatedUpdatedBy;
 
     protected $fillable = [
-        'payment_invoice',
+        // 'payment_invoice',
+        // 'student_id',
+        // 'cost',
+        // 'teacher_classroom_id',
+        // 'school_year_id',
+        // 'payment_for_month',
+        // 'description',
+
+        'invoice_number',
         'student_id',
-        'cost',
-        'teacher_classroom_id',
         'school_year_id',
         'payment_for_month',
-        'description',
+        'amount',
+        'fine_amount',
+        'personal_discount',
+        'fine_discount',
+        'fine_date',
+        'paid_date',
+        'description'
+        
     ]; 
 
-    public function TeacherClassroom()
-    {
-        return $this->belongsTo('App\Models\TeacherClassroom', 'teacher_classroom_id','id');
-    }
+    // public function TeacherClassroom()
+    // {
+    //     return $this->belongsTo('App\Models\TeacherClassroom', 'teacher_classroom_id','id');
+    // }
 
     public function SchoolYear()
     {
@@ -41,8 +54,8 @@ class Invoice extends Model
         return Helper::getMonthById($this->payment_for_month);
     }
 
-    public function SppMaster()
-    {
-        return $this->belongsTo('App\Models\SppMaster', 'spp_master_id','id');
-    }
+    // public function SppMaster()
+    // {
+    //     return $this->belongsTo('App\Models\SppMaster', 'spp_master_id','id');
+    // }
 }

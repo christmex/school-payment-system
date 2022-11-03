@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classrooms', function (Blueprint $table) {
+        Schema::create('student_school_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('school_level_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('classroom_name')->unique();
-            $table->foreignId('teacher_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('school_year_id')->constrained()->onDelete('cascade');
+            $table->foreignId('classroom_id')->constrained()->onDelete('cascade');
+            $table->string('desc')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classrooms');
+        Schema::dropIfExists('student_school_histories');
     }
 };
