@@ -17,17 +17,18 @@ Fitur
 
 Pertanyaan
 #Kalo yg langsung bayar 2/3 bulan spp, itu di program gmna ? kan tagihan di va bisa tuh lngsung tagihan banya, nah di program spp gmna ?
--
+-Pilih bayar banyak trus bayar semua
 #denda dan bayar spp masuk ke cash masuk kan (debit)?, klo personal discount dan denda discount cash keluar kan (kredit)?
--
+-iyaa
 #gimana kalo salah bayar,semisalny salah pilih, jadi duit yang masuk kas masuk harus di keluarkan dengan cara buat kash keluar trus kasih keterangan salah bayar ?
 
 Reminder
-- saat mau buat invoice baru check dulu, apakah bulan,school_year dan student id yg dituju sudh ada ?
+- saat mau buat invoice baru, check dulu, apakah bulan,school_year dan student id yg dituju sudh ada ?
 - invoice hanya bisa di edit oleh super admn, itupun jika kesalahan semisal salah pilih siswa, ternyata siswa tersebut belum bayar 
-- cek before di school year, tidak bisa buat tahun ajaran di bawah tahun ini, semisal ini tahun 2022, maka tidak bisa buat school year start di tahun 2021
+- cek before di school year, tidak bisa buat tahun ajaran di bawah tahun ini, semisal ini tahun 2022, maka tidak bisa buat school year start di tahun 2021 (DONE)
 - Mungkin bakal ada masalah saat tombol pay invoice di klik, akan mengarahkanke halaman costum, disitu ada 
 "trans('backpack::program_costum.pay')" -> resource/views/vendor/backpack/crud/operations/pay_invoice.blade.php , untuk referensi silahkan lihat [https://backpackforlaravel.com/docs/5.x/base-how-to#customize-the-translated-strings-aka-overwrite-the-language-file]
+- check semua fitur search di tiap menu, biasanya yg relationship ngg bsa searchnya
 
 >Transactional Tabel
 #Invoice -> masukkan kesini setiap kali nambah siswa baru, juga saat create bulk invoice or single invoice
