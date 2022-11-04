@@ -2,6 +2,10 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+use App\Models\Invoice;
+use App\Models\Setting;
+
 
 class Helper {
 
@@ -45,8 +49,83 @@ class Helper {
         ];
     }
 
+    
+    public static function getAllDueDate($startMonth){
+        // Get all SchoolYear
+        $SchoolYear = \App\Models\SchoolYear::where('is_active', true)->first();        
+        // Init allduedate
+        $allDueDate = [];
+        // set index array
+        $index = 1;
+        for ($i=$startMonth; $i <= count(self::SchoolYearMonth()); $i++) { 
+            // Get Normal Month by School Year Month
+            $getNormalMonth = self::getNormalMonth($i);
+            // 
+            if($i > self::$school_year_month_end){
+                $allDueDate[$index] = date($SchoolYear->school_year_end.'-'.$getNormalMonth.'-'.$SchoolYear->date_of_fine);
+            }
+            if($i < self::$school_year_month_start){
+                $allDueDate[$index] = date($SchoolYear->school_year_start.'-'.$getNormalMonth.'-'.$SchoolYear->date_of_fine);
+            }
+            $index++;
+        }
+
+        return $allDueDate;
+    }
+
+    public static function getNormalMonth($month){
+        return array_search(self::getSchoolYearMonthById($month), self::Months());
+    }
+
+    public static function getNormalMonthAll($joinMonth, $count){
+        $data = [];
+        for ($i=1; $i <= $count; $i++) { 
+            $data[$i] = self::getNormalMonth($joinMonth);
+            $joinMonth++;
+        }
+        return $data;
+    }
+
     public static function getMonthById($id){
         return self::Months()[$id];
+    }
+
+    public static function generateInvoiceNumber($count,$school_year_start){
+        $setting = Setting::where('meta_key','school_short_name')->first();
+        $latest = Invoice::orderBy('id','desc')->limit(1)->first();
+        $startVal = 10001;
+        if(!$latest){
+            $val = $startVal;
+        }else {
+            $val = preg_replace("/[^0-9\.]/", '', explode('/',$latest->invoice_number)[0])+1;
+        }
+        $generateInvoiceNumber = [];
+
+        for ($i=1; $i <= $count; $i++) { 
+            if(($school_year_start != date('Y')) && $i == 1){
+                $val = $startVal;
+            }
+            $generateInvoiceNumber[$i] = 'SPP'.str_pad($val,4,"0",STR_PAD_LEFT).'/'.$setting->meta_value.'/INV/'.rand(1000000000,99999999).'/'.date('Y');
+            $val++;
+        }
+        return $generateInvoiceNumber;
+
+
+        // if(($record == null) && (request()->join_month == $i)){
+            //     $expNum = date('Y').'-0001';
+            // }else {
+                // $expNum = explode('-', $record->invoice_number);
+                // $expNum = explode('-', date('Y').'-0001');
+            // }
+            
+            // //check first day in a year
+            // if ( date('l',strtotime(date('Y-01-01'))) ){
+            //     $nextInvoiceNumber = date('Y').'-0001';
+            // } else {
+            //     //increase 1 with last invoice number
+            //     $nextInvoiceNumber = $expNum[0].'-'. $expNum[1]+1;
+            // }
+
     }
 
     public static function getSchoolYearMonthById($id){
@@ -57,8 +136,64 @@ class Helper {
         return "RP. ".number_format($value, 0);
     }
 
-    public static function getActiveSchoolYear(){
+    public static function getActiveSchoolYear($attribute = NULL){
         $data = \App\Models\SchoolYear::where('is_active', true)->first();
+        if($attribute == 'all'){
+            return $data;
+        }
         return $data->id;
     }
+
+    public static function getCurrentMonth(){
+        return now()->month;
+    }
+
+    public static function getCurrentdate(){
+        return now()->date;
+    }
+
+    public static function timestampOnDb(){
+        return Carbon::now();
+    }
+
+    public static function calculateFineNewStudent(){
+        $getActiveSchoolYear = self::getActiveSchoolYear('all');
+        $thisMonthFine = new Carbon(date('Y-m-'.$getActiveSchoolYear->date_of_fine));
+        $now = Carbon::now();
+        $fine = 0;
+        // check jika $now di atas $thisMonthFine
+        if($now > $thisMonthFine){
+            $difference = ($thisMonthFine->diff($now)->days < 1)
+                                ? 'today'
+                                : $thisMonthFine->diff($now);
+            $fine = $difference->d * $getActiveSchoolYear->fine_amount;
+        }
+
+        return [
+            'fine' => $fine,
+            'now' => $now,
+            'datefine' => $getActiveSchoolYear->date_of_fine,
+            'thisMonthFine' => $thisMonthFine,
+        ];
+    }
+
+    // public static function InvoiceNumberGenerator(){
+    //     //get last record
+    //     $record = Invoice::latest()->first();
+    //     if($record == null){
+    //         return date('Y').'-0001';
+    //     }
+    //     $expNum = explode('-', $record->invoice_number);
+        
+    //     //check first day in a year
+    //     if ( date('l',strtotime(date('Y-01-01'))) ){
+    //         $nextInvoiceNumber = date('Y').'-0001';
+    //     } else {
+    //         //increase 1 with last invoice number
+    //         $nextInvoiceNumber = $expNum[0].'-'. $expNum[1]+1;
+    //     }
+
+    //     return $nextInvoiceNumber;
+    // }
+
 }

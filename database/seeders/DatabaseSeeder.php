@@ -99,6 +99,14 @@ class DatabaseSeeder extends Seeder
             'meta_key' => 'is_fine_of_amount_active',
             'meta_value' => 0,
         ]);
+        \App\Models\Setting::create([
+            'meta_key' => 'school_name',
+            'meta_value' => 'BASIC BATAM CENTER',
+        ]);
+        \App\Models\Setting::create([
+            'meta_key' => 'school_short_name',
+            'meta_value' => 'BBC',
+        ]);
         // SETTINGS
 
         // SCHOOL YEARS
@@ -110,18 +118,43 @@ class DatabaseSeeder extends Seeder
             'fine_amount' => 5000,
             'is_active' => 1
         ]);
+        \App\Models\SchoolYear::create([
+            'school_year_name' => '2023/2024',
+            'school_year_start' => 2023,
+            'school_year_end' => 2024,
+            'date_of_fine' => 20,
+            'fine_amount' => 5000,
+            'is_active' => 0
+        ]);
+        \App\Models\SchoolYear::create([
+            'school_year_name' => '2024/2025',
+            'school_year_start' => 2024,
+            'school_year_end' => 2025,
+            'date_of_fine' => 20,
+            'fine_amount' => 5000,
+            'is_active' => 0
+        ]);
         // SCHOOL YEARS
 
         // SPP MASTERS
         \App\Models\SppMaster::create([
-            'spp_name' => 'SPP Umum',
+            'spp_name' => 'SPP SD Anak Dalam - 600000',
             'amount' => 600000
         ]);
+        \App\Models\SppMaster::create([
+            'spp_name' => 'SPP SD Anak Luar - 650000',
+            'amount' => 650000
+        ]);
+        // SPP MASTERS
 
+        // TEACHER
         \App\Models\Teacher::create([
             'teacher_name' => 'Parlan'
         ]);
-        // SPP MASTERS
+        \App\Models\Teacher::create([
+            'teacher_name' => 'Ranto'
+        ]);
+        // TEACHER
 
         \App\Models\Classroom::create([
             'school_level_id' => 1,

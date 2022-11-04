@@ -181,23 +181,27 @@ class StudentCrudController extends CrudController
             'attribute' => 'AmountMoneyFormat', // attribute that is shown to admin
         ]);
         CRUD::field('personal_discount')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
-        // $this->crud->addField([
-        //     // 'type' => 'month',
-        //     'name' => 'join_month', // the relationship name in your Migration
-        //     // 'attributes' => [
-        //     //     'min' => '2022-01',
-        //     //     'max'       => '2022-12',
-        //     //   ], // change the HTML attributes of your input
+        $this->crud->addField([
+            // 'type' => 'month',
+            'name' => 'join_month', // the relationship name in your Migration
+            // 'attributes' => [
+            //     'min' => '2022-01',
+            //     'max'       => '2022-12',
+            //   ], // change the HTML attributes of your input
 
-        //     'type'        => 'select_from_array',
-        //     'options' => Helper::Months(),
-        //     'allows_null' => true,
-        // ]);
+            'type'        => 'select_from_array',
+            'options' => Helper::SchoolYearMonth(),
+            'allows_null' => true,
+        ]);
         $this->crud->addField([
             'type' => 'select',
             'name' => 'school_year_id', // the relationship name in your Migration
             'entity' => 'Schoolyear', // the relationship name in your Model
             'attribute' => 'school_year_name', // attribute that is shown to admin
+            'allows_null'     => false,
+            'options'   => (function ($query) {
+                return $query->orderBy('id', 'ASC')->where('is_active',true)->get();
+            }), //  you can use this to filter the results show in the select
             // kasih option function filter schol year yg aktif saja, 
             // after insert data siswa baru buat tagihan di bulan mendaftar
             // Gimananya caranya buat tagihan automatis

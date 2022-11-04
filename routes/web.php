@@ -1,5 +1,9 @@
 <?php
 
+
+use App\Helpers\Helper;
+use App\Models\Invoice;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // $latest = Invoice::latest()->first();
+    // $setting = Setting::where('meta_key','school_short_name')->first();
+    // if (! $latest) {
+    //     return 'SPP0001/'.$setting->meta_value.'/INV/'.date('Y');
+    // }
+
+    // $string = preg_replace("/[^0-9\.]/", '', 'SPP0001');
+
+    // // return 'SPP' . sprintf('%04d', $string+1) .'/'.$setting->meta_value.'/INV/'.date('Y');
+
+    // $currentNumber = '0001';
+    // $dfaul = preg_replace("/[^0-9\.]/", '', $currentNumber);
+    // dd();
+
+    // $val = preg_replace("/[^0-9\.]/", '', 'SPP0001');
+    // for ($i=0; $i < 5; $i++) { 
+    //     echo str_pad($val,4,"0",STR_PAD_LEFT)."<br>";
+    //     $val++;
+    // }
+        dd(Helper::generateInvoiceNumber(7,'2023'));
+    // return array_search(Helper::getSchoolYearMonthById(1), Helper::Months());
+
+
+    // return $dfaul.sprintf('%04d', $string+1) .'/'.$setting->meta_value.'/INV/'.date('Y');
 });

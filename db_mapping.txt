@@ -30,6 +30,11 @@ Reminder
 "trans('backpack::program_costum.pay')" -> resource/views/vendor/backpack/crud/operations/pay_invoice.blade.php , untuk referensi silahkan lihat [https://backpackforlaravel.com/docs/5.x/base-how-to#customize-the-translated-strings-aka-overwrite-the-language-file]
 - check semua fitur search di tiap menu, biasanya yg relationship ngg bsa searchnya
 
+- siswa bisih pilih bulan masuk, karna kadang ada anak masuk di oktober tpi skrng sdh noveber jdi harus di input sesuai bulannya, kemudiansaat insert siswa buat tagihan langsung dari bulan masuk sampai bulan tahun ajaran selesai
+- untuk denda, jika 4 byulan tunggakan, trus bayar dengan langsung  3 bulan maka ambil bulan yg paling pertama nunggak dendanya,
+lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan di ambil tiap bulan dendanya kalo bayar satu satu
+- saat insert siswa dan buat tagihan, school year nya harus di check dlu apakah aktif ?,untuk mengaktifkan school year di tabel school year harus check  tahun nya,  apakah tahunnya sudah lewat atau belum, kalo sudah lewat ndk boleh di aktifkan,check juga, apakah tahun schoolyear yg aktif sudah berakhir atau tidak, jika belum berakhir tidak boleh di aktifkan yang di atasnya 
+
 >Transactional Tabel
 #Invoice -> masukkan kesini setiap kali nambah siswa baru, juga saat create bulk invoice or single invoice
 - id

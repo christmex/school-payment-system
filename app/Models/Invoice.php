@@ -31,6 +31,7 @@ class Invoice extends Model
         'fine_discount',
         'fine_date',
         'paid_date',
+        'payment_way_id',
         'description'
         
     ]; 
