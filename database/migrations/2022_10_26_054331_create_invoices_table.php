@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('student_id')->nullable()->constrained()->nullOnDelete();
             // $table->foreignId('teacher_classroom_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('school_year_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('classroom_id')->nullable()->constrained()->nullOnDelete();
             $table->tinyInteger('payment_for_month');
             $table->Integer('amount');
             $table->Integer('fine_amount');

@@ -43,6 +43,7 @@ class InvoiceCrudController extends CrudController
     protected function setupListOperation()
     {
         // Set this for filter this month
+        // dd(Helper::getCurrentMonth());
         $this->crud->addClause('where', 'payment_for_month', '=', Helper::getCurrentMonth());
         $this->crud->addClause('where', 'school_year_id', '=', Helper::getActiveSchoolYear());
         // Set this for reorder the id
@@ -58,13 +59,13 @@ class InvoiceCrudController extends CrudController
             "attribute" => "student_name",
             "priority" => 2
         ]);
-        // $this->crud->addField([
-        //     'type' => 'select',
-        //     'label' => 'Classroom',
-        //     'name' => 'classroom_id', // the relationship name in your Migration
-        //     'entity' => 'Classroom', // the relationship name in your Model
-        //     'attribute' => 'classroom_name', // attribute that is shown to admin
-        // ]);
+        $this->crud->addField([
+            'type' => 'select',
+            'label' => 'Classroom',
+            'name' => 'classroom_id', // the relationship name in your Migration
+            'entity' => 'Classroom', // the relationship name in your Model
+            'attribute' => 'classroom_name', // attribute that is shown to admin
+        ]);
         CRUD::column('amount')->type('money_format');
         
         // CRUD::column('fine_amount')->type('money_format');

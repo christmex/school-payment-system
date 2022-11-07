@@ -16,15 +16,15 @@ trait PayInvoiceOperation
      */
     protected function setupPayInvoiceRoutes($segment, $routeName, $controller)
     {
-        Route::get($segment.'/{id}/pay-invoice', [
-            'as'        => $routeName.'.payInvoice',
-            'uses'      => $controller.'@payInvoice',
+        Route::get($segment.'/{id}/list-invoice', [
+            'as'        => $routeName.'.listInvoice',
+            'uses'      => $controller.'@listInvoice',
             'operation' => 'payInvoice',
         ]);
 
         Route::post($segment.'/{id}/pay-invoice', [
-            'as'        => $routeName.'.doPayInvoice',
-            'uses'      => $controller.'@doPayInvoice',
+            'as'        => $routeName.'.PayInvoice',
+            'uses'      => $controller.'@PayInvoice',
             'operation' => 'payInvoice',
         ]);
     }
@@ -34,12 +34,10 @@ trait PayInvoiceOperation
      */
     protected function setupPayInvoiceDefaults()
     {
-        CRUD::allowAccess('payInvoice');
+        CRUD::allowAccess('listInvoice');
 
         CRUD::operation('payInvoice', function () {
             CRUD::loadDefaultOperationSettingsFromConfig();
-
-            $this->crud->setupDefaultSaveActions();
         });
 
         CRUD::operation('list', function () {
@@ -47,34 +45,41 @@ trait PayInvoiceOperation
             // CRUD::addButton('top', 'pay_invoice', 'view', 'crud::buttons.pay_invoice');
             CRUD::addButton('line', 'pay_invoice', 'view', 'crud::buttons.pay_invoice','beginning');
         });
+        
     }
+
 
     /**
      * Show the view for performing the operation.
      *
      * @return Response
      */
-    public function payInvoice($id)
+    public function listInvoice($id)
     {
-        CRUD::hasAccessOrFail('payInvoice');
+        CRUD::hasAccessOrFail('listInvoice');
 
         // get entry ID from Request (makes sure its the last ID for nested resources)
         $id = $this->crud->getCurrentEntryId() ?? $id;
         // get the info for that entry
 
+        // $this->data['entry'] = $this->crud->with('invoices')->findOrFail($id)->invoices;
         $this->data['entry'] = $this->crud->getEntryWithLocale($id);
-        $this->crud->setOperationSetting('fields', $this->crud->getUpdateFields());
+        // $this->crud->setOperationSetting('fields', $this->crud->getUpdateFields());
 
         $this->data['crud'] = $this->crud;
-        $this->data['saveAction'] = $this->crud->getSaveAction();
-        $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::program_costum.pay').' '.$this->crud->entity_name;
+        // $this->data['saveAction'] = $this->crud->getSaveAction();
+        // $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::program_costum.pay').' '.$this->crud->entity_name;
         $this->data['id'] = $id;
-
+        // dd($this->crud->getEntries());
+        // dd($this->crud->with('invoices')->getEntries($id));
+        $this->data['title'] = $this->crud->getTitle() ?? mb_ucfirst($this->crud->entity_name_plural);
         // load the view
+        // dd($this->data['entry']);
         return view('crud::operations.pay_invoice', $this->data);
     }
 
-    public function doPayInvoice(){
+
+    public function PayInvoice(){
         
     }
 }

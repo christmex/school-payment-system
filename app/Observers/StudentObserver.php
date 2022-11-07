@@ -60,6 +60,7 @@ class StudentObserver
                 'invoice_number' => $generateInvoiceNumber[$i],
                 'student_id' => $student->id,
                 'school_year_id' => request()->school_year_id,
+                'school_year_id' => request()->classroom_id,
                 'payment_for_month' => $getNormalMonthAll[$i],
                 'amount' => $SppMaster->amount,
                 'fine_amount' => $fineData['fine'],

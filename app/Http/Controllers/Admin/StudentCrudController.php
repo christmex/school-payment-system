@@ -24,6 +24,8 @@ class StudentCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
+    use \App\Http\Controllers\Admin\Operations\PayInvoiceOperation;
+
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -145,7 +147,7 @@ class StudentCrudController extends CrudController
         //     "type" => "select",
         //     "attribute" => "school_year_name"
         // ]);
-        $this->crud->enableBulkActions();
+        // $this->crud->enableBulkActions();
         $this->crud->removeButton('delete');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -227,5 +229,13 @@ class StudentCrudController extends CrudController
         $this->crud->removeField('spp_master_id');
         $this->crud->removeField('personal_discount');
         $this->crud->removeField('school_year_id');
+    }
+
+    protected function setupPayInvoiceOperation(){
+        // CRUD::field('id');
+        CRUD::column('id');
+        CRUD::column('invoice_number')->priority(2);
+        CRUD::column('amount')->type('money_format');
+        // dd($this->crud->getRequest()->request);
     }
 }

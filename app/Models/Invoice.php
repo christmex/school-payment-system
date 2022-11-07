@@ -17,6 +17,7 @@ class Invoice extends Model
         'invoice_number',
         'student_id',
         'school_year_id',
+        'classroom_id',
         'payment_for_month',
         'amount',
         'fine_amount',
@@ -36,10 +37,10 @@ class Invoice extends Model
         );
     }
 
-    // public function Classroom()
-    // {
-    //     return $this->belongsTo('App\Models\Classroom', 'classroom_id','id');
-    // }
+    public function Classroom()
+    {
+        return $this->belongsTo('App\Models\Classroom', 'classroom_id','id');
+    }
 
     public function SchoolYear()
     {
