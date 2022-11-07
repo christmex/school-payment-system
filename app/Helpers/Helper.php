@@ -90,10 +90,11 @@ class Helper {
         return self::Months()[$id];
     }
 
-    public static function generateInvoiceNumber($count,$school_year_start){
+    public static function generateInvoiceNumber($count){
         $setting = Setting::where('meta_key','school_short_name')->first();
         $latest = Invoice::orderBy('id','desc')->limit(1)->first();
         $startVal = 10001;
+
         if(!$latest){
             $val = $startVal;
         }else {
@@ -101,30 +102,17 @@ class Helper {
         }
         $generateInvoiceNumber = [];
 
-        for ($i=1; $i <= $count; $i++) { 
-            if(($school_year_start != date('Y')) && $i == 1){
+        if($latest){
+            $explodeLatest = last(explode('/',$latest->invoice_number));
+            if($explodeLatest != date('Y')){
                 $val = $startVal;
             }
+        }
+        for ($i=1; $i <= $count; $i++) { 
             $generateInvoiceNumber[$i] = 'SPP'.str_pad($val,4,"0",STR_PAD_LEFT).'/'.$setting->meta_value.'/INV/'.rand(1000000000,99999999).'/'.date('Y');
             $val++;
         }
         return $generateInvoiceNumber;
-
-
-        // if(($record == null) && (request()->join_month == $i)){
-            //     $expNum = date('Y').'-0001';
-            // }else {
-                // $expNum = explode('-', $record->invoice_number);
-                // $expNum = explode('-', date('Y').'-0001');
-            // }
-            
-            // //check first day in a year
-            // if ( date('l',strtotime(date('Y-01-01'))) ){
-            //     $nextInvoiceNumber = date('Y').'-0001';
-            // } else {
-            //     //increase 1 with last invoice number
-            //     $nextInvoiceNumber = $expNum[0].'-'. $expNum[1]+1;
-            // }
 
     }
 
@@ -175,6 +163,20 @@ class Helper {
             'datefine' => $getActiveSchoolYear->date_of_fine,
             'thisMonthFine' => $thisMonthFine,
         ];
+    }
+
+    public static function dateHumanDiff($date){
+        $exp = explode('-', $date);
+        return last($exp).' '.self::getMonthById((int)$exp[1]).' '.$exp[0];
+        // $carbonDate = new Carbon($date);
+        // return $carbonDate->diffForHumans();
+    }
+
+    public static function carbonDateHumanDiff($date){
+        return Carbon::parse($date)->diffForHumans();
+        // $carbonDate = new Carbon($date);
+        // return $carbonDate->diffForHumans();
+        // return $date->diffForHumans();
     }
 
     // public static function InvoiceNumberGenerator(){

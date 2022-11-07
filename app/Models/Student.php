@@ -79,6 +79,7 @@ class Student extends Model
         return $this->hasMany(StudentFundingDetail::class)->with('SppMaster')->where('school_year_id', Helper::getActiveSchoolYear());
     }
 
+
     // public function getStudentFundingDetail()
     // {
     //     $data = $this->StudentFundingDetail()->with('SppMaster')->first();

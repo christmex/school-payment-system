@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Classroom extends Model
 {
@@ -21,6 +21,7 @@ class Classroom extends Model
         'classroom_name',
         'teacher_id'
     ];
+
 
     public function SchoolLevel()
     {

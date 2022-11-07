@@ -76,8 +76,21 @@ class StudentSchoolHistoryCrudController extends CrudController
         CRUD::setValidation(StudentSchoolHistoryRequest::class);
 
         CRUD::field('student_id');
-        CRUD::field('school_year_id');
-        CRUD::field('classroom_id');
+        $this->crud->addField([
+            'type' => 'select',
+            'name' => 'school_year_id', // the relationship name in your Migration
+            'entity' => 'Schoolyear', // the relationship name in your Model
+            'attribute' => 'school_year_name', // attribute that is shown to admin
+            // kasih option function filter schol year yg aktif saja, 
+            // after insert data siswa baru buat tagihan di bulan mendaftar
+            // Gimananya caranya buat tagihan automatis
+        ]);
+        $this->crud->addField([
+            'type' => 'select',
+            'name' => 'classroom_id', // the relationship name in your Migration
+            'entity' => 'Classroom', // the relationship name in your Model
+            'attribute' => 'classroom_name', // attribute that is shown to admin
+        ]);
         CRUD::field('desc');
 
         /**

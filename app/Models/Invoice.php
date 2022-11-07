@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Invoice extends Model
@@ -13,14 +14,6 @@ class Invoice extends Model
     use \App\Traits\CreatedUpdatedBy;
 
     protected $fillable = [
-        // 'payment_invoice',
-        // 'student_id',
-        // 'cost',
-        // 'teacher_classroom_id',
-        // 'school_year_id',
-        // 'payment_for_month',
-        // 'description',
-
         'invoice_number',
         'student_id',
         'school_year_id',
@@ -29,16 +22,23 @@ class Invoice extends Model
         'fine_amount',
         'personal_discount',
         'fine_discount',
-        'fine_date',
+        'due_date',
         'paid_date',
         'payment_way_id',
-        'description'
-        
+        'description'   
     ]; 
 
-    // public function TeacherClassroom()
+
+    protected function dueDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Helper::dateHumanDiff($value),
+        );
+    }
+
+    // public function Classroom()
     // {
-    //     return $this->belongsTo('App\Models\TeacherClassroom', 'teacher_classroom_id','id');
+    //     return $this->belongsTo('App\Models\Classroom', 'classroom_id','id');
     // }
 
     public function SchoolYear()

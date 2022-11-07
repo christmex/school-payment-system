@@ -4,6 +4,7 @@
 use App\Helpers\Helper;
 use App\Models\Invoice;
 use App\Models\Setting;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $Students = Student::with('StudentSchoolHistory.Classroom')->get();
+    // dd($Students);
+    foreach ($Students as $StudentSchoolHistory) {
+        // dd($StudentSchoolHistory->StudentSchoolHistory->classroom_id);
+        dd($StudentSchoolHistory->StudentSchoolHistory()->Classroom);
+    }
+    // dd($a->school_year);
+    // dd(last([1,2,3]));
     // $latest = Invoice::latest()->first();
     // $setting = Setting::where('meta_key','school_short_name')->first();
     // if (! $latest) {
@@ -37,7 +46,7 @@ Route::get('/', function () {
     //     echo str_pad($val,4,"0",STR_PAD_LEFT)."<br>";
     //     $val++;
     // }
-        dd(Helper::generateInvoiceNumber(7,'2023'));
+        // dd(Helper::generateInvoiceNumber(7,'2023'));
     // return array_search(Helper::getSchoolYearMonthById(1), Helper::Months());
 
 

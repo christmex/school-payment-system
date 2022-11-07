@@ -54,7 +54,7 @@ class StudentObserver
 
         // Fitur jika tahun ini sudah selesai, maka generate kembali invoice number dari awal yaitu 1001 dan di bagian akhir tahunnya di buat tahun yg saat ini
 
-        $generateInvoiceNumber = Helper::generateInvoiceNumber(count($getAllDueDate),$schoolyear->school_year_start);
+        $generateInvoiceNumber = Helper::generateInvoiceNumber(count($getAllDueDate));
         for ($i=1; $i <= count($getAllDueDate); $i++) { 
             $queryInvoice[] = [
                 'invoice_number' => $generateInvoiceNumber[$i],
@@ -65,7 +65,7 @@ class StudentObserver
                 'fine_amount' => $fineData['fine'],
                 'personal_discount' => request()->personal_discount,
                 'fine_discount' => 0,
-                'fine_date' => $getAllDueDate[$i],
+                'due_date' => $getAllDueDate[$i],
                 'paid_date' => NULL,
                 'payment_way_id' => NULL,
                 // 'description' => 'SPP '.Helper::getNormalMonth($joinMonth, Helper::Months()).' '.$schoolyear->school_year_name,

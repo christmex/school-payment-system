@@ -161,6 +161,11 @@ class DatabaseSeeder extends Seeder
             'classroom_name' => 'Matthew 1',
             'teacher_id' => 1
         ]);
+        \App\Models\Classroom::create([
+            'school_level_id' => 1,
+            'classroom_name' => 'Matthew 2',
+            'teacher_id' => 2
+        ]);
 
         // \App\Models\TeacherClassroom::create([
         //     'classroom_id' => 1,

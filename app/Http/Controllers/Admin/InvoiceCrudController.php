@@ -42,23 +42,44 @@ class InvoiceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('payment_invoice');
+        // Set this for filter this month
+        $this->crud->addClause('where', 'payment_for_month', '=', Helper::getCurrentMonth());
+        $this->crud->addClause('where', 'school_year_id', '=', Helper::getActiveSchoolYear());
+        // Set this for reorder the id
+        $this->crud->orderBy('id','asc');
+
+        CRUD::column('invoice_number')->priority(2);
         CRUD::addColumn([
             "name" => "student_id",
             "label" => "Student Name",
             "entity" => "Student",
             "model" => "App\Models\Student",
             "type" => "select",
-            "attribute" => "student_name"
+            "attribute" => "student_name",
+            "priority" => 2
         ]);
-        CRUD::column('cost')->type('money_format');
+        // $this->crud->addField([
+        //     'type' => 'select',
+        //     'label' => 'Classroom',
+        //     'name' => 'classroom_id', // the relationship name in your Migration
+        //     'entity' => 'Classroom', // the relationship name in your Model
+        //     'attribute' => 'classroom_name', // attribute that is shown to admin
+        // ]);
+        CRUD::column('amount')->type('money_format');
+        
+        // CRUD::column('fine_amount')->type('money_format');
+        // CRUD::addColumn([
+        //     "name" => "classroom_id",
+        //     "label" => "Classroom",
+        //     "entity" => "Student.hehe.Classroom",
+        //     "model" => "App\Models\Student",
+        //     "type" => "select",
+        //     "attribute" => "teacher_id"
+        // ]);
         CRUD::addColumn([
-            "name" => "teacher_classroom_id",
-            "label" => "Classroom",
-            "entity" => "TeacherClassroom.Classroom",
-            "model" => "App\Models\TeacherClassroom",
-            "type" => "select",
-            "attribute" => "classroom_name"
+            'name' => 'payment_for_month',
+            'type'  => 'model_function',
+            'function_name' => 'getMonthById'
         ]);
         CRUD::addColumn([
             "name" => "school_year_id",
@@ -68,22 +89,41 @@ class InvoiceCrudController extends CrudController
             "type" => "select",
             "attribute" => "school_year_name"
         ]);
-        // CRUD::column('payment_for_month');
         CRUD::addColumn([
-            'name' => 'payment_for_month',
-            'type'  => 'model_function',
-            'function_name' => 'getMonthById'
+            "name" => "created_by",
+            "label" => "Created By",
+            "entity" => "createdBy",
+            "model" => "App\Models\Invoice",
+            "type" => "select",
+            "attribute" => "name"
         ]);
-        CRUD::column('description');
+        CRUD::addColumn([
+            "name" => "updated_by",
+            "label" => "Updated By",
+            "entity" => "updatedBy",
+            "model" => "App\Models\Invoice",
+            "type" => "select",
+            "attribute" => "name"
+        ]);
+        CRUD::column('due_date');
+
+        // CRUD::addColumn([
+        //     'name' => 'payment_for_month',
+        //     'type'  => 'model_function',
+        //     'function_name' => 'getMonthById'
+        // ]);
+        // CRUD::column('description');
         // $this->crud->removeAllButtonsFromStack('line');
-        // $this->crud->removeAllButtons();
-        // $this->crud->addButtonFromView('line', 'PayInvoice', 'pay-invoice', 'beginning');
-        // $this->crud->addButton('line', 'PayInvoice','view','pay-invoice','beginning');
+        $this->crud->enableBulkActions();
+        $this->crud->removeAllButtons();
+        $this->crud->addButtonFromView('line', 'pay_invoice', 'pay-invoice', 'beginning');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
          */
+        
+        
     }
 
     /**
@@ -96,7 +136,7 @@ class InvoiceCrudController extends CrudController
     {
         CRUD::setValidation(InvoiceRequest::class);
 
-        // CRUD::field('payment_invoice');
+        CRUD::field('invoice_number');
         CRUD::field('student_id');
         $this->crud->addField([
             'type' => 'select',

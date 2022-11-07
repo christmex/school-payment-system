@@ -24,7 +24,7 @@ return new class extends Migration
             $table->Integer('fine_amount');
             $table->Integer('personal_discount');
             $table->Integer('fine_discount');
-            $table->date('fine_date')->nullable()->default(NULL);
+            $table->date('due_date')->nullable()->default(NULL);
             $table->date('paid_date')->nullable()->default(NULL);
             $table->foreignId('payment_way_id')->nullable()->constrained()->nullOnDelete()->default(NULL);
             $table->text('description')->nullable();
