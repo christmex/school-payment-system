@@ -38,12 +38,17 @@ class Invoice extends Model
 
     public function getAmountMoneyFormatAttribute()
     { 
-      return Helper::moneyFormat($this->amount);
+        return Helper::moneyFormat($this->amount);
     }
 
     public function getPersonalDiscountMoneyFormatAttribute()
     { 
-      return Helper::moneyFormat($this->personal_discount);
+        return Helper::moneyFormat($this->personal_discount);
+    }
+
+    public function getSubTotalAttribute()
+    { 
+        return Helper::moneyFormat($this->amount - $this->personal_discount);
     }
 
     public function getPaymentForMonthInHumanWayAttribute()

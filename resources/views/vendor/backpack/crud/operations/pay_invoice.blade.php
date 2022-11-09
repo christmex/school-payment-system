@@ -27,7 +27,7 @@
 
 	</div>
 </div>
-
+<!-- Gunakan livewire saja -->
 <div class="row">
     <div class="col-lg-12">
     <div class="card">
@@ -49,8 +49,10 @@
                     <td>{{$data->student->student_name}}</td>
                     <td>{{$data->PaymentForMonthInHumanWay}}</td>
                     <td>{{$data->AmountMoneyFormat}}</td>
-                    <td>{{$data->PersonalDiscountMoneyFormat}}</td>
-                    <td><span class="badge badge-success">Active</span></td>
+                    <td><input type='number' value='{{$data->personal_discount}}' min='0' name='personal_discount[]'></td>
+                    
+                    <td>{{$data->SubTotal}}</td>
+                    <!-- <td><span class="badge badge-success">as</span></td> -->
                 </tr>
             @endforeach
             </tbody>
