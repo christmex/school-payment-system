@@ -44,12 +44,12 @@ class InvoiceCrudController extends CrudController
     {
         // Set this for filter this month
         // dd(Helper::getCurrentMonth());
-        $this->crud->addClause('where', 'payment_for_month', '=', Helper::getCurrentMonth());
+        $this->crud->addClause('where', 'payment_for_month', '<=', Helper::getCurrentMonth());
         $this->crud->addClause('where', 'school_year_id', '=', Helper::getActiveSchoolYear());
         // Set this for reorder the id
         $this->crud->orderBy('id','asc');
 
-        CRUD::column('invoice_number')->priority(2);
+        CRUD::column('invoice_number');
         CRUD::addColumn([
             "name" => "student_id",
             "label" => "Student Name",
@@ -59,15 +59,55 @@ class InvoiceCrudController extends CrudController
             "attribute" => "student_name",
             "priority" => 2
         ]);
-        $this->crud->addField([
+        CRUD::addColumn([
             'type' => 'select',
             'label' => 'Classroom',
             'name' => 'classroom_id', // the relationship name in your Migration
             'entity' => 'Classroom', // the relationship name in your Model
             'attribute' => 'classroom_name', // attribute that is shown to admin
+            "priority" => 2
         ]);
-        CRUD::column('amount')->type('money_format');
-        
+        // $this->crud->column('amount')->type('number')->prefix('');
+        CRUD::addColumn([
+            'type' => 'money_format',
+            'label' => 'Amounts',
+            'name' => 'amount', 
+            // 'wrapper' => [
+            //     'element' => 'span',
+            //     'class' => 'badge badge-danger'
+            // ],
+            "priority" => 2
+        ]);
+        // CRUD::addColumn([
+        //     'type' => 'money_format',
+        //     // 'label' => 'Per',
+        //     'name' => 'personal_discount', 
+        //     // 'wrapper' => [
+        //     //     'element' => 'span',
+        //     //     'class' => 'badge badge-success'
+        //     // ],
+        //     "priority" => 2
+        // ]);
+        CRUD::addColumn([
+            'name'     => 'personal_discount',
+            'label'    => 'Personal Discount',
+            'type'     => 'custom_html',
+            'value'    => function($entry) {
+                return "<input type='number' value='{$entry->personal_discount}' min='0' name='personal_discount[]'>";
+                
+            } 
+        ]);
+        CRUD::column('fine_amount')->type('money_format');
+        CRUD::addColumn([
+            'name'     => 'fine_discount',
+            'label'    => 'Fine Discount',
+            'type'     => 'custom_html',
+            'value'    => function($entry) {
+                return "<input type='number' value='{$entry->fine_discount}' min='0' name='fine_discount[]'>";
+                
+            } 
+        ]);
+
         // CRUD::column('fine_amount')->type('money_format');
         // CRUD::addColumn([
         //     "name" => "classroom_id",
@@ -80,8 +120,10 @@ class InvoiceCrudController extends CrudController
         CRUD::addColumn([
             'name' => 'payment_for_month',
             'type'  => 'model_function',
+            "priority" => 1,
             'function_name' => 'getMonthById'
         ]);
+        CRUD::column('due_date')->priority(2);
         CRUD::addColumn([
             "name" => "school_year_id",
             "label" => "School Year",
@@ -89,6 +131,19 @@ class InvoiceCrudController extends CrudController
             "model" => "App\Models\SchoolYear",
             "type" => "select",
             "attribute" => "school_year_name"
+        ]);
+        CRUD::addColumn([
+            'name'     => 'total',
+            'label'    => 'Total Amount',
+            'type'     => 'custom_html',
+            'value'    => function($entry) {
+                $total = $entry->amount + $entry->fine_amount;
+                return "<span>".$total."</span>";
+
+                // $total = Helper::moneyFormat($entry->amount + $entry->fine_amount);
+                // return "<input type='text' value='{$total}' name='total[]'>";
+                
+            } 
         ]);
         CRUD::addColumn([
             "name" => "created_by",
@@ -106,7 +161,8 @@ class InvoiceCrudController extends CrudController
             "type" => "select",
             "attribute" => "name"
         ]);
-        CRUD::column('due_date');
+        
+        
 
         // CRUD::addColumn([
         //     'name' => 'payment_for_month',
@@ -117,7 +173,7 @@ class InvoiceCrudController extends CrudController
         // $this->crud->removeAllButtonsFromStack('line');
         $this->crud->enableBulkActions();
         $this->crud->removeAllButtons();
-        $this->crud->addButtonFromView('line', 'pay_invoice', 'pay-invoice', 'beginning');
+        $this->crud->addButtonFromView('bottom', 'pay_invoice', 'pay-invoice', 'beginning');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');

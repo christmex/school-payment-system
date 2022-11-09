@@ -29,12 +29,28 @@ class Invoice extends Model
         'description'   
     ]; 
 
-
     protected function dueDate(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => Helper::dateHumanDiff($value),
         );
+    }
+
+    public function getAmountMoneyFormatAttribute()
+    { 
+      return Helper::moneyFormat($this->amount);
+    }
+
+    public function getPersonalDiscountMoneyFormatAttribute()
+    { 
+      return Helper::moneyFormat($this->personal_discount);
+    }
+
+    public function getPaymentForMonthInHumanWayAttribute()
+    { 
+        return Helper::getMonthById($this->payment_for_month);
+        // return Helper::getMonthById($this->payment_for_month);
+        // return $this->attributes['payment_for_month'];
     }
 
     public function Classroom()

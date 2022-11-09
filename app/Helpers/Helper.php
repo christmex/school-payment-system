@@ -144,6 +144,23 @@ class Helper {
         return Carbon::now();
     }
 
+    public static function calculatePinalties($date, $fine_amount = 0){
+        $date = new Carbon(date($date));
+        $now = Carbon::now();
+        $pinlaties = 0;
+        $difference = ($date->diff($now)->days < 1)
+                ? 'today'
+                : $date->diff($now);
+        $pinlaties = $difference->days * $fine_amount;
+        return $pinlaties;
+        // dd([
+        //     'date' => $date,
+        //     'now' => $now,
+        //     'difference' => $difference,
+        //     'pinlaties' => $pinlaties,
+        // ]);
+    }
+
     public static function calculateFineNewStudent(){
         $getActiveSchoolYear = self::getActiveSchoolYear('all');
         $thisMonthFine = new Carbon(date('Y-m-'.$getActiveSchoolYear->date_of_fine));
