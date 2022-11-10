@@ -36,6 +36,14 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - saat insert siswa dan buat tagihan, school year nya harus di check dlu apakah aktif ?,untuk mengaktifkan school year di tabel school year harus check  tahun nya,  apakah tahunnya sudah lewat atau belum, kalo sudah lewat ndk boleh di aktifkan,check juga, apakah tahun schoolyear yg aktif sudah berakhir atau tidak, jika belum berakhir tidak boleh di aktifkan yang di atasnya 
 - di bagian list invoice buat kolom berapa lama sudah telat bayar sama nominal denda mungkin
 - tidak bisa tambah kelas baru di student school history jika id siswa dan id school year sudah ada krna siswa cmn bisa terdaftar di satu kelas pertahun ajaran jika berubah siahkan edit 
+- Gunakan livewire saja 
+- School funding dan school history hanya bisa di edit saat school year yg sedang aktif
+- ganti payment for month gunakan versi school year month biar bisa di order
+
+
+
+
+
 
 >Transactional Tabel
 #Invoice -> masukkan kesini setiap kali nambah siswa baru, juga saat create bulk invoice or single invoice

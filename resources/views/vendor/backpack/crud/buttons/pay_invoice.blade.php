@@ -60,17 +60,16 @@
                     type: 'POST',
                     data: { entries: crud.checkedItems,personal_discount: personal_discount },
                     success: function(result) {
-                        window.location.href = result
                         // alert(result)
                     // Show an alert with the result
-                        new Noty({
-                            type: "success",
-                            text: "<strong>Entries cloned</strong><br>"+crud.checkedItems.length+" new entries have been added."
-                        }).show();
-
-                    crud.checkedItems = [];
-                    personal_discount = [];
-                    crud.table.ajax.reload();
+                        // new Noty({
+                        //     type: "success",
+                        //     text: "<strong>Entries cloned</strong><br>"+crud.checkedItems.length+" new entries have been added."
+                        // }).show();
+                        crud.checkedItems = [];
+                        personal_discount = [];
+                        crud.table.ajax.reload();
+                        window.location.href = result
                     },
                     error: function(result) {
                     // Show an alert with the result
