@@ -44,17 +44,44 @@
             </tr>
             </thead>
             <tbody>
+                @php
+                    $total = 0;
+                    $fineAmount = 0;
+                @endphp 
             @foreach($entry as $data)
                 <tr>
                     <td>{{$data->student->student_name}}</td>
                     <td>{{$data->PaymentForMonthInHumanWay}}</td>
                     <td>{{$data->AmountMoneyFormat}}</td>
-                    <td><input type='number' value='{{$data->personal_discount}}' min='0' name='personal_discount[]'></td>
+                    <td>RP. <input type='number' value='{{$data->personal_discount}}' min='0' name='personal_discount[]' style="border:none"></td>
                     
-                    <td>{{$data->SubTotal}}</td>
+                    <td>{{$data->SubTotalMoneyFormat}}</td>
+                    @php 
+                        $total += $data->SubTotal;
+                        $fineAmount = $data->fine_amount >= $fineAmount ? $data->fine_amount : $fineAmount;
+                    @endphp 
                     <!-- <td><span class="badge badge-success">as</span></td> -->
                 </tr>
             @endforeach
+                @php 
+                    $finalTotal = Helper::MoneyFormat($total + ($fineAmount));
+                @endphp 
+                <tr>
+                    <td colspan="4" align="right"><b>Total</b></td>
+                    <td>{{ Helper::MoneyFormat($total) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="right"><b>Fine Amount</b></td>
+                    <td>{{ Helper::MoneyFormat($fineAmount) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="right"><b>Fine Discount</b></td>
+                    <td>RP. <input type="number" min="0" style="border:none"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="right"><b>Final Total</b></td>
+                    <td>{{$finalTotal}}</td>
+                </tr>
             </tbody>
         </table>
         <button class="btn btn-primary">asd</button>

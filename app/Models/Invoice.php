@@ -48,6 +48,11 @@ class Invoice extends Model
 
     public function getSubTotalAttribute()
     { 
+        return $this->amount - $this->personal_discount;
+    }
+
+    public function getSubTotalMoneyFormatAttribute()
+    { 
         return Helper::moneyFormat($this->amount - $this->personal_discount);
     }
 

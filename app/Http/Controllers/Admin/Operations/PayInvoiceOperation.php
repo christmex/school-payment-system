@@ -108,7 +108,7 @@ trait PayInvoiceOperation
 
         // dd($clonedEntries);
         
-
+        // Check first if the id of the student_id is same do query to find the sudent_id in this invoice tbel
         $id = base64_encode(serialize($this->crud->getRequest()->input('entries')));
         // $this->crud->getRequest()->input('personal_discount');
 
