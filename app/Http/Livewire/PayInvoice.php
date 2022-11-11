@@ -3,11 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Helpers\Helper;
+use App\Models\Invoice;
 use Livewire\Component;
+use App\Models\PaymentWay;
 
 class PayInvoice extends Component
 {
     public $entry;
+    public $entryIds;
     public $entryTotal;
 
     public $student_name = [];
@@ -22,13 +25,21 @@ class PayInvoice extends Component
     public $finalTotal = 0;
 
 
-    public $tesa = [];
-    public $tesi = [];
-    public $tesu = [];
+    public $ModelPaymentWay;
+    public $PaymentWay;
+    public $description = NULL;
+
+    protected $rules = [
+        'PaymentWay' => 'required|Integer|min:1',
+    ];
 
 
     public function mount($entry)
     {
+        //Payment Way Model 
+        $this->ModelPaymentWay = PaymentWay::all();
+
+        // Invoice
         $this->entry = $entry;
         $this->entryTotal = count($entry);
 
@@ -39,6 +50,7 @@ class PayInvoice extends Component
             $this->personal_discount[$key] = Helper::MoneyFormat($value->personal_discount);
             $this->SubTotal[$key] = $value->SubTotal;
 
+            $this->entryIds[] = $value->id;
             
             $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
             
@@ -88,5 +100,19 @@ class PayInvoice extends Component
     public function render()
     {
         return view('livewire.pay-invoice');
+    }
+
+    public function save(){
+        $this->validate();
+        // dd($this->entryIds);
+
+        // check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
+
+        Invoice::whereIn('id', $this->entryIds)
+        ->update(['payment_way_id' => $this->PaymentWay,'description' => $this->description,'paid_date' => Helper::timestampOnDb()]);
+
+        \Alert::add('success', 'Success paying the invoice')->flash();
+        return redirect()->route('invoice.index');
+        
     }
 }

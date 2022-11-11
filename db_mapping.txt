@@ -40,8 +40,9 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - School funding dan school history hanya bisa di edit saat school year yg sedang aktif
 - ganti payment for month gunakan versi school year month biar bisa di order
 - Gunakan money format di semua yang ada masukan duit
-
-
+- Sebelum klik pay invoice di halaman invoice check dulu apakah ada tagihan di bulan sebelumnya ? kalo ada maka tidak bisa dilanjutkan hrus mebayar tagihan di bulan sebelumnya dulu
+- Ada masalah di fine discount klo pemnayaran dilakukan untuk 2 bulan gimana cara taunya kalau bulan ini di kasih discount amountnya berapa karna semua digabung
+- check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
 
 
 

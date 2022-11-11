@@ -97,12 +97,17 @@ trait PayInvoiceOperation
     public function PayInvoice(){
         
         // $entries = $this->crud->getRequest()->input('entries');
-        // $clonedEntries = [];
-        // dd($entries);
+        // $student_ids = [];
+        // // dd($entries);
 
+        // dd($entries);
         // foreach ($entries as $key => $id) {
         //     if ($entry = $this->crud->model->find($id)) {
-        //         $clonedEntries[] = $entry->replicate()->push();
+        //         if(array_search($entry->student_id,$student_ids)){
+                    
+        //         }else {
+
+        //         }
         //     }
         // }
 

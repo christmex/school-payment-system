@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('petty_cashes', function (Blueprint $table) {
             $table->id();
             $table->string('petty_cash_code'); //SPP*tahun*bulan*tanggal*Auto increment id
-            $table->string('petty_cash_title');//BAYAR SPP/DISCOUNT SPP/BAYAR DENDA/DISCOUNT DENDA jonathan tahun aaran bulan ksjdnak bla bla
+            $table->string('petty_cash_title');//BAYAR SPP/DISCOUNT SPP/BAYAR DENDA/DISCOUNT DENDA jonathan tahun ajaran bulan ksjdnak bla bla
             // $table->enum('petty_cash_type',['IN','OUT']);
             $table->Integer('debit')->default(0);
             $table->Integer('credit')->default(0);

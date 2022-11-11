@@ -44,8 +44,10 @@ class InvoiceCrudController extends CrudController
     {
         // Set this for filter this month
         // dd(Helper::getCurrentMonth());
-        $this->crud->addClause('where', 'payment_for_month', '<=', Helper::getCurrentMonth());
-        $this->crud->addClause('where', 'school_year_id', '=', Helper::getActiveSchoolYear());
+        // dd($);
+        // $this->crud->addClause('where', 'payment_for_month', '<=', Helper::getCurrentMonth());
+        // $this->crud->addClause('where', 'school_year_id', '=', Helper::getActiveSchoolYear());
+        $this->crud->addClause('where', 'paid_date', '=', NULL);
         // Set this for reorder the id
         $this->crud->orderBy('id','asc');
 
