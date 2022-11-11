@@ -58,7 +58,8 @@ class Invoice extends Model
 
     public function getPaymentForMonthInHumanWayAttribute()
     { 
-        return Helper::getMonthById($this->payment_for_month);
+        return Helper::getNormalMonthName($this->payment_for_month);
+        // return Helper::getMonthById($this->payment_for_month);
         // return Helper::getMonthById($this->payment_for_month);
         // return $this->attributes['payment_for_month'];
     }
@@ -78,8 +79,8 @@ class Invoice extends Model
         return $this->belongsTo('App\Models\Student', 'student_id','id');
     }
 
-    public function getMonthById(){
-        return Helper::getMonthById($this->payment_for_month);
+    public function getNormalMonth(){
+        return Helper::getNormalMonthName($this->payment_for_month);
     }
 
     // public function SppMaster()

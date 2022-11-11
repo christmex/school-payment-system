@@ -49,9 +49,26 @@ class Helper {
         ];
     }
 
-    public static function convertNormalMonthToSchoolYearMonth($id){
-        return array_search(self::Months()[$i], self::SchoolYearMonth());
+    
+    public static function getSchoolYearMonth($month){
+        return array_search($month, self::SchoolYearMonth());
     }
+
+    public static function getSchoolYearMonthAll($joinMonth, $count){
+        // dd($joinMonth);
+        $data = [];
+        for ($i=1; $i <= $count; $i++) { 
+            $data[$i] = self::getSchoolYearMonth(self::SchoolYearMonth()[$joinMonth]);
+            $joinMonth++;
+        }
+        return $data;
+    
+    }
+
+
+    // public static function convertNormalMonthToSchoolYearMonth($id){
+    //     return array_search(self::Months()[$i], self::SchoolYearMonth());
+    // }
 
     
     public static function getAllDueDate($startMonth){
@@ -80,6 +97,11 @@ class Helper {
     public static function getNormalMonth($month){
         return array_search(self::getSchoolYearMonthById($month), self::Months());
     }
+
+    public static function getNormalMonthName($month){
+        return self::getMonthById(self::getNormalMonth($month));
+    }
+
 
     public static function getNormalMonthAll($joinMonth, $count){
         $data = [];

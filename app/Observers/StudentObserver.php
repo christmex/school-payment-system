@@ -22,6 +22,7 @@ class StudentObserver
      */
     public function created(Student $student)
     {
+        
         DB::table('student_school_histories')->insert([
             'student_id' => $student->id,
             'school_year_id' => request()->school_year_id,
@@ -49,8 +50,11 @@ class StudentObserver
         $fineData = Helper::calculateFineNewStudent();
         $joinMonth = request()->join_month;
         $getAllDueDate = Helper::getAllDueDate($joinMonth);
-        $getNormalMonthAll = Helper::getNormalMonthAll($joinMonth,count($getAllDueDate));
+        // $getNormalMonthAll = Helper::getNormalMonthAll($joinMonth,count($getAllDueDate));
+        $getSchoolYearMonthAll = Helper::getSchoolYearMonthAll($joinMonth,count($getAllDueDate));
         $queryInvoice = [];
+
+        // dd($getSchoolYearMonthAll);
 
         // Fitur jika tahun ini sudah selesai, maka generate kembali invoice number dari awal yaitu 1001 dan di bagian akhir tahunnya di buat tahun yg saat ini
 
@@ -61,7 +65,8 @@ class StudentObserver
                 'student_id' => $student->id,
                 'school_year_id' => request()->school_year_id,
                 'classroom_id' => request()->classroom_id,
-                'payment_for_month' => $getNormalMonthAll[$i],
+                // 'payment_for_month' => $getNormalMonthAll[$i],
+                'payment_for_month' => $getSchoolYearMonthAll[$i],
                 'amount' => $SppMaster->amount,
                 // 'fine_amount' => $fineData['fine'],
                 'fine_amount' => Helper::calculatePinalties($getAllDueDate[$i],$schoolyear->fine_amount),

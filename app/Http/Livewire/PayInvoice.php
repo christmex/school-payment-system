@@ -13,10 +13,12 @@ class PayInvoice extends Component
 {
     public $entry;
     public $entryIds;
+    public $entryInvoiceNumber;
     public $entryTotal;
 
     public $student_name = [];
     public $payment_month = [];
+    public $payment_month_id = [];
     public $amount = [];
     public $personal_discount = [];
     public $SubTotal = [];
@@ -48,11 +50,13 @@ class PayInvoice extends Component
         foreach ($entry as $key => $value) {
             $this->student_name[$key] = $value->student->student_name;
             $this->payment_month[$key] = $value->PaymentForMonthInHumanWay;
+            $this->payment_month_id[$key] = $value->payment_for_month;
             $this->amount[$key] = $value->amount;
             $this->personal_discount[$key] = Helper::MoneyFormat($value->personal_discount);
             $this->SubTotal[$key] = $value->SubTotal;
 
             $this->entryIds[] = $value->id;
+            $this->entryInvoiceNumber[] = $value->invoice_number;
             
             $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
             
@@ -153,11 +157,14 @@ class PayInvoice extends Component
                     'created_at' =>  Helper::timestampOnDb(),
                     'updated_at' => Helper::timestampOnDb(),
                 ];
+                // dd($this->entry);
                 $queryInvoice[] = [
+                    'id' => $this->entry[$i]['id'],
+                    'invoice_number' => $this->entry[$i]['invoice_number'],
                     'personal_discount' => Helper::sanitizeMoneyFormat($this->personal_discount[$i]),
-                    'fine_discount' => 0,
-                    'payment_way_id' => $this -> PaymentWay,
-                    'description' => $this -> description,
+                    'fine_discount' => min($this->payment_month_id) == $this->entry[$i]['payment_for_month'] ? Helper::sanitizeMoneyFormat($this->fineDiscount) : 0,
+                    'payment_way_id' => $this->PaymentWay,
+                    'description' => $this->description,
                     'paid_date' => Helper::timestampOnDb()
                 ];
                 
@@ -191,8 +198,42 @@ class PayInvoice extends Component
             }
             
         }
-
-        // dd($queryPettyCash);
+        // dd($queryInvoice);
+        // array:2 [▼ // app\Http\Livewire\PayInvoice.php:200
+        //     0 => array:6 [▼
+        //         "id" => 1
+        //         "personal_discount" => "25000"
+        //         "fine_discount" => "0"
+        //         "payment_way_id" => "1"
+        //         "description" => null
+        //         "paid_date" => Carbon\Carbon @1668168787 {#1766 ▶}
+        //     ]
+        //     1 => array:6 [▼
+        //         "id" => 2
+        //         "personal_discount" => "25000"
+        //         "fine_discount" => 0
+        //         "payment_way_id" => "1"
+        //         "description" => null
+        //         "paid_date" => Carbon\Carbon @1668168787 {#1756 ▶}
+        //     ]
+        //     ]
+        // dd(['code' => 'test 1'],
+        // ['code' => 'test 2']);
+        // DB::table('invoices')->whereIn('id', $this->entryIds)->update([
+        //     ["personal_discount" => 25000,
+        //     "fine_discount" => 0,
+        //     "payment_way_id" => 1,
+        //     "description" => null,
+        //     "paid_date" => '2022-11-11'],
+        //     ["personal_discount" => 2000,
+        //     "fine_discount" => 0,
+        //     "payment_way_id" => 1,
+        //     "description" => null,
+        //     "paid_date" => '2022-11-11']
+        // ]);
+        // Invoice::insertOrUpdate($queryInvoice);
+        // dd(Invoice::updateOrCreate(['id' => 1, 'id' => 2],$queryInvoice));
+        // DB::table('invoices')->upsert($queryInvoice,['id','invoice_number'], ['personal_discount','fine_discount','payment_way_id','description','paid_date']);
         PettyCash::insert($queryPettyCash);
         // DB::table('petty_cashes')->insert($queryPettyCash);
 

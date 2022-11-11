@@ -132,7 +132,7 @@ class InvoiceCrudController extends CrudController
             'name' => 'payment_for_month',
             'type'  => 'model_function',
             "priority" => 1,
-            'function_name' => 'getMonthById'
+            'function_name' => 'getNormalMonth'
         ]);
         CRUD::column('due_date')->priority(2);
         CRUD::addColumn([
