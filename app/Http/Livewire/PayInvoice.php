@@ -103,16 +103,21 @@ class PayInvoice extends Component
     }
 
     public function save(){
-        $this->validate();
-        // dd($this->entryIds);
+        $validate = $this->validate();
+        return 'as';
 
         // check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
+        
 
         Invoice::whereIn('id', $this->entryIds)
         ->update(['payment_way_id' => $this->PaymentWay,'description' => $this->description,'paid_date' => Helper::timestampOnDb()]);
 
+
+    }
+
+    public function saveWithRedirectToInvoice(){
+        $this->save();
         \Alert::add('success', 'Success paying the invoice')->flash();
         return redirect()->route('invoice.index');
-        
     }
 }

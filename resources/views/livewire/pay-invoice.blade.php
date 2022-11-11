@@ -61,13 +61,13 @@
         </tbody>
     </table>
     <!-- <button class="btn btn-primary" wire:click="save"><i class="nav-icon la la-money-bill"></i> Pay Now</button> -->
-    <button class="btn btn-primary" onclick="save()"><i class="nav-icon la la-money-bill"></i> Pay Now</button>
+    <button class="btn btn-primary" onclick="save('save')"><i class="nav-icon la la-money-bill"></i> Pay Now</button>
 </div>
 
 @push('after_scripts')
 <script>
   if (typeof save != 'function') {
-    function save() {
+    function save(action) {
 
         var message = "{{ __('custom.pay_invoice_confirm') }}";
 
@@ -92,7 +92,16 @@
             },
         }).then((value) => {
             if (value) {
-                    @this.save()
+                    if(action == 'save'){
+                        @this.save()
+                        // if(){
+                            
+                        //     new Noty({
+                        //         type: "success",
+                        //         text: 'Some notification text',
+                        //     }).show();
+                        // }
+                    }
                 }
             });
         }

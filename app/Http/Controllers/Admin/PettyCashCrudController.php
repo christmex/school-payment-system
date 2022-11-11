@@ -41,12 +41,12 @@ class PettyCashCrudController extends CrudController
     {
         CRUD::column('petty_cash_code');
         CRUD::column('petty_cash_title');
-        CRUD::column('petty_cash_type');
+        // CRUD::column('petty_cash_type');
         CRUD::column('debit');
         CRUD::column('credit');
         CRUD::column('description');
-        CRUD::column('student_id');
-        CRUD::column('user_id');
+        // CRUD::column('student_id');
+        // CRUD::column('user_id');
         CRUD::column('trx_date');
 
         /**
@@ -68,12 +68,12 @@ class PettyCashCrudController extends CrudController
 
         CRUD::field('petty_cash_code');
         CRUD::field('petty_cash_title');
-        CRUD::field('petty_cash_type');
+        // CRUD::field('petty_cash_type');
         CRUD::field('debit');
         CRUD::field('credit');
         CRUD::field('description');
-        CRUD::field('student_id');
-        CRUD::field('user_id');
+        // CRUD::field('student_id');
+        // CRUD::field('user_id');
         CRUD::field('trx_date');
 
         /**
