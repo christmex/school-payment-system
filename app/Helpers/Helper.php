@@ -121,7 +121,7 @@ class Helper {
     }
 
     public static function moneyFormat($value){
-        return "RP. ".number_format($value, 0);
+        return "Rp ".number_format($value, 0,',', '.');
     }
 
     public static function getActiveSchoolYear($attribute = NULL){
@@ -214,5 +214,9 @@ class Helper {
 
     //     return $nextInvoiceNumber;
     // }
+
+    public static function sanitizeMoneyFormat($value){
+        return preg_replace("/[^0-9]/", "", $value);
+    }
 
 }

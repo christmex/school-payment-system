@@ -16,7 +16,7 @@
                 <td>{{ $data }}</td>
                 <td>{{ $payment_month[$key] }}</td>
                 <td>{{ Helper::MoneyFormat($amount[$key]) }}</td>
-                <td><input type="number" wire:model="personal_discount.{{ $key }}"  min='0' style="border:none" type-currency="IDR"></td>
+                <td><input type="text" wire:model="personal_discount.{{ $key }}"  min='0' style="border:none" type-currency="IDR"></td>
                 <td>{{ Helper::MoneyFormat($SubTotal[$key]) }}</td>
             </tr>
             @endforeach
@@ -31,11 +31,12 @@
             </tr>
             <tr>
                 <td colspan="4" align="right"><b>Fine Discount</b></td>
-                <td>RP. <input type="number" min="0" style="border:none" wire:model="fineDiscount"></td>
+                <td><input type="text" min="0" style="border:none" wire:model="fineDiscount" type-currency="IDR"></td>
             </tr>
             <tr>
                 <td colspan="4" align="right"><b>Final Total</b></td>
                 <td><b>{{Helper::MoneyFormat($finalTotal)}}</b></td>
+                
             </tr>
                 
         </tbody>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Helpers\Helper;
 use Livewire\Component;
 
 class PayInvoice extends Component
@@ -35,23 +36,25 @@ class PayInvoice extends Component
             $this->student_name[$key] = $value->student->student_name;
             $this->payment_month[$key] = $value->PaymentForMonthInHumanWay;
             $this->amount[$key] = $value->amount;
-            $this->personal_discount[$key] = $value->personal_discount;
+            $this->personal_discount[$key] = Helper::MoneyFormat($value->personal_discount);
             $this->SubTotal[$key] = $value->SubTotal;
 
             
             $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
         }
         $this->total = array_sum($this->SubTotal);
-
         $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
+        $this->fineDiscount = Helper::MoneyFormat($this->fineDiscount);
     }
     
     public function updatedPersonalDiscount($value, $index){
-        // Check dulu apakah int or string klo int lnjutkan, kalo bukan int ubah jadi 0
+        // Check dulu apakah int or string klo int lnjutkan, kalo bukan int ubah jadi 0  
         if($value ==""){
-            $this->personal_discount[$index] = 0;
+            // $this->personal_discount[$index] = 0;
+            $this->personal_discount[$index] = "Rp 0";
         }
-        $operation = $this->amount[$index] - $this->personal_discount[$index];
+        // $this->personal_discount[$index] = Helper::sanitizeMoneyFormat($value);
+        $operation = $this->amount[$index] - Helper::sanitizeMoneyFormat($this->personal_discount[$index]);
         if($operation < 0){
             // dd(\Alert::error('Employee status cant perform this action')->flash());
             // \Alert::error('Employee status cant perform this action');
@@ -60,17 +63,22 @@ class PayInvoice extends Component
         }
         $this->SubTotal[$index] = $operation;
         $this->total = array_sum($this->SubTotal);
-        $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
+        $this->finalTotal = $this->total + ($this->fineAmount - Helper::sanitizeMoneyFormat($this->fineDiscount));
         
 
     }
 
     public function updatedFineDiscount($value){
         if($value ==""){
-            $this->fineDiscount = 0;
+            // $this->fineDiscount = 0;
+            $this->fineDiscount = "Rp 0";
+        }
+        $operation =  $this->total + ($this->fineAmount - Helper::sanitizeMoneyFormat($this->fineDiscount));
+        if($operation < 0){
+            return false;
         }
 
-        $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
+        $this->finalTotal =$operation;
         // dd($this->finalTotal);
         
     }
