@@ -145,13 +145,20 @@ class Helper {
     }
 
     public static function calculatePinalties($date, $fine_amount = 0){
+
         $date = new Carbon(date($date));
         $now = Carbon::now();
+
         $pinlaties = 0;
-        $difference = ($date->diff($now)->days < 1)
-                ? 'today'
-                : $date->diff($now);
-        $pinlaties = $difference->days * $fine_amount;
+        if (Carbon::parse($date)->gt($now)){
+            $pinlaties = 0;
+        }else {
+            $difference = ($date->diff($now)->days < 1)
+                    ? 'today'
+                    : $date->diff($now);
+            $pinlaties = $difference->days * $fine_amount;
+        }
+
         return $pinlaties;
         // dd([
         //     'date' => $date,

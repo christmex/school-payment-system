@@ -41,6 +41,7 @@ class PayInvoice extends Component
 
             
             $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
+            
         }
         $this->total = array_sum($this->SubTotal);
         $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
