@@ -49,6 +49,10 @@ class Helper {
         ];
     }
 
+    public static function convertNormalMonthToSchoolYearMonth($id){
+        return array_search(self::Months()[$i], self::SchoolYearMonth());
+    }
+
     
     public static function getAllDueDate($startMonth){
         // Get all SchoolYear
@@ -160,12 +164,6 @@ class Helper {
         }
 
         return $pinlaties;
-        // dd([
-        //     'date' => $date,
-        //     'now' => $now,
-        //     'difference' => $difference,
-        //     'pinlaties' => $pinlaties,
-        // ]);
     }
 
     public static function calculateFineNewStudent(){

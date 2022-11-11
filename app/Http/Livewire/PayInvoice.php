@@ -5,7 +5,9 @@ namespace App\Http\Livewire;
 use App\Helpers\Helper;
 use App\Models\Invoice;
 use Livewire\Component;
+use App\Models\PettyCash;
 use App\Models\PaymentWay;
+use Illuminate\Support\Facades\DB;
 
 class PayInvoice extends Component
 {
@@ -95,7 +97,13 @@ class PayInvoice extends Component
         // dd($this->finalTotal);
         
     }
-    // 1.140.000 +1 200 000 
+    
+    public function CheckValidData(){
+        // if((count($this->student_name) == count($this->student_name)) && (count($this->amount) == count($this->personal_discount)) && (count($this->SubTotal) == count($this->fineAmount))){
+        //     return true;
+        // }
+        return true;
+    } 
 
     public function render()
     {
@@ -104,13 +112,89 @@ class PayInvoice extends Component
 
     public function save(){
         $validate = $this->validate();
-        return 'as';
-
+        // dd($this->entry);
         // check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
-        
 
-        Invoice::whereIn('id', $this->entryIds)
-        ->update(['payment_way_id' => $this->PaymentWay,'description' => $this->description,'paid_date' => Helper::timestampOnDb()]);
+
+
+        // Invoice::whereIn('id', $this->entryIds)->update([
+        //     'personal_discount'
+        //     'payment_way_id' => $this -> PaymentWay,
+        //     'description' => $this -> description,
+        //     'paid_date' => Helper::timestampOnDb()
+        // ]);
+
+        $queryInvoice = [];
+        $queryPettyCash = [];
+
+        if($this::CheckValidData()){
+            for ($i=0; $i < count($this->entry); $i++) { 
+                $queryPettyCash[] = [
+                    'petty_cash_code' => 'asas',
+                    'petty_cash_title'  => 'BAYAR SPP',
+                    'debit' => $this->amount[$i],
+                    'credit' => 0,
+                    'description' => NULL,
+                    'trx_date' => Helper::timestampOnDb(),
+                    'created_by' => backpack_user()->id,
+                    'updated_by' => backpack_user()->id,
+                    'created_at' =>  Helper::timestampOnDb(),
+                    'updated_at' => Helper::timestampOnDb(),
+                ];
+                $queryPettyCash[] = [
+                    'petty_cash_code' => 'asas',
+                    'petty_cash_title'  => 'DISCOUNT SPP',
+                    'debit' => 0,
+                    'credit' => Helper::sanitizeMoneyFormat($this->personal_discount[$i]),
+                    'description' => NULL,
+                    'trx_date' => Helper::timestampOnDb(),
+                    'created_by' => backpack_user()->id,
+                    'updated_by' => backpack_user()->id,
+                    'created_at' =>  Helper::timestampOnDb(),
+                    'updated_at' => Helper::timestampOnDb(),
+                ];
+                $queryInvoice[] = [
+                    'personal_discount' => Helper::sanitizeMoneyFormat($this->personal_discount[$i]),
+                    'fine_discount' => 0,
+                    'payment_way_id' => $this -> PaymentWay,
+                    'description' => $this -> description,
+                    'paid_date' => Helper::timestampOnDb()
+                ];
+                
+                
+            }
+            if($this->fineAmount){
+                $queryPettyCash[] = [
+                    'petty_cash_code' => 'asas',
+                    'petty_cash_title'  => 'BAYAR DENDA',
+                    'debit' => $this->fineAmount,
+                    'credit' => 0,
+                    'description' => NULL,
+                    'trx_date' => Helper::timestampOnDb(),
+                    'created_by' => backpack_user()->id,
+                    'updated_by' => backpack_user()->id,
+                    'created_at' =>  Helper::timestampOnDb(),
+                    'updated_at' => Helper::timestampOnDb(),
+                ];
+                $queryPettyCash[] = [
+                    'petty_cash_code' => 'asas',
+                    'petty_cash_title'  => 'DISCOUNT DENDA',
+                    'debit' => 0,
+                    'credit' => Helper::sanitizeMoneyFormat($this->fineDiscount),
+                    'description' => NULL,
+                    'trx_date' => Helper::timestampOnDb(),
+                    'created_by' => backpack_user()->id,
+                    'updated_by' => backpack_user()->id,
+                    'created_at' =>  Helper::timestampOnDb(),
+                    'updated_at' => Helper::timestampOnDb(),
+                ];
+            }
+            
+        }
+
+        // dd($queryPettyCash);
+        PettyCash::insert($queryPettyCash);
+        // DB::table('petty_cashes')->insert($queryPettyCash);
 
 
     }

@@ -40,7 +40,7 @@
         <thead>
             <tr>
                 <th>Payment Way</th>
-                <th>Description</th>
+                <th>Description (optional)</th>
                 <th>Final Total</th>
             </tr>
         </thead>
