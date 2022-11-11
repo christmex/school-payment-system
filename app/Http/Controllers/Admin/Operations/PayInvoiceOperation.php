@@ -133,7 +133,18 @@ trait PayInvoiceOperation
      */
     public function PreviewInvoice($id)
     {
-        
+        if ( base64_encode(base64_decode($id, true)) === $id){
+            if ( !serialize(unserialize(base64_decode($id))) == base64_decode($id)){
+                \Alert::add('error', 'Something is wrong, wrong payload')->flash();
+                return redirect()->route('invoice.index')->withInput();
+            }
+        } else {
+            \Alert::add('error', 'Something is wrong, wrong payload')->flash();
+            return redirect()->route('invoice.index')->withInput();
+            // return Redirect::to('some-url');
+        }
+
+
         // CRUD::hasAccessOrFail('listInvoice');
         $extract = unserialize(base64_decode($id));
 

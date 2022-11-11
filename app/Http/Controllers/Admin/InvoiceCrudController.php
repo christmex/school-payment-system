@@ -49,6 +49,13 @@ class InvoiceCrudController extends CrudController
         // Set this for reorder the id
         $this->crud->orderBy('id','asc');
 
+        $this->crud->addColumn([
+            'name'      => 'row_number',
+            'type'      => 'row_number',
+            'label'     => '#',
+            'orderable' => false,
+        ])->makeFirstColumn();
+
         CRUD::column('invoice_number');
         CRUD::addColumn([
             "name" => "student_id",
@@ -88,25 +95,27 @@ class InvoiceCrudController extends CrudController
         //     // ],
         //     "priority" => 2
         // ]);
-        CRUD::addColumn([
-            'name'     => 'personal_discount',
-            'label'    => 'Personal Discount',
-            'type'     => 'custom_html',
-            'value'    => function($entry) {
-                return "<input type='number' value='{$entry->personal_discount}' min='0' name='personal_discount[]'>";
+        $this->crud->column('personal_discount')->type('money_format');
+        // CRUD::addColumn([
+        //     'name'     => 'personal_discount',
+        //     'label'    => 'Personal Discount',
+        //     'type'     => 'custom_html',
+        //     'value'    => function($entry) {
+        //         return "<input type='number' value='{$entry->personal_discount}' min='0' name='personal_discount[]'>";
                 
-            } 
-        ]);
+        //     } 
+        // ]);
         CRUD::column('fine_amount')->type('money_format');
-        CRUD::addColumn([
-            'name'     => 'fine_discount',
-            'label'    => 'Fine Discount',
-            'type'     => 'custom_html',
-            'value'    => function($entry) {
-                return "<input type='number' value='{$entry->fine_discount}' min='0' name='fine_discount[]'>";
+        CRUD::column('fine_discount')->type('money_format');
+        // CRUD::addColumn([
+        //     'name'     => 'fine_discount',
+        //     'label'    => 'Fine Discount',
+        //     'type'     => 'custom_html',
+        //     'value'    => function($entry) {
+        //         return "<input type='number' value='{$entry->fine_discount}' min='0' name='fine_discount[]'>";
                 
-            } 
-        ]);
+        //     } 
+        // ]);
 
         // CRUD::column('fine_amount')->type('money_format');
         // CRUD::addColumn([
@@ -138,7 +147,7 @@ class InvoiceCrudController extends CrudController
             'type'     => 'custom_html',
             'value'    => function($entry) {
                 $total = $entry->amount + $entry->fine_amount;
-                return "<span>".$total."</span>";
+                return "<span>".Helper::MoneyFormat($total)."</span>";
 
                 // $total = Helper::moneyFormat($entry->amount + $entry->fine_amount);
                 // return "<input type='text' value='{$total}' name='total[]'>";
