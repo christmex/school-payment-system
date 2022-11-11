@@ -1,10 +1,50 @@
 @if ($crud->hasAccess('listInvoice') && $crud->get('list.bulkActions'))
-  <a href="javascript:void(0)" onclick="bulkCloneEntries(this)" class="btn btn-sm btn-secondary bulk-button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-clone"></i> Pay Invoice</a>
+  <a href="javascript:void(0)" onclick="bulkCloneEntries(this)" class="btn btn-sm btn-secondary bulk-button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-clone"></i> Review Invoice</a>
   
 @endif
 
 @push('after_scripts')
 <script>
+  if (typeof bulkCloneEntries != 'function') {
+    function bulkCloneEntries(button) {
+
+        if (typeof crud.checkedItems === 'undefined' || crud.checkedItems.length == 0)
+        {
+            new Noty({
+            type: "warning",
+            text: "<strong>{{ trans('backpack::crud.bulk_no_entries_selected_title') }}</strong><br>{{ trans('backpack::crud.bulk_no_entries_selected_message') }}"
+          }).show();
+
+          return;
+        }
+
+        var ajax_calls = [];
+        var clone_route = "{{ url($crud->route) }}/pay-invoice";
+
+        // submit an AJAX delete call
+        $.ajax({
+            url: clone_route,
+            type: 'POST',
+            data: { entries: crud.checkedItems},
+            success: function(result) {
+                crud.checkedItems = [];
+                personal_discount = [];
+                crud.table.ajax.reload();
+                window.location.href = result
+            },
+            error: function(result) {
+            // Show an alert with the result
+                new Noty({
+                    type: "danger",
+                    text: "<strong>Review Invoice</strong><br>Cant review the invoice. Please try again."
+                }).show();
+            }
+        });
+    }
+  }
+</script>
+
+<!-- <script>
   if (typeof bulkCloneEntries != 'function') {
     function bulkCloneEntries(button) {
 
@@ -88,5 +128,5 @@
         //       window.location.href = clone_route;
       
   }
-</script>
+</script> -->
 @endpush

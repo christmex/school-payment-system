@@ -60,5 +60,43 @@
             </tr>
         </tbody>
     </table>
-    <button class="btn btn-primary" wire:click="save"><i class="nav-icon la la-money-bill"></i> Pay Now</button>
+    <!-- <button class="btn btn-primary" wire:click="save"><i class="nav-icon la la-money-bill"></i> Pay Now</button> -->
+    <button class="btn btn-primary" onclick="save()"><i class="nav-icon la la-money-bill"></i> Pay Now</button>
 </div>
+
+@push('after_scripts')
+<script>
+  if (typeof save != 'function') {
+    function save() {
+
+        var message = "{{ __('custom.pay_invoice_confirm') }}";
+
+        swal({
+            title: "{{ trans('backpack::base.warning') }}",
+            text: message,
+            icon: "warning",
+            buttons: {
+            cancel: {
+            text: "{{ trans('backpack::crud.cancel') }}",
+            value: null,
+            visible: true,
+            className: "bg-secondary",
+            closeModal: true,
+            },
+            delete: {
+            text: "{{ __('custom.pay_invoice_now') }}",
+            value: true,
+            visible: true,
+            className: "bg-primary",
+            }
+            },
+        }).then((value) => {
+            if (value) {
+                    @this.save()
+                }
+            });
+        }
+    }   
+  
+</script>
+@endpush
