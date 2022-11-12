@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class PayInvoice extends Component
 {
+    public $button = 'Create';
+    public $buttonStatus;
     public $entry;
     public $entryIds;
     public $entryInvoiceNumber;
@@ -37,6 +39,7 @@ class PayInvoice extends Component
         'PaymentWay' => 'required|Integer|min:1',
     ];
 
+    public function LoadingAnimation(){}
 
     public function mount($entry)
     {
@@ -59,7 +62,8 @@ class PayInvoice extends Component
             $this->entryInvoiceNumber[] = $value->invoice_number;
             
             $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
-            
+
+            $this->buttonStatus = $value->paid_date;
         }
         $this->total = array_sum($this->SubTotal);
         $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
@@ -214,7 +218,7 @@ class PayInvoice extends Component
             WHERE ID IN ({$ids})");
         }
         PettyCash::insert($queryPettyCash);
-
+        $this->buttonStatus = true;
 
     }
 

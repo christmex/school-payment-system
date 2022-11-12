@@ -61,8 +61,13 @@
         </tbody>
     </table>
     <!-- <button class="btn btn-primary" wire:click="save"><i class="nav-icon la la-money-bill"></i> Pay Now</button> -->
-    <button class="btn btn-primary" onclick="save('save')"><i class="nav-icon la la-money-bill"></i> Pay Now</button>
-</div>
+    @if($buttonStatus)
+    <button class="btn btn-primary"><i class="nav-icon la la-print"></i> Print</button>
+    @else
+    <button class="btn btn-primary" onclick="save('save')"><i class="nav-icon la la-money-bill"></i> 
+    Pay Now</button>
+    @endif
+
 
 @push('after_scripts')
 <script>
@@ -94,6 +99,7 @@
             if (value) {
                     if(action == 'save'){
                         @this.save()
+                        // Livewire.emit('render')
                         // if(){
                             
                         //     new Noty({

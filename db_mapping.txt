@@ -44,6 +44,13 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - Ada masalah di fine discount klo pemnayaran dilakukan untuk 2 bulan gimana cara taunya kalau bulan ini di kasih discount amountnya berapa karna semua digabung
 - check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
 - Validasi di bagian preview invoice validasi di personal personal_discount dan fine_discount tidak boleh melebihi amount dan fine amount [DONE]
+- buat 1 tabel invoice_group gunannya untuk mengelompokkan invoice yang di bayar bersamaan, ini diperlukan saat kita print bukti
+	in invoice_group 
+	-id	
+	-invoice_group_number 
+
+	in invoice tabel add new column => invoice_group_id
+- Tambah indikator loading nnti di invoice review
 
 
 >Transactional Tabel
