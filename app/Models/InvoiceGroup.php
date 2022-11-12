@@ -14,4 +14,9 @@ class InvoiceGroup extends Model
     protected $fillable = [
         'invoice_group_number'
     ]; 
+
+    public function Invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }
