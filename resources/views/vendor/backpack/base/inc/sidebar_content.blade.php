@@ -7,7 +7,8 @@
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-cog"></i> Petty Cashes</a>
     <ul class="nav-dropdown-items">
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('petty-cash') }}"><i class="nav-icon la la-money"></i> In</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('petty-cash/PettyCashCostum') }}"><i class="nav-icon la la-money"></i> Petty Cashes</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('petty-cash') }}"><i class="nav-icon la la-money"></i> Petty Cashes Master</a></li>
     </ul>
 </li>
 <!-- Setting -->
