@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('invoice_group_id')->nullable()->constrained()->nullOnDelete()->default(NULL);
             $table->string('invoice_number');
             $table->foreignId('student_id')->nullable()->constrained()->nullOnDelete();
             // $table->foreignId('teacher_classroom_id')->nullable()->constrained()->nullOnDelete();

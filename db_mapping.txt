@@ -2,7 +2,7 @@ Fitur
 - Naik kelas
 	- Naik kelas ada kenaikan spp ?
 	-
-- Buat payment
+- Buat Invoice 
 - Fitur Bayar invoice
 - Fitur print pembayaran
 - Fitur export data
@@ -10,10 +10,13 @@ Fitur
 - Fitur cash masuk
 - Fitur siswa bisa login ke platform ini trus cek nomor virtual account dan lihat payment, masukkan va_spp,va_book di tabel transactional tabel
 - Fitur undo , untuk case salah bayar, lihat pertanyaan nomor 3
-- Fitur Bulk buat tagihan spp, jadikan select bulan di invoide multiple
+- Fitur Bulk buat tagihan spp, jadikan select bulan di invoice multiple
 - Fitur bulk pay
 - Fitur buat tombol activate school year
 - Translate semua error
+- naik kelas by class, jadi pilih kelas mana yang mau naik kelas nanti muncul semua anak di kelas itu
+- nake kelas by personal, pilih anak dan naikkan kelas yang sesuai 
+- turun kelas, mungkin ngg sengaja naikin anak, jadi kita bisa turunkan anak di kelas di bawahnya
 
 Pertanyaan
 #Kalo yg langsung bayar 2/3 bulan spp, itu di program gmna ? kan tagihan di va bisa tuh lngsung tagihan banya, nah di program spp gmna ?
@@ -51,6 +54,7 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 
 	in invoice tabel add new column => invoice_group_id
 - Tambah indikator loading nnti di invoice review
+
 
 
 >Transactional Tabel
