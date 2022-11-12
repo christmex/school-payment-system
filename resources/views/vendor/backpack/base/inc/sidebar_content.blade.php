@@ -47,3 +47,7 @@
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('teacher-classroom') }}"><i class="nav-icon la la-question"></i> Teacher classrooms</a></li> -->
 
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice') }}"><i class="nav-icon la la-question"></i> Invoices</a></li> -->
+
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice-group') }}"><i class="nav-icon la la-print"></i> Invoice groups</a></li>
+<!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('student-funding-detail') }}"><i class="nav-icon la la-question"></i> Student funding details</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('student-school-history') }}"><i class="nav-icon la la-question"></i> Student school histories</a></li> -->
