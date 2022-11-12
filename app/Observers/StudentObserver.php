@@ -67,7 +67,7 @@ class StudentObserver
                 'classroom_id' => request()->classroom_id,
                 // 'payment_for_month' => $getNormalMonthAll[$i],
                 'payment_for_month' => $getSchoolYearMonthAll[$i],
-                'amount' => $SppMaster->amount,
+                'amount' => $SppMaster->amount + request()->additional ,
                 // 'fine_amount' => $fineData['fine'],
                 'fine_amount' => Helper::calculatePinalties($getAllDueDate[$i],$schoolyear->fine_amount),
                 'personal_discount' => request()->personal_discount,

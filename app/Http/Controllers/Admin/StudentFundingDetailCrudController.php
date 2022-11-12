@@ -97,6 +97,7 @@ class StudentFundingDetailCrudController extends CrudController
             'attribute' => 'amount', // attribute that is shown to admin
         ]);
         CRUD::field('personal_discount')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
+        CRUD::field('additional')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

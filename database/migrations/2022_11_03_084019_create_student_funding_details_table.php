@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->foreignId('school_year_id')->constrained()->onDelete('cascade');
             $table->foreignId('spp_master_id')->constrained()->onDelete('cascade');
-            $table->Integer('personal_discount');
+            $table->Integer('personal_discount')->default(0);
+            $table->Integer('additional')->default(0);
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();

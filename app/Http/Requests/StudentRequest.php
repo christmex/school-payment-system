@@ -31,6 +31,7 @@ class StudentRequest extends FormRequest
             'classroom_id' => 'required|integer',
             'spp_master_id' => 'required|integer',
             'personal_discount' => 'integer|min:0',
+            'additional' => 'integer|min:0',
             'join_month' => 'required|integer|min:1|max:12',
             'school_year_id' => 'required|integer'
         ];

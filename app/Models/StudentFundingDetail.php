@@ -17,6 +17,7 @@ class StudentFundingDetail extends Model
         'school_year_id',
         'spp_master_id',
         'personal_discount',
+        'additional',
     ];
 
     public function SchoolYear()
