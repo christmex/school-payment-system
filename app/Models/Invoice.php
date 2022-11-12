@@ -14,6 +14,7 @@ class Invoice extends Model
     use \App\Traits\CreatedUpdatedBy;
 
     protected $fillable = [
+        'invoice_group_id',
         'invoice_number',
         'student_id',
         'school_year_id',
@@ -77,6 +78,11 @@ class Invoice extends Model
     public function Student()
     {
         return $this->belongsTo('App\Models\Student', 'student_id','id');
+    }
+
+    public function InvoiceGroup()
+    {
+        return $this->belongsTo('App\Models\InvoiceGroup', 'invoice_group_id','id');
     }
 
     public function getNormalMonth(){

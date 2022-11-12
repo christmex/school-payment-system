@@ -58,7 +58,17 @@ class InvoiceCrudController extends CrudController
             'orderable' => false,
         ])->makeFirstColumn();
 
-        CRUD::column('invoice_number');
+        CRUD::column('invoice_number')->priority(3)->limit(100);
+        CRUD::addColumn([
+            "name" => "invoice_group_id",
+            "label" => "Invoice Grup",
+            "entity" => "InvoiceGroup",
+            "model" => "App\Models\InvoiceGroup",
+            "type" => "select",
+            "attribute" => "invoice_group_number",
+            "priority" => 3,
+            "limit" => 100,
+        ]);
         CRUD::addColumn([
             "name" => "student_id",
             "label" => "Student Name",
@@ -84,6 +94,19 @@ class InvoiceCrudController extends CrudController
             // 'wrapper' => [
             //     'element' => 'span',
             //     'class' => 'badge badge-danger'
+            // 'class' => function ($crud, $column, $entry, $related_key) {
+                    
+            //     $obj = $entry->EmployeeRegisterAtGovService;
+            //     foreach ($obj as $value) {
+            //         // return $value->ServiceCredential->css_class;
+            //         return $value->service_credential_id;
+            //     }
+            //     // if ($column['text'] == 'P') {
+            //     //     return 'badge badge-danger';
+            //     // }
+    
+            //     // return 'badge badge-info';
+            // }
             // ],
             "priority" => 2
         ]);

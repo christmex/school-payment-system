@@ -5,6 +5,8 @@ namespace App\Helpers;
 use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\Setting;
+use App\Models\PettyCash;
+use App\Models\InvoiceGroup;
 
 
 class Helper {
@@ -139,6 +141,58 @@ class Helper {
             $val++;
         }
         return $generateInvoiceNumber;
+
+    }
+
+    public static function generateInvoiceGroupNumber($count){
+        $setting = Setting::where('meta_key','school_short_name')->first();
+        $latest = InvoiceGroup::orderBy('id','desc')->limit(1)->first();
+        $startVal = 10001;
+
+        if(!$latest){
+            $val = $startVal;
+        }else {
+            $val = preg_replace("/[^0-9\.]/", '', explode('/',$latest->invoice_group_number)[0])+1;
+        }
+        $generateNumber = [];
+
+        if($latest){
+            $explodeLatest = last(explode('/',$latest->invoice_group_number));
+            if($explodeLatest != date('Y')){
+                $val = $startVal;
+            }
+        }
+        for ($i=1; $i <= $count; $i++) { 
+            $generateNumber[$i] = 'INVOICE-GROUP'.str_pad($val,4,"0",STR_PAD_LEFT).'/'.$setting->meta_value.'/'.rand(1000000000,99999999).'/'.date('Y');
+            $val++;
+        }
+        return $generateNumber;
+
+    }
+
+    public static function generatePettyCashNumber($count){
+        $setting = Setting::where('meta_key','school_short_name')->first();
+        $latest = PettyCash::orderBy('id','desc')->limit(1)->first();
+        $startVal = 10001;
+
+        if(!$latest){
+            $val = $startVal;
+        }else {
+            $val = preg_replace("/[^0-9\.]/", '', explode('/',$latest->petty_cash_code)[0])+1;
+        }
+        $generateNumber = [];
+
+        if($latest){
+            $explodeLatest = last(explode('/',$latest->petty_cash_code));
+            if($explodeLatest != date('Y')){
+                $val = $startVal;
+            }
+        }
+        for ($i=1; $i <= $count; $i++) { 
+            $generateNumber[$i] = 'PETTY-CASH'.str_pad($val,4,"0",STR_PAD_LEFT).'/'.$setting->meta_value.'/'.rand(1000000000,99999999).'/'.date('Y');
+            $val++;
+        }
+        return $generateNumber;
 
     }
 
