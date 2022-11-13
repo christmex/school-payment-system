@@ -22,12 +22,22 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-body p-3 d-flex align-items-center"><i class="la la-cash-register bg-primary p-3 font-2xl mr-3"></i>
                 <div>
                     <div class="text-value-sm text-primary">{{$crud->sumCreditAndDebitMoneyFormat($filter_start_date,$filter_end_date)}}</div>
                     <div class="text-muted text-uppercase font-weight-bold small">Income By Filter ({{$filter_start_date}} - {{$filter_end_date}})</div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body p-3 d-flex align-items-center"><i class="la la-cash-register bg-primary p-3 font-2xl mr-3"></i>
+                <div>
+                    <div class="text-value-sm text-primary">{{$crud->countTrx($filter_start_date,$filter_end_date)}}</div>
+                    <div class="text-muted text-uppercase font-weight-bold small">Total transaction ({{$filter_start_date}} - {{$filter_end_date}})</div>
                 </div>
                 </div>
             </div>

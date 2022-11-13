@@ -66,6 +66,10 @@ class PettyCash extends Model
         return $this->whereBetween('trx_date',[$date, $enddate])->sum('credit');
     }
 
+    public function countTrx($date = null, $enddate = null){
+        return $this->whereBetween('trx_date',[$date, $enddate])->get()->count();
+    }
+
     public function sumCreditAndDebitMoneyFormat($date = null, $enddate = null){
         // return $this->sumDebit() - $this->sumCredit();
         return Helper::MoneyFormat($this->sumDebit($date, $enddate) - $this->sumCredit($date, $enddate));
