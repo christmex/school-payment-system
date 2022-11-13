@@ -51,23 +51,23 @@ class PettyCash extends Model
         $credit = $this->sum('credit');
         return $debit - $credit;
     }
-
-    public function sumDebit($date = null){
-        if($date){
-            return $this->where('trx_date',$date)->sum('debit');
-        }
-        return $this->sum('debit');
+    
+    public function sumDebit($date = null, $enddate = null){
+        // if($date ){
+        //     return $this->where('trx_date',$date)->sum('debit');
+        // }
+        return $this->whereBetween('trx_date',[$date, $enddate])->sum('debit');
     }
 
-    public function sumCredit($date = null){
-        if($date){
-            return $this->where('trx_date',$date)->sum('credit');
-        }
-        return $this->sum('credit');
+    public function sumCredit($date = null, $enddate = null){
+        // if($date){
+        //     return $this->where('trx_date',$date)->sum('credit');
+        // }
+        return $this->whereBetween('trx_date',[$date, $enddate])->sum('credit');
     }
 
-    public function sumCreditAndDebitMoneyFormat($date = null){
+    public function sumCreditAndDebitMoneyFormat($date = null, $enddate = null){
         // return $this->sumDebit() - $this->sumCredit();
-        return Helper::MoneyFormat($this->sumDebit($date) - $this->sumCredit($date));
+        return Helper::MoneyFormat($this->sumDebit($date, $enddate) - $this->sumCredit($date, $enddate));
     }
 }

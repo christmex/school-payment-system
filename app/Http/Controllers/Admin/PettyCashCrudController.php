@@ -54,54 +54,9 @@ class PettyCashCrudController extends CrudController
         $this->data['crud'] = $this->crud;
         $this->data['title'] = $this->crud->getTitle() ?? mb_ucfirst($this->crud->entity_name_plural);
 
-        // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
         return view('costum.list-petty-cash', $this->data);
     }
 
-
-    // public function search(){
-    //     $this->crud->hasAccessOrFail('list');
-
-    //     $this->crud->applyUnappliedFilters();
-
-    //     $start = (int) request()->input('start');
-    //     $length = (int) request()->input('length');
-    //     $search = request()->input('search');
-
-    //     // if a search term was present
-    //     if ($search && $search['value'] ?? false) {
-    //         // filter the results accordingly
-    //         $this->crud->applySearchTerm($search['value']);
-    //     }
-    //     // start the results according to the datatables pagination
-    //     if ($start) {
-    //         $this->crud->skip($start);
-    //     }
-    //     // limit the number of results according to the datatables pagination
-    //     if ($length) {
-    //         $this->crud->take($length);
-    //     }
-    //     // overwrite any order set in the setup() method with the datatables order
-    //     $this->crud->applyDatatableOrder();
-
-    //     $entries = $this->crud->getEntries();
-
-    //     // if show entry count is disabled we use the "simplePagination" technique to move between pages.
-    //     if ($this->crud->getOperationSetting('showEntryCount')) {
-    //         $totalEntryCount = (int) (request()->get('totalEntryCount') ?: $this->crud->getTotalQueryCount());
-    //         $filteredEntryCount = $this->crud->getFilteredQueryCount() ?? $totalEntryCount;
-    //     } else {
-    //         $totalEntryCount = $length;
-    //         $filteredEntryCount = $entries->count() < $length ? 0 : $length + $start + 1;
-    //     }
-
-    //     // store the totalEntryCount in CrudPanel so that multiple blade files can access it
-    //     $this->crud->setOperationSetting('totalEntryCount', $totalEntryCount);
-    //     $beforeReturn = $this->crud->getEntriesAsJsonForDatatables($entries, $totalEntryCount, $filteredEntryCount, $start);
-    //     $beforeReturn['searchQuery'] = $search['value'];
-    //     // $this->search = $search['value'];
-    //     return $beforeReturn;
-    // }
 
     /**
      * Define what happens when the List operation is loaded.
