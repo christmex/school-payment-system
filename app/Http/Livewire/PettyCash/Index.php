@@ -10,6 +10,7 @@ class Index extends Component
     public $crud;
     public $filter_start_date;
     public $filter_end_date;
+    public $search;
     
     protected $rules = [
         'filter_start_date' => 'date|before_or_equal:filter_end_date',

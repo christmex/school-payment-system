@@ -4,12 +4,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <label for=""><b>Start date</b> @error('filter_start_date') <span class="error">{{ $message }}</span> @enderror</label>
                             <input type="date" wire:model="filter_start_date" id="" class="form-control inline"></div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label for=""><b>End date</b> @error('filter_end_date') <span class="error">{{ $message }}</span> @enderror</label>
                             <input type="date" wire:model="filter_end_date" id="" class="form-control inline">
+                        </div>
+                        <div class="col-4">
+                            <label for=""><b>Search</b> @error('search') <span class="error">{{ $message }}</span> @enderror</label>
+                            <input type="text" wire:model="search" id="" class="form-control inline" placeholder="Ex: Bulan Mei">
                         </div>
                     </div>
                     <!-- <div class="row mt-3">
@@ -26,7 +30,7 @@
             <div class="card">
                 <div class="card-body p-3 d-flex align-items-center"><i class="la la-cash-register bg-primary p-3 font-2xl mr-3"></i>
                 <div>
-                    <div class="text-value-sm text-primary">{{$crud->sumCreditAndDebitMoneyFormat($filter_start_date,$filter_end_date)}}</div>
+                    <div class="text-value-sm text-primary">{{$crud->sumCreditAndDebitMoneyFormat($filter_start_date,$filter_end_date,$search)}}</div>
                     <div class="text-muted text-uppercase font-weight-bold small">Income By Filter ({{$filter_start_date}} - {{$filter_end_date}})</div>
                 </div>
                 </div>
@@ -36,7 +40,7 @@
             <div class="card">
                 <div class="card-body p-3 d-flex align-items-center"><i class="la la-cash-register bg-primary p-3 font-2xl mr-3"></i>
                 <div>
-                    <div class="text-value-sm text-primary">{{$crud->countTrx($filter_start_date,$filter_end_date)}}</div>
+                    <div class="text-value-sm text-primary">{{$crud->countTrx($filter_start_date,$filter_end_date,$search)}}</div>
                     <div class="text-muted text-uppercase font-weight-bold small">Total transaction ({{$filter_start_date}} - {{$filter_end_date}})</div>
                 </div>
                 </div>
@@ -58,7 +62,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach($crud->whereBetween('trx_date',[$filter_start_date, $filter_end_date])->get() as $data)
+                            @foreach($crud->whereBetween('trx_date',[$filter_start_date, $filter_end_date])->where('petty_cash_title', 'like', '%'.$search.'%')->get() as $data)
                                 <tr>
                                     <td>
                                         {!! $data->petty_cash_title !!}
@@ -74,9 +78,9 @@
                         <tfoot>
                             <tr>
                                 <th>Total</th>
-                                <th>{{Helper::MoneyFormat($crud->sumDebit($filter_start_date,$filter_end_date))}}</th>
-                                <th>{{Helper::MoneyFormat($crud->sumCredit($filter_start_date,$filter_end_date))}}</th>
-                                <th>{{$crud->sumCreditAndDebitMoneyFormat($filter_start_date,$filter_end_date)}}</th>
+                                <th>{{Helper::MoneyFormat($crud->sumDebit($filter_start_date,$filter_end_date,$search))}}</th>
+                                <th>{{Helper::MoneyFormat($crud->sumCredit($filter_start_date,$filter_end_date,$search))}}</th>
+                                <th>{{$crud->sumCreditAndDebitMoneyFormat($filter_start_date,$filter_end_date,$search)}}</th>
                             </tr>
                         </tfoot>
                     </table>

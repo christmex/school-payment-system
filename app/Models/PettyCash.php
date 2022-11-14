@@ -53,26 +53,26 @@ class PettyCash extends Model
         return $debit - $credit;
     }
     
-    public function sumDebit($date = null, $enddate = null){
+    public function sumDebit($date = null, $enddate = null, $search = NULL){
         // if($date ){
         //     return $this->where('trx_date',$date)->sum('debit');
         // }
-        return $this->whereBetween('trx_date',[$date, $enddate])->sum('debit');
+        return $this->whereBetween('trx_date',[$date, $enddate])->where('petty_cash_title', 'like', '%'.$search.'%')->sum('debit');
     }
 
-    public function sumCredit($date = null, $enddate = null){
+    public function sumCredit($date = null, $enddate = null, $search = NULL){
         // if($date){
         //     return $this->where('trx_date',$date)->sum('credit');
         // }
-        return $this->whereBetween('trx_date',[$date, $enddate])->sum('credit');
+        return $this->whereBetween('trx_date',[$date, $enddate])->where('petty_cash_title', 'like', '%'.$search.'%')->sum('credit');
     }
 
-    public function countTrx($date = null, $enddate = null){
-        return $this->whereBetween('trx_date',[$date, $enddate])->get()->count();
+    public function countTrx($date = null, $enddate = null, $search = NULL){
+        return $this->whereBetween('trx_date',[$date, $enddate])->where('petty_cash_title', 'like', '%'.$search.'%')->get()->count();
     }
 
-    public function sumCreditAndDebitMoneyFormat($date = null, $enddate = null){
+    public function sumCreditAndDebitMoneyFormat($date = null, $enddate = null, $search = NULL){
         // return $this->sumDebit() - $this->sumCredit();
-        return Helper::MoneyFormat($this->sumDebit($date, $enddate) - $this->sumCredit($date, $enddate));
+        return Helper::MoneyFormat($this->sumDebit($date, $enddate,$search) - $this->sumCredit($date, $enddate,$search));
     }
 }
