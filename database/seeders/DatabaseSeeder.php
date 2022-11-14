@@ -53,6 +53,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\PaymentWay::create([
             'payment_way' => 'EDC BCA',
         ]);
+
+        \App\Models\PaymentWay::create([
+            'payment_way' => 'TUNAI',
+        ]);
         // PAYMENT WAYS
 
         // SCHOOL LEVELS

@@ -40,6 +40,7 @@
         <thead>
             <tr>
                 <th>Payment Way</th>
+                <th>Payment Date</th>
                 <th>Description (optional)</th>
                 <th>Final Total</th>
             </tr>
@@ -55,6 +56,7 @@
                     </select>
                     @error('PaymentWay') <div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                 </td>
+                <td><input type="date" wire:model="PaymentDate" style="width:100%" class="form-control"></td>
                 <td><input type="text" wire:model="description" style="width:100%" class="form-control" placeholder="Description here..."></td>
                 <td><b>{{Helper::MoneyFormat($finalTotal)}}</b></td>
             </tr>

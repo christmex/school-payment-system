@@ -35,12 +35,14 @@ class PayInvoice extends Component
 
     public $ModelPaymentWay;
     public $PaymentWay;
+    public $PaymentDate;
     public $description = NULL;
 
     public $classroom;
 
     protected $rules = [
         'PaymentWay' => 'required|Integer|min:1',
+        'PaymentDate' => 'required|date',
     ];
 
     public function LoadingAnimation(){}
@@ -74,6 +76,7 @@ class PayInvoice extends Component
         $this->total = array_sum($this->SubTotal);
         $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
         $this->fineDiscount = Helper::MoneyFormat($this->fineDiscount);
+        $this->PaymentDate = date('Y-m-d');
     }
     
     public function updatedPersonalDiscount($value, $index){
@@ -236,7 +239,7 @@ class PayInvoice extends Component
                 fine_discount = CASE {$cases_fine_discount} END,
                 payment_way_id = {$this->PaymentWay},
                 description = '{$this->description}',
-                paid_date = '".Helper::timestampOnDb()."'
+                paid_date = '{$this->PaymentDate}'
                 WHERE ID IN ({$ids})");
             }
 
