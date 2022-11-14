@@ -97,18 +97,18 @@ class StudentCrudController extends CrudController
         // CRUD::column('classroom_id');
         CRUD::addColumn([
             "label" => "Classroom",
-            "entity" => "StudentSchoolHistory",
+            "entity" => "StudentSchoolHistory.Classroom",
             "model" => "App\Models\StudentSchoolHistory",
             "type" => "select",
             "attribute" => "classroom_name"
         ]);
-        CRUD::addColumn([
-            "label" => "ass",
-            "entity" => "StudentLevel",
-            // "model" => "App\Models\StudentSchoolHistory",
-            "type" => "select",
-            "attribute" => "id"
-        ]);
+        // CRUD::addColumn([
+        //     "label" => "ass",
+        //     "entity" => "StudentClassroom",
+        //     // "model" => "App\Models\StudentSchoolHistory",
+        //     "type" => "select",
+        //     "attribute" => "id"
+        // ]);
         CRUD::addColumn([
             "label" => "SPP",
             "entity" => "StudentFundingDetail.SppMaster",

@@ -75,9 +75,9 @@ class Student extends Model
     //     return $this->hasMany(StudentSchoolHistory::class, 'student_id', 'id');
     // }
 
-    public function StudentLevel(){
-        return $this->belongsToThrough(SchoolLevel::class, [Classroom::class, StudentSchoolHistory::class]);
-    }
+    // public function StudentClassroom(){
+    //     dd();
+    // }
 
     public function StudentSchoolHistory()
     {

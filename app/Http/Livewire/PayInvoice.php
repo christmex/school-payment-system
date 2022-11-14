@@ -37,6 +37,8 @@ class PayInvoice extends Component
     public $PaymentWay;
     public $description = NULL;
 
+    public $classroom;
+
     protected $rules = [
         'PaymentWay' => 'required|Integer|min:1',
     ];
@@ -51,8 +53,6 @@ class PayInvoice extends Component
         // Invoice
         $this->entry = $entry;
         $this->entryTotal = count($entry);
-
-        
 
         foreach ($entry as $key => $value) {
             $this->student_name[$key] = $value->student->student_name;
@@ -69,6 +69,7 @@ class PayInvoice extends Component
             $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
 
             $this->buttonStatus = $value->paid_date;
+            $this->classroom = $value->student->StudentSchoolHistory->first()->Classroom->classroom_name;
         }
         $this->total = array_sum($this->SubTotal);
         $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
@@ -146,7 +147,7 @@ class PayInvoice extends Component
             for ($i=0; $i < $this->entryTotal; $i++) { 
                 $queryPettyCash[] = [
                     'petty_cash_code' => '',
-                    'petty_cash_title'  => "BAYAR SPP {$this->student_name[$i]} BULAN {$this->payment_month[$i]} KELAS {} TAHUN AJARAN {$activeSchoolYear->school_year_name}",
+                    'petty_cash_title'  => "BAYAR SPP <b>{$this->student_name[$i]}</b> BULAN <b>{$this->payment_month[$i]}</b> KELAS <b>{$this->classroom}</b> TAHUN AJARAN <b>{$activeSchoolYear->school_year_name} </b>",
                     'debit' => $this->amount[$i],
                     'credit' => 0,
                     'description' => NULL,

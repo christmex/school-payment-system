@@ -61,7 +61,7 @@
                             @foreach($crud->whereBetween('trx_date',[$filter_start_date, $filter_end_date])->get() as $data)
                                 <tr>
                                     <td>
-                                        {{$data->petty_cash_title}}
+                                        {!! $data->petty_cash_title !!}
                                     </td>
                                     <td>
                                         {{$data->debitMoneyFormat}}
