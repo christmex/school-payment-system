@@ -14,7 +14,7 @@
             
             <tr>
                 <td>{{ $data }}</td>
-                <td>{{ $payment_month[$key] }}</td>
+                <td>{{ $payment_month[$key] }} @if($paid_status[$key]) <span class='badge badge-success'>PAID</span> @endif</td>
                 <td>{{ Helper::MoneyFormat($amount[$key]) }}</td>
                 <td><input type="text" wire:model="personal_discount.{{ $key }}"  min='0' style="border:none" type-currency="IDR"></td>
                 <td>{{ Helper::MoneyFormat($SubTotal[$key]) }}</td>

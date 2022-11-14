@@ -21,6 +21,7 @@ class PayInvoice extends Component
 
     public $student_name = [];
     public $payment_month = [];
+    public $paid_status = [];
     public $payment_month_id = [];
     public $amount = [];
     public $personal_discount = [];
@@ -55,6 +56,7 @@ class PayInvoice extends Component
             $this->student_name[$key] = $value->student->student_name;
             $this->payment_month[$key] = $value->PaymentForMonthInHumanWay;
             $this->payment_month_id[$key] = $value->payment_for_month;
+            $this->paid_status[$key] = $value->paid_date ;
             $this->amount[$key] = $value->amount;
             $this->personal_discount[$key] = Helper::MoneyFormat($value->personal_discount);
             $this->SubTotal[$key] = $value->SubTotal;
@@ -140,7 +142,7 @@ class PayInvoice extends Component
             for ($i=0; $i < $this->entryTotal; $i++) { 
                 $queryPettyCash[] = [
                     'petty_cash_code' => '',
-                    'petty_cash_title'  => "BAYAR SPP {$this->student_name[$i]} BULAN {$this->payment_month[$i]}",
+                    'petty_cash_title'  => "BAYAR SPP {$this->student_name[$i]} BULAN {$this->payment_month[$i]}KELAS {} TAHUN AJARAN {}",
                     'debit' => $this->amount[$i],
                     'credit' => 0,
                     'description' => NULL,
