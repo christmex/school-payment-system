@@ -54,7 +54,7 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 
 	in invoice tabel add new column => invoice_group_id
 - Tambah indikator loading nnti di invoice review
-
+- hitung tiap tiap jenjang di petty cash
 
 
 >Transactional Tabel
