@@ -138,31 +138,18 @@ class PayInvoice extends Component
         // check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
 
 
+        DB::transaction(function () {
+            $queryInvoice = [];
+            $queryPettyCash = [];
+            $activeSchoolYear = Helper::getActiveSchoolYear('all');
 
-        $queryInvoice = [];
-        $queryPettyCash = [];
-        $activeSchoolYear = Helper::getActiveSchoolYear('all');
-
-        if($this->entryTotal){
-            for ($i=0; $i < $this->entryTotal; $i++) { 
-                $queryPettyCash[] = [
-                    'petty_cash_code' => '',
-                    'petty_cash_title'  => "BAYAR SPP <b>{$this->student_name[$i]}</b> BULAN <b>{$this->payment_month[$i]}</b> KELAS <b>{$this->classroom}</b> TAHUN AJARAN <b>{$activeSchoolYear->school_year_name} </b>",
-                    'debit' => $this->amount[$i],
-                    'credit' => 0,
-                    'description' => NULL,
-                    'trx_date' => Helper::timestampOnDb(),
-                    'created_by' => backpack_user()->id,
-                    'updated_by' => backpack_user()->id,
-                    'created_at' =>  Helper::timestampOnDb(),
-                    'updated_at' => Helper::timestampOnDb(),
-                ];
-                if(Helper::sanitizeMoneyFormat($this->personal_discount[$i])){
+            if($this->entryTotal){
+                for ($i=0; $i < $this->entryTotal; $i++) { 
                     $queryPettyCash[] = [
                         'petty_cash_code' => '',
-                        'petty_cash_title'  => "DISCOUNT SPP {$this->student_name[$i]} BULAN {$this->payment_month[$i]}",
-                        'debit' => 0,
-                        'credit' => Helper::sanitizeMoneyFormat($this->personal_discount[$i]),
+                        'petty_cash_title'  => "BAYAR SPP <b>{$this->student_name[$i]}</b> BULAN <b>{$this->payment_month[$i]}</b> KELAS <b>{$this->classroom}</b> TAHUN AJARAN <b>{$activeSchoolYear->school_year_name} </b>",
+                        'debit' => $this->amount[$i],
+                        'credit' => 0,
                         'description' => NULL,
                         'trx_date' => Helper::timestampOnDb(),
                         'created_by' => backpack_user()->id,
@@ -170,80 +157,92 @@ class PayInvoice extends Component
                         'created_at' =>  Helper::timestampOnDb(),
                         'updated_at' => Helper::timestampOnDb(),
                     ];
+                    if(Helper::sanitizeMoneyFormat($this->personal_discount[$i])){
+                        $queryPettyCash[] = [
+                            'petty_cash_code' => '',
+                            'petty_cash_title'  => "DISCOUNT SPP <b>{$this->student_name[$i]}</b> BULAN <b>{$this->payment_month[$i]}</b> KELAS <b>{$this->classroom}</b> TAHUN AJARAN <b>{$activeSchoolYear->school_year_name} </b>",
+                            'debit' => 0,
+                            'credit' => Helper::sanitizeMoneyFormat($this->personal_discount[$i]),
+                            'description' => NULL,
+                            'trx_date' => Helper::timestampOnDb(),
+                            'created_by' => backpack_user()->id,
+                            'updated_by' => backpack_user()->id,
+                            'created_at' =>  Helper::timestampOnDb(),
+                            'updated_at' => Helper::timestampOnDb(),
+                        ];
+                    }
+
+                    $personal_discount = Helper::sanitizeMoneyFormat($this->personal_discount[$i]);
+                    $cases_personal_discount[] = "WHEN id = {$this->entry[$i]['id']} THEN {$personal_discount}";
+
+                    if(min($this->payment_month_id) == $this->entry[$i]['payment_for_month']){
+                        $fine_discount = Helper::sanitizeMoneyFormat($this->fineDiscount);
+                    }else {
+                        $fine_discount = 0;
+                    }
+
+                    $cases_fine_discount[] = "WHEN id = {$this->entry[$i]['id']} THEN {$fine_discount}";
+                    
+                }
+                // dd();
+                if($this->fineAmount){
+                    $minMonth = Helper::getSchoolYearMonthById(min($this->payment_month_id));
+                    $queryPettyCash[] = [
+                        'petty_cash_code' => '',
+                        'petty_cash_title'  => "BAYAR DENDA <b>{$this->student_name[0]}</b> BULAN <b>{$minMonth}</b> KELAS <b>{$this->classroom}</b> TAHUN AJARAN <b>{$activeSchoolYear->school_year_name}</b>",
+                        'debit' => $this->fineAmount,
+                        'credit' => 0,
+                        'description' => NULL,
+                        'trx_date' => Helper::timestampOnDb(),
+                        'created_by' => backpack_user()->id,
+                        'updated_by' => backpack_user()->id,
+                        'created_at' =>  Helper::timestampOnDb(),
+                        'updated_at' => Helper::timestampOnDb(),
+                    ];
+                    if(Helper::sanitizeMoneyFormat($this->fineDiscount)){
+                        $queryPettyCash[] = [
+                            'petty_cash_code' => '',
+                            'petty_cash_title'  => "DISCOUNT DENDA <b>{$this->student_name[0]}</b> BULAN <b>{$minMonth}</b> KELAS <b>{$this->classroom}</b> TAHUN AJARAN <b>{$activeSchoolYear->school_year_name}</b>",
+                            'debit' => 0,
+                            'credit' => Helper::sanitizeMoneyFormat($this->fineDiscount),
+                            'description' => NULL,
+                            'trx_date' => Helper::timestampOnDb(),
+                            'created_by' => backpack_user()->id,
+                            'updated_by' => backpack_user()->id,
+                            'created_at' =>  Helper::timestampOnDb(),
+                            'updated_at' => Helper::timestampOnDb(),
+                        ];
+                    }
                 }
 
-                $personal_discount = Helper::sanitizeMoneyFormat($this->personal_discount[$i]);
-                $cases_personal_discount[] = "WHEN id = {$this->entry[$i]['id']} THEN {$personal_discount}";
-
-                if(min($this->payment_month_id) == $this->entry[$i]['payment_for_month']){
-                    $fine_discount = Helper::sanitizeMoneyFormat($this->fineDiscount);
-                }else {
-                    $fine_discount = 0;
+                $generatePettyCashNumber = Helper::generatePettyCashNumber(count($queryPettyCash));
+                for ($i=1; $i <= count($generatePettyCashNumber); $i++) { 
+                    $queryPettyCash[$i-1]['petty_cash_code'] = $generatePettyCashNumber[$i];
                 }
-
-                $cases_fine_discount[] = "WHEN id = {$this->entry[$i]['id']} THEN {$fine_discount}";
                 
             }
-            // dd();
-            if($this->fineAmount){
-                $minMonth = Helper::getSchoolYearMonthById(min($this->payment_month_id));
-                $queryPettyCash[] = [
-                    'petty_cash_code' => '',
-                    'petty_cash_title'  => "BAYAR DENDA {$this->student_name[0]} BULAN {$minMonth}",
-                    'debit' => $this->fineAmount,
-                    'credit' => 0,
-                    'description' => NULL,
-                    'trx_date' => Helper::timestampOnDb(),
-                    'created_by' => backpack_user()->id,
-                    'updated_by' => backpack_user()->id,
-                    'created_at' =>  Helper::timestampOnDb(),
-                    'updated_at' => Helper::timestampOnDb(),
-                ];
-                if(Helper::sanitizeMoneyFormat($this->fineDiscount)){
-                    $queryPettyCash[] = [
-                        'petty_cash_code' => '',
-                        'petty_cash_title'  => "DISCOUNT DENDA {$this->student_name[0]} BULAN {$minMonth}",
-                        'debit' => 0,
-                        'credit' => Helper::sanitizeMoneyFormat($this->fineDiscount),
-                        'description' => NULL,
-                        'trx_date' => Helper::timestampOnDb(),
-                        'created_by' => backpack_user()->id,
-                        'updated_by' => backpack_user()->id,
-                        'created_at' =>  Helper::timestampOnDb(),
-                        'updated_at' => Helper::timestampOnDb(),
-                    ];
-                }
-            }
-
-            $generatePettyCashNumber = Helper::generatePettyCashNumber(count($queryPettyCash));
-            // dd($generatePettyCashNumber);
-            // dd($queryPettyCash);
-            for ($i=1; $i <= count($generatePettyCashNumber); $i++) { 
-                $queryPettyCash[$i-1]['petty_cash_code'] = $generatePettyCashNumber[$i];
-            }
-            // dd($queryPettyCash);
             
-        }
-        $InvoiceGroup = InvoiceGroup::create([
-            'invoice_group_number' => Helper::generateInvoiceGroupNumber(1)[1]
-        ]);
-        // dd($InvoiceGroup);
-        $ids = implode(',', $this->entryIds);
-        $cases_personal_discount = implode(' ', $cases_personal_discount);
-        $cases_fine_discount = implode(' ', $cases_fine_discount);
-        if (!empty($ids)) {
-            \DB::update("UPDATE invoices 
-            SET invoice_group_id = {$InvoiceGroup->id}, 
-            personal_discount = CASE {$cases_personal_discount} END,
-            fine_discount = CASE {$cases_fine_discount} END,
-            payment_way_id = {$this->PaymentWay},
-            description = '{$this->description}',
-            paid_date = '".Helper::timestampOnDb()."'
-            WHERE ID IN ({$ids})");
-        }
-        PettyCash::insert($queryPettyCash);
-        $this->buttonStatus = true;
+            $InvoiceGroup = InvoiceGroup::create([
+                'invoice_group_number' => Helper::generateInvoiceGroupNumber(1)[1]
+            ]);
 
+            $ids = implode(',', $this->entryIds);
+            $cases_personal_discount = implode(' ', $cases_personal_discount);
+            $cases_fine_discount = implode(' ', $cases_fine_discount);
+            if (!empty($ids)) {
+                \DB::update("UPDATE invoices 
+                SET invoice_group_id = {$InvoiceGroup->id}, 
+                personal_discount = CASE {$cases_personal_discount} END,
+                fine_discount = CASE {$cases_fine_discount} END,
+                payment_way_id = {$this->PaymentWay},
+                description = '{$this->description}',
+                paid_date = '".Helper::timestampOnDb()."'
+                WHERE ID IN ({$ids})");
+            }
+
+            PettyCash::insert($queryPettyCash);
+            $this->buttonStatus = true;
+        });
     }
 
     public function saveWithRedirectToInvoice(){
