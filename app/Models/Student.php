@@ -12,6 +12,8 @@ class Student extends Model
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use \App\Traits\CreatedUpdatedBy;
+    use \App\Traits\getActiveSchoolYear;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
 
     /**
      * The attributes that are mass assignable.
@@ -29,12 +31,16 @@ class Student extends Model
         // 'school_year_id'
     ];
 
+    // Ccostum var
+    // protected $ActiveSchoolYear;
+
 
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    
     
     // public function getMonthById(){
     //     // dd($this);
@@ -69,14 +75,18 @@ class Student extends Model
     //     return $this->hasMany(StudentSchoolHistory::class, 'student_id', 'id');
     // }
 
+    public function StudentLevel(){
+        return $this->belongsToThrough(SchoolLevel::class, [Classroom::class, StudentSchoolHistory::class]);
+    }
+
     public function StudentSchoolHistory()
     {
-        return $this->hasMany(StudentSchoolHistory::class)->where('school_year_id', Helper::getActiveSchoolYear());
+        return $this->hasMany(StudentSchoolHistory::class)->with('Classroom')->where('school_year_id', $this->ActiveSchoolYear);
     }
 
     public function StudentFundingDetail()
     {
-        return $this->hasMany(StudentFundingDetail::class)->with('SppMaster')->where('school_year_id', Helper::getActiveSchoolYear());
+        return $this->hasMany(StudentFundingDetail::class)->with('SppMaster')->where('school_year_id', $this->ActiveSchoolYear);
     }
 
     public function Invoices()
