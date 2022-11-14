@@ -138,11 +138,12 @@ class PayInvoice extends Component
 
         $queryInvoice = [];
         $queryPettyCash = [];
+        $activeSchoolYear = Helper::getActiveSchoolYear('all');
         if($this->entryTotal){
             for ($i=0; $i < $this->entryTotal; $i++) { 
                 $queryPettyCash[] = [
                     'petty_cash_code' => '',
-                    'petty_cash_title'  => "BAYAR SPP {$this->student_name[$i]} BULAN {$this->payment_month[$i]}KELAS {} TAHUN AJARAN {}",
+                    'petty_cash_title'  => "BAYAR SPP {$this->student_name[$i]} BULAN {$this->payment_month[$i]}KELAS {} TAHUN AJARAN {$activeSchoolYear->school_year_name}",
                     'debit' => $this->amount[$i],
                     'credit' => 0,
                     'description' => NULL,
