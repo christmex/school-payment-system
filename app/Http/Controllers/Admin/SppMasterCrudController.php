@@ -63,6 +63,7 @@ class SppMasterCrudController extends CrudController
 
         CRUD::field('spp_name');
         CRUD::field('amount')->type('number')->attributes(['placeholder' => 0,'min' => 0]);
+        // CRUD::field('amount')->type('text')->attributes(['placeholder' => 0,'min' => 0,'type-currency' => 'IDR']);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
