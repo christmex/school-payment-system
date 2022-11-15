@@ -24,7 +24,7 @@ class StudentCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
-    use \App\Http\Controllers\Admin\Operations\PayInvoiceOperation;
+    // use \App\Http\Controllers\Admin\Operations\PayInvoiceOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -117,6 +117,7 @@ class StudentCrudController extends CrudController
             "attribute" => "AmountMoneyFormat"
         ]);
 
+        $this->crud->enableBulkActions();
         // Bisa pakai ini jga
         // CRUD::addColumn([
         //     'label'  => 'Spp',

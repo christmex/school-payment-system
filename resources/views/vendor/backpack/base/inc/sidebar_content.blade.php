@@ -2,6 +2,8 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
 
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice') }}"><i class="nav-icon la la-cash-register"></i> Invoices</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice-group') }}"><i class="nav-icon la la-print"></i> Invoice groups</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('naik-kelas') }}"><i class="nav-icon la la-sort-amount-up"></i> Naik Kelas</a></li>
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('payment') }}"><i class="nav-icon la la-cash-register"></i> Payments</a></li> -->
 <!-- Petty cash -->
 <li class="nav-item nav-dropdown">
@@ -48,7 +50,5 @@
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('teacher-classroom') }}"><i class="nav-icon la la-question"></i> Teacher classrooms</a></li> -->
 
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice') }}"><i class="nav-icon la la-question"></i> Invoices</a></li> -->
-
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('invoice-group') }}"><i class="nav-icon la la-print"></i> Invoice groups</a></li>
 <!-- <li class="nav-item"><a class="nav-link" href="{{ backpack_url('student-funding-detail') }}"><i class="nav-icon la la-question"></i> Student funding details</a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('student-school-history') }}"><i class="nav-icon la la-question"></i> Student school histories</a></li> -->

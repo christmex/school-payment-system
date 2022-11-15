@@ -32,4 +32,5 @@ Route::group([
     Route::crud('student-funding-detail', 'StudentFundingDetailCrudController');
     Route::crud('student-school-history', 'StudentSchoolHistoryCrudController');
     Route::crud('invoice-group', 'InvoiceGroupCrudController');
+    Route::get('naik-kelas', 'NaikKelasController@index');
 }); // this should be the absolute last line of this file
