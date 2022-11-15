@@ -6,8 +6,8 @@ Fitur
 - Fitur Bayar invoice
 - Fitur print pembayaran
 - Fitur export data
-- Fitur cash keluar
-- Fitur cash masuk
+- Fitur cash keluar [DONE]
+- Fitur cash masuk [DONE]
 - Fitur siswa bisa login ke platform ini trus cek nomor virtual account dan lihat payment, masukkan va_spp,va_book di tabel transactional tabel
 - Fitur undo , untuk case salah bayar, lihat pertanyaan nomor 3
 - Fitur Bulk buat tagihan spp, jadikan select bulan di invoice multiple
