@@ -11,7 +11,8 @@ trait getActiveSchoolYear
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
-
-        $this->ActiveSchoolYear = Helper::getActiveSchoolYear();
+        if(backpack_user()){
+            $this->ActiveSchoolYear = Helper::getActiveSchoolYear();
+        }
     }
 }
