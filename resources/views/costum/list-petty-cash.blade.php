@@ -26,6 +26,18 @@
 @endsection
 
 @section('content')
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        
+        @if ( $crud->buttons()->where('stack', 'top')->count() ||  $crud->exportButtons())
+          <div class="d-print-none {{ $crud->hasAccess('create')?'with-border':'' }}">
+
+            @include('crud::inc.button_stack', ['stack' => 'top'])
+
+          </div>
+        @endif
+      </div>
+    </div>
     <livewire:petty-cash.index :crud="$crud"/> 
 @endsection
 @once

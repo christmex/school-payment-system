@@ -17,6 +17,7 @@ class PettyCashCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -32,21 +33,22 @@ class PettyCashCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/petty-cash');
         CRUD::setEntityNameStrings('petty cash', 'petty cashes');
 
-        
-        // $this->crud->setListView('costum.list-petty-cash');
+        $this->crud->addButton('top', 'create', 'view', 'crud::buttons.create');
     }
 
     protected function setupPettyCashCostumRoutes($segment, $routeName, $controller) {
-        
+
         Route::get($segment.'/PettyCashCostum', [
             'as'        => $routeName.'.PettyCashCostum',
             'uses'      => $controller.'@PettyCashCostum',
             'operation' => 'PettyCashCostum',
         ]);
+
     }
 
     public function PettyCashCostum(){
         $this->crud->hasAccessOrFail('list');
+        // $this->crud->addButton('top', 'create', 'view', 'crud::buttons.create');
         $this->crud->loadDefaultOperationSettingsFromConfig();
         
 
@@ -56,7 +58,6 @@ class PettyCashCrudController extends CrudController
         return view('costum.list-petty-cash', $this->data);
     }
 
-
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -65,6 +66,10 @@ class PettyCashCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        // return view('costum.list-petty-cash');
+        // return redirect('/admin');
+        $this->crud->setListView('costum.list-petty-cash');
+
         CRUD::column('petty_cash_code')->priority(3);
         CRUD::column('petty_cash_title')->priority(2)->limit(100);
         // CRUD::column('petty_cash_type');
@@ -75,6 +80,7 @@ class PettyCashCrudController extends CrudController
         // CRUD::column('user_id');
         CRUD::column('trx_date')->priority(2);
 
+        
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
