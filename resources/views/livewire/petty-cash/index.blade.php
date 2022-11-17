@@ -55,7 +55,7 @@
                     <div class="row mb-3">
                         <div class="col-sm-5">
                             <h4 class="card-title mb-0">Petty Cash</h4>
-                            <div class="small text-muted">November 2022</div>
+                            <div class="small text-muted">BASIC CHRISTIAN SCHOOL</div>
                         </div>
                         <!-- /.col-->
                         <div class="col-sm-7 d-none d-md-block" wire:ignore>

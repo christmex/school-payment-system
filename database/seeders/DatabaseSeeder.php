@@ -170,6 +170,31 @@ class DatabaseSeeder extends Seeder
             'classroom_name' => 'Matthew 2',
             'teacher_id' => 2
         ]);
+        \App\Models\Classroom::create([
+            'school_level_id' => 1,
+            'classroom_name' => 'Matthew 3',
+            'teacher_id' => NULL
+        ]);
+        \App\Models\Classroom::create([
+            'school_level_id' => 1,
+            'classroom_name' => 'Matthew 4',
+            'teacher_id' => NULL
+        ]);
+        \App\Models\Classroom::create([
+            'school_level_id' => 2,
+            'classroom_name' => 'Mark 1',
+            'teacher_id' => NULL
+        ]);
+        \App\Models\Classroom::create([
+            'school_level_id' => 2,
+            'classroom_name' => 'Mark 2',
+            'teacher_id' => NULL
+        ]);
+        \App\Models\Classroom::create([
+            'school_level_id' => 2,
+            'classroom_name' => 'Mark 3',
+            'teacher_id' => NULL
+        ]);
 
         // \App\Models\TeacherClassroom::create([
         //     'classroom_id' => 1,

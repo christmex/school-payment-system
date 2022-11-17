@@ -205,7 +205,12 @@ class Helper {
     }
 
     public static function getActiveSchoolYear($attribute = NULL){
-        $data = \App\Models\SchoolYear::where('is_active', true)->first();
+        if(session('getActiveSchoolYear')){
+            $data = session('getActiveSchoolYear');
+        }else {
+            $data = \App\Models\SchoolYear::where('is_active', true)->first();
+            session(['getActiveSchoolYear' => $data]);
+        }
         if($attribute == 'all'){
             return $data;
         }
@@ -242,8 +247,12 @@ class Helper {
         return $pinlaties;
     }
 
-    public static function calculateFineNewStudent(){
-        $getActiveSchoolYear = self::getActiveSchoolYear('all');
+    public static function calculateFineNewStudent($modelSchoolYear = null){
+        if($modelSchoolYear){
+            $getActiveSchoolYear = $modelSchoolYear;
+        }else {
+            $getActiveSchoolYear = self::getActiveSchoolYear('all');
+        }
         $thisMonthFine = new Carbon(date('Y-m-'.$getActiveSchoolYear->date_of_fine));
         $now = Carbon::now();
         $fine = 0;
@@ -298,6 +307,13 @@ class Helper {
 
     public static function sanitizeMoneyFormat($value){
         return preg_replace("/[^0-9]/", "", $value);
+    }
+
+    public static function in_array_r($array, $key, $val) {
+        foreach ($array as $item)
+            if (isset($item[$key]) && $item[$key] == $val)
+                return true;
+        return false;
     }
 
 }

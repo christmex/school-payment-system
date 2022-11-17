@@ -156,7 +156,7 @@ class StudentCrudController extends CrudController
         //     "attribute" => "school_year_name"
         // ]);
         // $this->crud->enableBulkActions();
-        $this->crud->removeButton('delete');
+        // $this->crud->removeButton('delete');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
