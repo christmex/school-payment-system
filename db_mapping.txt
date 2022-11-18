@@ -59,7 +59,9 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - pergantian tahun ajaran tidak bisa dilakukan sebelum tahun ajaran dimulai, jikadipindah sebelum tahun ajaran dimulai gagalkan
 
 
-
+#NEXT
+- FITUR PRINT DI INVOICE DAN PETTY CASH
+- FITUR KIRIm NOTIFIKASI DISPACT BROWSER WITH LIVEWIRE 
 
 
 

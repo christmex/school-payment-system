@@ -122,22 +122,22 @@ class DatabaseSeeder extends Seeder
             'fine_amount' => 5000,
             'is_active' => 1
         ]);
-        \App\Models\SchoolYear::create([
-            'school_year_name' => '2023/2024',
-            'school_year_start' => 2023,
-            'school_year_end' => 2024,
-            'date_of_fine' => 20,
-            'fine_amount' => 5000,
-            'is_active' => 0
-        ]);
-        \App\Models\SchoolYear::create([
-            'school_year_name' => '2024/2025',
-            'school_year_start' => 2024,
-            'school_year_end' => 2025,
-            'date_of_fine' => 20,
-            'fine_amount' => 5000,
-            'is_active' => 0
-        ]);
+        // \App\Models\SchoolYear::create([
+        //     'school_year_name' => '2023/2024',
+        //     'school_year_start' => 2023,
+        //     'school_year_end' => 2024,
+        //     'date_of_fine' => 20,
+        //     'fine_amount' => 5000,
+        //     'is_active' => 0
+        // ]);
+        // \App\Models\SchoolYear::create([
+        //     'school_year_name' => '2024/2025',
+        //     'school_year_start' => 2024,
+        //     'school_year_end' => 2025,
+        //     'date_of_fine' => 20,
+        //     'fine_amount' => 5000,
+        //     'is_active' => 0
+        // ]);
         // SCHOOL YEARS
 
         // SPP MASTERS

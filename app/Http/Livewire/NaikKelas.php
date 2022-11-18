@@ -41,21 +41,39 @@ class NaikKelas extends Component
  
 
     public function mount(){
-        $this->Query_SchoolYear = SchoolYear::where('is_active', true)->first();
-
+        
+        // $this->redirect('/school-year');
+        //     $this->redirectCustom($this->SchoolYearModel);
+        // $this->Query_SchoolYear = SchoolYear::where('is_active', true)->first();
+        $Query_SchoolYear = SchoolYear::all();
         $this->SppMasterModel = SppMaster::all();
         $this->TeacherModel = Teacher::all();
-        $this->SchoolYearModel =  SchoolYear::where('school_year_start','=',$this->Query_SchoolYear->school_year_start + 1)->first();
         $this->ClassroomModel = Classroom::all();
+        $this->Query_SchoolYear = $Query_SchoolYear->where('is_active', true)->first();
 
-        $this->Form_SchoolYear =  $this->Query_SchoolYear->school_year_name;
-        $this->Form_NewSchoolYear = $this->SchoolYearModel->school_year_name;
+        $this->SchoolYearModel =  $Query_SchoolYear->where('school_year_start','=',$this->Query_SchoolYear->school_year_start + 1)->first();
+        // if SchoolYearModel not found then redirect to create new school year
+        if($this->SchoolYearModel){
+            $this->Form_SchoolYear =  $this->Query_SchoolYear->school_year_name;
+            $this->Form_NewSchoolYear = $this->SchoolYearModel->school_year_name;
+    
+            $this->Form_SchoolYear_id =  $this->Query_SchoolYear->id;
+            $this->Form_NewSchoolYear_id = $this->SchoolYearModel->id;
+        }
+        
+        
+    }
 
-        $this->Form_SchoolYear_id =  $this->Query_SchoolYear->id;
-        $this->Form_NewSchoolYear_id = $this->SchoolYearModel->id;
+    public function redirectCustom(){
+        // show alert first then redirect
+        \Alert::add('warning', 'Silahkan buat tahun ajaran baru '.($this->Query_SchoolYear->school_year_start + 1).'/'.$this->Query_SchoolYear->school_year_start + 2)->flash();
+        return redirect()->to(route('school-year.index'));
     }
 
     public function updatedFormPreviousClassroom(){
+        if(!$this->Form_SchoolYear){
+            $this->redirectCustom();
+        }
         if($this->Form_PreviousClassroom){
             $this->Checkbox_StudenId = [];
             $this->StudentModel = StudentSchoolHistory::with('student')->where('classroom_id',$this->Form_PreviousClassroom)->where('school_year_id',$this->Query_SchoolYear->id)->get();
@@ -176,6 +194,8 @@ class NaikKelas extends Component
 
 
             // Send notify dispact to the browser with livewire 
+            \Alert::add('success', 'Data berhasil tersimpan')->flash();
+            return redirect()->to(route('naik-kelas.index'));
         }
 
         
