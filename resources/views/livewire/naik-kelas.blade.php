@@ -13,7 +13,7 @@
 
                 <div class="form-group required">
                     <label for="Form_PreviousClassroom">Previous Classroom</label>
-                    <select wire:model="Form_PreviousClassroom" id="Form_PreviousClassroom" class="form-control  @error('Form_PreviousClassroom') form-control is-invalid @enderror">
+                    <select wire:model="Form_PreviousClassroom" id="Form_PreviousClassroom" class="form-control  @error('Form_PreviousClassroom')is-invalid @enderror">
                         <option value="">-</option>
                         @foreach($ClassroomModel as $data)
                             <option value="{{$data->id}}">{{$data->classroom_name}}</option>
@@ -46,7 +46,7 @@
             <div class="col-lg-6"> <!-- uncomment this if you want to use 2 column and set the col-lg-12 to col-lg-6  -->
                 <div class="form-group required">
                     <label for="Form_AfterClassroom">After Classroom</label>
-                    <select wire:model="Form_AfterClassroom" id="Form_AfterClassroom" class="form-control @error('Form_AfterClassroom') form-control is-invalid @enderror">
+                    <select wire:model="Form_AfterClassroom" id="Form_AfterClassroom" class="form-control @error('Form_AfterClassroom')is-invalid @enderror">
                         <option value="">-</option>
                         @foreach($ClassroomModel as $data)
                             <option value="{{$data->id}}">{{$data->classroom_name}}</option>

@@ -49,6 +49,7 @@ class InvoiceCrudController extends CrudController
         // $this->crud->addClause('where', 'school_year_id', '=', Helper::getActiveSchoolYear());
         // $this->crud->addClause('where', 'paid_date', '=', NULL);
         // Set this for reorder the id
+        $this->crud->setListView('costum.all-student-invoices');
         $this->crud->orderBy('id','asc');
 
         $this->crud->addColumn([
