@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Helpers\Helper;
 use App\Models\Invoice;
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\PettyCash;
 use App\Models\PaymentWay;
 use App\Models\InvoiceGroup;
 use Illuminate\Support\Facades\DB;
+use App\Models\StudentSchoolHistory;
 
 class PayInvoice extends Component
 {
@@ -20,6 +22,7 @@ class PayInvoice extends Component
     public $entryTotal;
 
     public $student_name = [];
+    public $student_ids = [];
     public $payment_month = [];
     public $paid_status = [];
     public $payment_month_id = [];
@@ -49,6 +52,7 @@ class PayInvoice extends Component
 
     public function mount($entry)
     {
+
         //Payment Way Model 
         $this->ModelPaymentWay = PaymentWay::all();
 
@@ -58,6 +62,7 @@ class PayInvoice extends Component
 
         foreach ($entry as $key => $value) {
             $this->student_name[$key] = $value->student->student_name;
+            $this->student_ids[$key] = $value->student->id;
             $this->payment_month[$key] = $value->PaymentForMonthInHumanWay;
             $this->payment_month_id[$key] = $value->payment_for_month;
             $this->paid_status[$key] = $value->paid_date ;
@@ -145,7 +150,9 @@ class PayInvoice extends Component
             $queryInvoice = [];
             $queryPettyCash = [];
             $activeSchoolYear = Helper::getActiveSchoolYear('all');
-
+            // $as = StudentSchoolHistory::with('SchoolLevel')->whereIn('student_id',[1,2])->where('school_year_id',1)->get();
+            $getSchoolLevel = StudentSchoolHistory::with('SchoolLevel')->whereIn('student_id',$this->student_ids)->where('school_year_id',$activeSchoolYear->id)->first()->SchoolLevel->id;
+    
             if($this->entryTotal){
                 for ($i=0; $i < $this->entryTotal; $i++) { 
                     $queryPettyCash[] = [
@@ -154,6 +161,8 @@ class PayInvoice extends Component
                         'debit' => $this->amount[$i],
                         'credit' => 0,
                         'description' => NULL,
+                        'school_level_id' => $getSchoolLevel,
+                        'payment_way_id' => $this->PaymentWay,
                         'trx_date' => Helper::timestampOnDb(),
                         'created_by' => backpack_user()->id,
                         'updated_by' => backpack_user()->id,
@@ -167,6 +176,8 @@ class PayInvoice extends Component
                             'debit' => 0,
                             'credit' => Helper::sanitizeMoneyFormat($this->personal_discount[$i]),
                             'description' => NULL,
+                            'school_level_id' => $getSchoolLevel,
+                            'payment_way_id' => $this->PaymentWay,
                             'trx_date' => Helper::timestampOnDb(),
                             'created_by' => backpack_user()->id,
                             'updated_by' => backpack_user()->id,
@@ -196,6 +207,8 @@ class PayInvoice extends Component
                         'debit' => $this->fineAmount,
                         'credit' => 0,
                         'description' => NULL,
+                        'school_level_id' => $getSchoolLevel,
+                        'payment_way_id' => $this->PaymentWay,
                         'trx_date' => Helper::timestampOnDb(),
                         'created_by' => backpack_user()->id,
                         'updated_by' => backpack_user()->id,
@@ -209,6 +222,8 @@ class PayInvoice extends Component
                             'debit' => 0,
                             'credit' => Helper::sanitizeMoneyFormat($this->fineDiscount),
                             'description' => NULL,
+                            'school_level_id' => $getSchoolLevel,
+                            'payment_way_id' => $this->PaymentWay,
                             'trx_date' => Helper::timestampOnDb(),
                             'created_by' => backpack_user()->id,
                             'updated_by' => backpack_user()->id,

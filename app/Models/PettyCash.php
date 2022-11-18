@@ -25,6 +25,7 @@ class PettyCash extends Model
         'credit',
         'description',
         'school_level_id',
+        'payment_way_id',
         // 'student_id',
         // 'user_id',
         'trx_date'

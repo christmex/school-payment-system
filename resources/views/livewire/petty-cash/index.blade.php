@@ -12,7 +12,7 @@
                             <input type="date" wire:model="filter_end_date" id="" class="form-control inline">
                         </div>
                         <div class="col-4">
-                            <label for=""><b>Search</b> @error('search') <span class="error">{{ $message }}</span> @enderror</label>
+                            <label for=""><b>Search in filter</b> @error('search') <span class="error">{{ $message }}</span> @enderror</label>
                             <input type="text" wire:model="search" id="" class="form-control inline" placeholder="Ex: Bulan Mei">
                         </div>
                     </div>

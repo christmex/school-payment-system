@@ -21,7 +21,8 @@ return new class extends Migration
             $table->Integer('debit')->default(0);
             $table->Integer('credit')->default(0);
             $table->longText('description')->nullable();
-            $table->foreignId('school_level_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('school_level_id')->nullable()->constrained()->nullOnDelete()->default(NULL);
+            $table->foreignId('payment_way_id')->nullable()->constrained()->nullOnDelete()->default(NULL);
             // $table->foreignId('student_id')->nullable()->constrained()->nullOnDelete();
             // $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->date('trx_date');

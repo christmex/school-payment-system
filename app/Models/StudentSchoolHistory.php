@@ -10,6 +10,7 @@ class StudentSchoolHistory extends Model
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
     use \App\Traits\CreatedUpdatedBy;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
 
     protected $fillable = [
         'student_id',
@@ -31,6 +32,11 @@ class StudentSchoolHistory extends Model
     public function Classroom()
     {
         return $this->belongsTo('App\Models\Classroom', 'classroom_id','id');
+    }
+
+    public function SchoolLevel()
+    {
+        return $this->belongsToThrough(SchoolLevel::class, Classroom::class);
     }
 
 }
