@@ -2,13 +2,25 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                <div class="card-header">
+                    Report
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-info"><i class="la la-print"></i> Print Report From Filter Date</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            <label for=""><b>Start date</b> @error('filter_start_date') <span class="error">{{ $message }}</span> @enderror</label>
+                            <label for=""><b>Filter start date</b> @error('filter_start_date') <span class="error">{{ $message }}</span> @enderror</label>
                             <input type="date" wire:model="filter_start_date" id="" class="form-control inline"></div>
                         <div class="col-4">
-                            <label for=""><b>End date</b> @error('filter_end_date') <span class="error">{{ $message }}</span> @enderror</label>
+                            <label for=""><b>Filter snd date</b> @error('filter_end_date') <span class="error">{{ $message }}</span> @enderror</label>
                             <input type="date" wire:model="filter_end_date" id="" class="form-control inline">
                         </div>
                         <div class="col-4">
@@ -25,6 +37,7 @@
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-lg-6">
             <div class="card">
