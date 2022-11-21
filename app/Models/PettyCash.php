@@ -76,4 +76,15 @@ class PettyCash extends Model
         // return $this->sumDebit() - $this->sumCredit();
         return Helper::MoneyFormat($this->sumDebit($date, $enddate,$search) - $this->sumCredit($date, $enddate,$search));
     }
+
+    
+    public function SchoolLevel()
+    {
+        return $this->belongsTo('App\Models\SchoolLevel', 'school_level_id','id');
+    }
+    
+    public function PaymentWay()
+    {
+        return $this->belongsTo('App\Models\PaymentWay', 'payment_way_id','id');
+    }
 }

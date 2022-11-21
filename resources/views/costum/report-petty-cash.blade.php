@@ -3,38 +3,72 @@
 <head>
     @include(backpack_view('inc.head'))
 </head>
-<body class="app flex-row align-items-center">
+<!-- <body class="app flex-row align-items-center"> -->
+<body class="app">
 
 
   <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-lg-12">
             <table class="table table-responsive-sm table-bordered table-striped table-hover table-sm">
                 <thead>
-                <tr>
-                    <th colspan="4">as</th>
-                </tr>
-                <!-- <tr>
-                    <th>as</th>
-                    <th>as</th>
-                    <th>as</th>
-                    <th>as</th>
-                </tr> -->
+                    <tr>
+                        <th>TITLE | REPORT DATE {{$currentDate}}</th>
+                        <th>PAYMENT WAY</th>
+                        <th>SCHOOL LEVEL</th>
+                        <th>DEBIT</th>
+                   </tr>
                 </thead>
                 <tbody>
-                   <tr>
-                        <td>VA</td>
-                        <td>asdasd</td>
-                        <td>asdasd</td>
-                        <td>asdasd</td>
-                   </tr>
+                    @php 
+                        $sumDebit = 0;
+                        $linePaymentWay = NULL;
+                        $subTotal = 0;
+                    @endphp 
+                    @foreach($PettyCash as $data)
+
+                        @if($linePaymentWay == NULL)
+                            @php 
+                                $linePaymentWay = $data->payment_way;
+                            @endphp 
+                        @endif
+
+                        @if($linePaymentWay != $data->payment_way)
+                            <tr>
+                                <td colspan=3>Subtotal</td>
+                                <td>{{Helper::MoneyFormat($subTotal)}}</td>
+                                @php 
+                                    $subTotal = 0;
+                                    $subTotal += $data->debit;
+                                    $linePaymentWay = $data->payment_way;
+                                @endphp 
+                            </tr>
+                        @else 
+                            @php 
+                                $subTotal += $data->debit;
+                            @endphp 
+                        @endif 
+                        <tr>
+                            <td>{!! $data->petty_cash_title !!}</td>
+                            <td>{{$data->payment_way}}</td>
+                            <td>{{$data->school_level}}</td>
+                            <td>{{Helper::MoneyFormat($data->debit)}}</td>
+                        </tr>
+
+                        @if($loop->last)
+                        <tr>
+                                <td colspan=3>Subtotal</td>
+                                <td>{{Helper::MoneyFormat($subTotal)}}</td>
+                            </tr>
+                        @endif
+
+                        @php $sumDebit+=$data->debit; @endphp 
+                    @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>as</th>
-                        <th>as</th>
-                        <th>as</th>
-                        <th>as</th>
+                        <th colspan=3>TOTAL KESELURUHAN</th>
+                        <th>{{Helper::MoneyFormat($sumDebit)}}</th>
                     </tr>
                 </tfoot>
             </table>
