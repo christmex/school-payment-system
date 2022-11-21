@@ -35,6 +35,8 @@ class PayInvoice extends Component
     public $fineDiscount = 0;
     public $finalTotal = 0;
 
+    public $print_id;
+
 
     public $ModelPaymentWay;
     public $PaymentWay;
@@ -244,6 +246,8 @@ class PayInvoice extends Component
                 'invoice_group_number' => Helper::generateInvoiceGroupNumber(1)[1]
             ]);
 
+            
+
             $ids = implode(',', $this->entryIds);
             $cases_personal_discount = implode(' ', $cases_personal_discount);
             $cases_fine_discount = implode(' ', $cases_fine_discount);
@@ -260,6 +264,7 @@ class PayInvoice extends Component
 
             PettyCash::insert($queryPettyCash);
             $this->buttonStatus = true;
+            $this->print_id = $InvoiceGroup->id;
         });
     }
 

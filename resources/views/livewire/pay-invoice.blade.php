@@ -63,8 +63,8 @@
         </tbody>
     </table>
     <!-- <button class="btn btn-primary" wire:click="save"><i class="nav-icon la la-money-bill"></i> Pay Now</button> -->
-    @if($buttonStatus)
-    <button class="btn btn-primary"><i class="nav-icon la la-print"></i> Print</button>
+    @if($buttonStatus && $print_id)
+        <a class="btn btn-primary" href="{{backpack_url('report/invoice/'.$print_id)}}" target="_blank"><i class="nav-icon la la-print"></i> Print</a>
     @else
     <button class="btn btn-primary" onclick="save('save')"><i class="nav-icon la la-money-bill"></i> 
     Pay Now</button>

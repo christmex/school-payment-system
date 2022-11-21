@@ -83,7 +83,7 @@
                                             @endif 
                                         </td>
                                         <td>
-                                            @if($data->paid_date != NULL)    <a href="#" class="btn btn-success btn-small"><i class="la la-print"></i> Print</a> @endif 
+                                            @if($data->paid_date != NULL)    <a href="{{backpack_url('report/invoice/'.$data->invoice_group_id)}}" class="btn btn-success btn-small" target="_blank"><i class="la la-print"></i> Print</a> @endif 
                                         </td>
                                     </tr>
                                 @endforeach

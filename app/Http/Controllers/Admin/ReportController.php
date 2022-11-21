@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\PettyCash;
+use App\Models\InvoiceGroup;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
 {
+
+    public $SubTotal = [];
+    public $total = 0;
+    public $fineAmount = 0;
+    public $fineDiscount = 0;
+    public $finalTotal = 0;
 
     public function report_petty_cash_index(){
         return view('costum.report-petty-cash-index');
@@ -33,6 +40,21 @@ class ReportController extends Controller
     
 
     public function report_invoice(Request $request){
+        $InvoiceGroup = InvoiceGroup::with('Invoices')->where('id',$request->id)->first();
+        // dd($InvoiceGroup->Invoices);
 
+        foreach ($InvoiceGroup->Invoices as $key => $value) {
+            $this->SubTotal[$key] = $value->SubTotal;
+            $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
+            $this->fineDiscount = $value->fine_discount >= $this->fineDiscount ? $value->fine_discount : $this->fineDiscount;
+        }
+
+        $total = array_sum($this->SubTotal);
+        $fineDiscount = $this->fineDiscount;
+        $fineAmount = $this->fineAmount;
+        $finalTotal = $total + ($this->fineAmount - $this->fineDiscount);
+
+
+        return view('costum.report-invoice',compact('InvoiceGroup','total','finalTotal','fineDiscount','fineAmount'));
     }
 }
