@@ -53,17 +53,20 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 	-invoice_group_number 
 
 	in invoice tabel add new column => invoice_group_id
-- Tambah indikator loading nnti di invoice review
+- Tambah indikator loading
 - hitung tiap tiap jenjang di petty cash
 - kasih notif abis pay invoice, gunakan dispach browser di livewire untuk kirim notifikasi, kemudian, di javascript  kita siapkan notfy by backpackforlaravel untuk di trigger
 - pergantian tahun ajaran tidak bisa dilakukan sebelum tahun ajaran dimulai, jikadipindah sebelum tahun ajaran dimulai gagalkan
 - Pas filter nama di bagian invoice harus menggunakan
-- tidak boleh bayar invoice jika masih ada tunggakan
+- tidak boleh bayar invoice jika masih ada tunggakan, harus bayar tagihan paling  bawahdulu baru bisa bayar tagihan selanjutnyua
 - saat filter nama di bagian invoice jika nulis nama tidak lengkap akan ada error jadi coba di filter lagi
+- buat tour js di web biar kasih tutorial sma user
 
 #NEXT
 - FITUR PRINT DI INVOICE DAN PETTY CASH
 - FITUR KIRIm NOTIFIKASI DISPACT BROWSER WITH LIVEWIRE 
+- FITUR SISWA YANG SUDAH BAYAR DAN BELUM BAYAR INVOICE BULAN INI 
+- FITUR SISWA YANG NUNGGAK
 
 
 

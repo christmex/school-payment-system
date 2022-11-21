@@ -3,24 +3,39 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <form wire:submit.prevent="filter">
                     <div class="row">
                         <div class="col-12">
-                            <label for="students"><b>Student Name</b></label>
-                            <input list="students" id="student" wire:model="studentForm" class="form-control inline @error('studentForm')is-invalid @enderror" placeholder="Ex: John Week">
+                            <label for="students"><b>Nama Siswa</b></label>
+                            <input type="text" id="student" wire:model="studentForm" class="form-control inline @error('studentForm')is-invalid @enderror" placeholder="Contoh: John Week" autocomplete="off">
                             @error('studentForm') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
-                            <datalist id="students">
+                            <!-- <input list="students" id="student" wire:model="studentForm" class="form-control inline @error('studentForm')is-invalid @enderror" placeholder="Ex: John Week"> -->
+                            <!-- <datalist id="students">
                                 @foreach($studentModel as $data)
                                     <option value="{{$data->student_name}}">
                                 @endforeach
-                            </datalist>
+                            </datalist> -->
+                            <div class="mt-3">
+                                @if($ListTheStudents)
+                                    <span>Mungkin maksud anda :</span>
+                                    @foreach($ListTheStudents as $data)
+                                        @if($loop->last)
+                                        <a href="javascript:;" wire:click="SetstudentForm('{{$data->student_name}}')" class="text-underline-hover">{{$data->student_name}}</a>
+                                        @else
+                                        <a href="javascript:;" wire:click="SetstudentForm('{{$data->student_name}}')" class="text-underline-hover">{{$data->student_name}},</a>
+                                        @endif
+                                    @endforeach
+                                @endif 
+                            </div>
 
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-12">
-                            <button class="btn btn-primary btn-block" wire:click="filter">Filter</button>
+                            <button type="submit" class="btn btn-primary btn-block" wire:click="filter">Filter</button>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -14,6 +14,8 @@ class Index extends Component
     public $FilterMonth_;
     public $Checkbox_MonthId = [];
 
+    public $ListTheStudents;
+
     protected $rules = [
         'studentForm' => 'required|string',
     ];
@@ -53,14 +55,40 @@ class Index extends Component
         return view('livewire.invoice.index');
     }
 
+    public function checkStudentExist(){
+        $check = Student::with('Invoices')->where('student_name','like','%'.$this->studentForm.'%')->get();
+        if($check->count() == 1){
+            $this->studentForm = $check->first()->student_name;
+            $this->ListTheStudents = NULL;
+            return true;
+        }elseif($check->count() > 1){
+            $this->ListTheStudents = $check;
+            return false;
+        }else {
+            $this->addError('studentForm', 'Siswa tidak ditemukan');
+            $this->ListTheStudents = NULL;
+            return false;
+        }
+    }
+
+    public function SetstudentForm($student){
+        $this->studentForm = $student;
+        $this->ListTheStudents = NULL;
+        $this->filter();
+
+    }
+
     public function filter(){
         $this->validate();
-        if($this->FilterMonth_){
-            $this->FilterMonth($this->FilterMonth_);
-        }else {
-            // $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('payment_for_month',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
 
-            $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+        if($this->checkStudentExist()){
+            if($this->FilterMonth_){
+                $this->FilterMonth($this->FilterMonth_);
+            }else {
+                // $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('payment_for_month',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+    
+                $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+            }
         }
     }
 
