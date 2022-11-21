@@ -33,5 +33,7 @@ Route::group([
     Route::crud('student-school-history', 'StudentSchoolHistoryCrudController');
     Route::crud('invoice-group', 'InvoiceGroupCrudController');
     Route::get('naik-kelas', 'NaikKelasController@index')->name('naik-kelas.index');
-    Route::get('report-petty-cash/{date}', 'PettyCashReportController@index')->name('petty-cash.report');
+    Route::get('report/petty-cash/', 'ReportController@report_petty_cash_index')->name('report.petty-cash-index');
+    Route::post('report/petty-cash/print', 'ReportController@report_petty_cash')->name('report.petty-cash');
+    Route::get('report/invoice/{id}', 'ReportController@report_invoice')->name('report.invoice');
 }); // this should be the absolute last line of this file
