@@ -4,5 +4,7 @@ return [
 	'pay_invoice_confirm' => 'Apakah kamu yakin ingin membayar tagihan ini?',
 	'fine_amount' => '',
 	'pay_invoice_now' => 'Bayar Tagihan Sekarang',
-
+	'PaymentWay' => [
+		'payment_way' => 'Cara pembayaran'
+	],
 ];
