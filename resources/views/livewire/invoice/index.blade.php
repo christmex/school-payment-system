@@ -9,12 +9,7 @@
                             <label for="students"><b>Nama Siswa</b></label>
                             <input type="text" id="student" wire:model="studentForm" class="form-control inline @error('studentForm')is-invalid @enderror" placeholder="Contoh: John Week" autocomplete="off">
                             @error('studentForm') <span class="invalid-feedback d-block">{{ $message }}</span> @enderror
-                            <!-- <input list="students" id="student" wire:model="studentForm" class="form-control inline @error('studentForm')is-invalid @enderror" placeholder="Ex: John Week"> -->
-                            <!-- <datalist id="students">
-                                @foreach($studentModel as $data)
-                                    <option value="{{$data->student_name}}">
-                                @endforeach
-                            </datalist> -->
+
                             <div class="mt-3">
                                 @if($ListTheStudents)
                                     <span>Mungkin maksud anda :</span>
@@ -80,33 +75,36 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if($studentInvoiceModel && (count($studentInvoiceModel)))
-                                @foreach($studentInvoiceModel as $data)
-                                    <tr>
-                                        <td>
-                                        @if($data->paid_date == NULL)    
-                                            <input type="checkbox" wire:model="Checkbox_MonthId" value="{{$data->id}}"> {{$loop->iteration}}
-                                        @endif 
-                                        </td>
-                                        <td>{{$studentForm}}</td>
-                                        <td>
-                                            {{$data->getNormalMonth()}}
-                                            @if($data->paid_date != NULL)
-                                                <span class="badge badge-success">PAID</span>
-                                            @else 
-                                                <span class="badge badge-danger">UNPAID</span>
+                            @if(!empty($studentInvoiceModel))
+                                @if($studentInvoiceModel && (count($studentInvoiceModel)))
+                                    @foreach($studentInvoiceModel as $data)
+                                        <tr>
+                                            <td>
+                                            @if($data->paid_date == NULL)    
+                                                <input type="checkbox" wire:model="Checkbox_MonthId" value="{{$data->id}}"> {{$loop->iteration}}
                                             @endif 
-                                        </td>
-                                        <td>
-                                            @if($data->paid_date != NULL)    <a href="{{backpack_url('report/invoice/'.$data->invoice_group_id)}}" class="btn btn-success btn-small" target="_blank"><i class="la la-print"></i> Print</a> @endif 
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                            </td>
+                                            <td>{{$studentForm}}</td>
+                                            <td>
+                                                {{$data->getNormalMonth()}}
+                                                @if($data->paid_date != NULL)
+                                                    <span class="badge badge-success">PAID</span>
+                                                @else 
+                                                    <span class="badge badge-danger">UNPAID</span>
+                                                @endif 
+                                            </td>
+                                            <td>
+                                                @if($data->paid_date != NULL)    <a href="{{backpack_url('report/invoice/'.$data->invoice_group_id)}}" class="btn btn-success btn-small" target="_blank"><i class="la la-print"></i> Print</a> @endif 
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             @else 
-                                <tr>
-                                    <td colspan=4 align="center">NO DATA</td>
-                                </tr>
+                            <tr>
+                                <td colspan=4 align="center">NO DATA</td>
+                            </tr>
                             @endif
+                            
                         </tbody>
                         <tfoot>
                             <tr>
@@ -117,8 +115,10 @@
                             </tr>
                         </tfoot>
                     </table>
-                    @if($studentInvoiceModel && (count($studentInvoiceModel)))
+                    @if(!empty($studentInvoiceModel))
+                    @if($studentInvoiceModel && (count($studentInvoiceModel)) && count($this->Checkbox_MonthId))
                     <button class="btn btn-success" wire:click="pay">Review Invoice</button>
+                    @endif
                     @endif
                 </div>
             </div>

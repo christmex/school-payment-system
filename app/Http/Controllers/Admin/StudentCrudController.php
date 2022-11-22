@@ -191,7 +191,7 @@ class StudentCrudController extends CrudController
             'attribute' => 'AmountMoneyFormat', // attribute that is shown to admin
         ]);
         CRUD::field('personal_discount')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
-        CRUD::field('additional')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
+        // CRUD::field('additional')->type('number')->attributes(['placeholder' => 0,'min' => 0])->default(0);
         $this->crud->addField([
             // 'type' => 'month',
             'name' => 'join_month', // the relationship name in your Migration

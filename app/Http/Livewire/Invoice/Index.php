@@ -21,7 +21,7 @@ class Index extends Component
     ];
 
     public function mount(){
-        $this->studentModel = Student::with('Invoices')->get();
+        // $this->studentModel = Student::with('Invoices')->get();
     }
 
     public function updatedStudentForm(){
@@ -33,19 +33,31 @@ class Index extends Component
         $this->FilterMonth_ = $filter;
         $this->Checkbox_MonthId = [];
         $this->validate();
-        // dd('as');
         if($this->studentForm){
             if($filter == 'THIS MONTH'){
-                $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+                // $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+
+                $this->studentInvoiceModel = Student::with(['Invoices' => function ($q) {
+                    $q->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+                }])->where('student_name',$this->studentForm)->first()->Invoices;
             }
             if($filter == 'PAID'){
-                $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','!=',NULL);
+                
+                // $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','!=',NULL);
+                $this->studentInvoiceModel = Student::with(['Invoices' => function ($q) {
+                    $q->where('paid_date','!=',NULL);
+                }])->where('student_name',$this->studentForm)->first()->Invoices;
             }
             if($filter == 'UNPAID'){
-                $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL);
+                // $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL);
+                $this->studentInvoiceModel = Student::with(['Invoices' => function ($q) {
+                    $q->where('paid_date','=',NULL);
+                }])->where('student_name',$this->studentForm)->first()->Invoices;
             }
             if($filter == 'ALL'){
-                $this->studentInvoiceModel =  $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices;
+                
+                // $this->studentInvoiceModel =  $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices;
+                $this->studentInvoiceModel = Student::with(['Invoices'])->where('student_name',$this->studentForm)->first()->Invoices;
             }
         }
     }
@@ -56,7 +68,8 @@ class Index extends Component
     }
 
     public function checkStudentExist(){
-        $check = Student::with('Invoices')->where('student_name','like','%'.$this->studentForm.'%')->get();
+        $check = Student::where('student_name','like','%'.$this->studentForm.'%')->get();
+        
         if($check->count() == 1){
             $this->studentForm = $check->first()->student_name;
             $this->ListTheStudents = NULL;
@@ -79,15 +92,24 @@ class Index extends Component
     }
 
     public function filter(){
+        // dd('as');
         $this->validate();
 
         if($this->checkStudentExist()){
+            
+            
             if($this->FilterMonth_){
                 $this->FilterMonth($this->FilterMonth_);
             }else {
+                
                 // $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('payment_for_month',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
     
-                $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+                // $this->studentInvoiceModel = $this->studentModel->where('student_name',$this->studentForm)->first()->Invoices->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+
+                $this->studentInvoiceModel = Student::with(['Invoices' => function ($q) {
+                    $q->where('paid_date','=',NULL)->where('payment_for_month','<=',Helper::getSchoolYearMonth(Helper::getMonthById(date('m'))));
+                }])->where('student_name',$this->studentForm)->first()->Invoices;
+                // dd($this->studentInvoiceModel);
             }
         }
     }
@@ -97,6 +119,8 @@ class Index extends Component
         if(count($this->Checkbox_MonthId)){
             $id = base64_encode(serialize($this->Checkbox_MonthId));
             return redirect()->route('invoice.PreviewInvoice', compact('id'));
+        }else {
+            // $this->addError('warningCheckboxEmpty', 'Silahkan pilihdata dahulu');
         }
     }
 }
