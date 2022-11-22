@@ -113,7 +113,7 @@ class NaikKelas extends Component
 
                 // Check if students and the school years already exist
                 $Check_StudentSchoolHistory = StudentSchoolHistory::where('school_year_id','=',$this->Form_NewSchoolYear_id)->get()->toArray();
-
+                
                 $query_student_school_histories = [];
                 $query_student_funding_details = [];
 
@@ -129,7 +129,7 @@ class NaikKelas extends Component
                         $query_student_school_histories[] = [
                             'student_id' => $this->Checkbox_StudenId[$i],
                             'school_year_id' => $this->Form_NewSchoolYear_id,
-                            'desc' => "Naik kelas ke {$arrayPreviousClassroom['classroom_name']} dari Kelas {$arrayAfterClassroom['classroom_name']} di Tahun Ajaran {$this->Form_NewSchoolYear}",
+                            'desc' => "Naik kelas ke {$arrayAfterClassroom['classroom_name']} dari Kelas {$arrayPreviousClassroom['classroom_name']} di Tahun Ajaran {$this->Form_NewSchoolYear}",
                             'classroom_id' => $arrayAfterClassroom['id'],
                             'created_by' => backpack_user()->id,
                             'updated_by' => backpack_user()->id,

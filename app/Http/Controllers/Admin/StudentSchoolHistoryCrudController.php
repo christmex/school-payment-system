@@ -56,7 +56,7 @@ class StudentSchoolHistoryCrudController extends CrudController
             "type" => "select",
             "attribute" => "classroom_name"
         ]);
-        CRUD::column('desc');
+        CRUD::column('desc')->limit(100)->priority(1);
         $this->crud->removeButton('delete');
         /**
          * Columns can be defined using the fluent syntax or array syntax:

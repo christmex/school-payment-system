@@ -86,12 +86,14 @@
                                             </td>
                                             <td>{{$studentForm}}</td>
                                             <td>
-                                                {{$data->getNormalMonth()}}
+                                                {{$data->getNormalMonth()}} |
+                                                TA {{$data->SchoolYear->school_year_name}}
                                                 @if($data->paid_date != NULL)
                                                     <span class="badge badge-success">PAID</span>
                                                 @else 
                                                     <span class="badge badge-danger">UNPAID</span>
                                                 @endif 
+                                                
                                             </td>
                                             <td>
                                                 @if($data->paid_date != NULL)    <a href="{{backpack_url('report/invoice/'.$data->invoice_group_id)}}" class="btn btn-success btn-small" target="_blank"><i class="la la-print"></i> Print</a> @endif 
