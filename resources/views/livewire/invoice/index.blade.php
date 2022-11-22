@@ -98,6 +98,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @else 
+                                    <tr>
+                                        <td colspan=4 align="center">NO DATA</td>
+                                    </tr>
                                 @endif
                             @else 
                             <tr>
