@@ -81,7 +81,14 @@ class PayInvoice extends Component
             $this->print_id = $value->invoice_group_id;
             $this->PaymentDate = $value->paid_date;
             $this->PaymentWay = $value->payment_way_id;
-            $this->classroom = $value->student->StudentSchoolHistory->first()->Classroom->classroom_name;
+            // dd(count($value->student->StudentSchoolHistory->toArray()));
+            if(count($value->student->StudentSchoolHistory->toArray())){
+                $this->buttonStatus = true;
+                $this->classroom = $value->student->StudentSchoolHistory->first()->Classroom->classroom_name;
+            }else {
+                $this->buttonStatus = null;
+                $this->addError('buttonStatus', 'Terjadi kesalahan, tidak bisa membayar tagihan, kesalahan ini kemungkinan terjadi karna tahun ajaran yang bermasalah, silahkan hubungi developer');
+            }
         }
         $this->total = array_sum($this->SubTotal);
         $this->fineDiscount = $setting->meta_value ?  Helper::MoneyFormat($this->fineAmount) : Helper::MoneyFormat($this->fineDiscount);

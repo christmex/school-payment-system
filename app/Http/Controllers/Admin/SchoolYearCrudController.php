@@ -120,6 +120,9 @@ class SchoolYearCrudController extends CrudController
             DB::table('school_years')->update(['is_active' => 0]);
             $getModel->is_active = 1;
             $getModel->save();
+            
+            session(['getActiveSchoolYear' => $getModel]);
+
             return response("Berhasil mengaktifkan tahun ajaran {$getModel->school_year_name}.", 200);
         }else {
             return response('Silahkan mengaktifkan tahun ajaran ini di tahun depan', 403);

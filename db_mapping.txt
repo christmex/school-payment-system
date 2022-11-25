@@ -56,10 +56,10 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - FITUR KIRIm NOTIFIKASI DISPACT BROWSER WITH LIVEWIRE 
 - FITUR SISWA YANG SUDAH BAYAR DAN BELUM BAYAR INVOICE BULAN INI 
 - FITUR SISWA YANG NUNGGAK
-- Cek jika di setting is_fine_active tidak aktif maka otomatis set fine discouint sama dengan fine amount saat review invoice
+
 
 #LAST WORK
-- Setiap kali ganti tahun ajaran harus set ulang session (liht helper getActiveSchoolYear)
+
 
 
 
@@ -78,8 +78,8 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - buat 1 tabel invoice_group gunannya untuk mengelompokkan invoice yang di bayar bersamaan, ini diperlukan saat kita print bukti [DONE]
 - Tambah livewire saja [DONE]
 - Perbaiki review invouice saat sudah di bayar jika di refresh maka akan menampilkan tombol pay lagi [DONE]
-
-
+- Cek jika di setting is_fine_active tidak aktif maka otomatis set fine discouint sama dengan fine amount saat review invoice [DONE]
+- Setiap kali ganti tahun ajaran harus set ulang session (liht helper getActiveSchoolYear) [DONE]
 
 
 

@@ -39,7 +39,7 @@
     <table class="table table-responsive-sm table-bordered table-striped table-hover table-sm">
         <thead>
             <tr>
-                <th>Payment Way</th>
+                <th>Payment Way {{$buttonStatus}}</th>
                 <th>Payment Date</th>
                 <th>Description (optional)</th>
                 <th>Final Total</th>
@@ -66,9 +66,16 @@
     @if($buttonStatus && $print_id)
         <a class="btn btn-primary" href="{{backpack_url('report/invoice/'.$print_id)}}" target="_blank"><i class="nav-icon la la-print"></i> Print</a>
     @else
-    <button class="btn btn-primary" onclick="save('save')"><i class="nav-icon la la-money-bill"></i> 
-    Pay Now</button>
+        @if($buttonStatus == null)
+            @error('buttonStatus') <div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+        @else 
+        <button class="btn btn-primary" onclick="save('save')"><i class="nav-icon la la-money-bill"></i>Pay Now</button>
+        @endif
+        
     @endif
+
+   
+    
 
 
 @push('after_scripts')
