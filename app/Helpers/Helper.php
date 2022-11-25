@@ -119,7 +119,7 @@ class Helper {
     }
 
     public static function generateInvoiceNumber($count){
-        $setting = Setting::where('meta_key','school_short_name')->first();
+        $setting = self::getSetting('school_short_name'); //Setting::where('meta_key','school_short_name')->first();
         $latest = Invoice::orderBy('id','desc')->limit(1)->first();
         $startVal = 10001;
 
@@ -145,7 +145,7 @@ class Helper {
     }
 
     public static function generateInvoiceGroupNumber($count){
-        $setting = Setting::where('meta_key','school_short_name')->first();
+        $setting = self::getSetting('school_short_name'); //Setting::where('meta_key','school_short_name')->first();
         $latest = InvoiceGroup::orderBy('id','desc')->limit(1)->first();
         $startVal = 10001;
 
@@ -171,7 +171,7 @@ class Helper {
     }
 
     public static function generatePettyCashNumber($count){
-        $setting = Setting::where('meta_key','school_short_name')->first();
+        $setting = self::getSetting('school_short_name'); //Setting::where('meta_key','school_short_name')->first();
         $latest = PettyCash::orderBy('id','desc')->limit(1)->first();
         $startVal = 10001;
 
@@ -215,6 +215,10 @@ class Helper {
             return $data;
         }
         return $data->id;
+    }
+
+    public static function getSetting($key){
+        return Setting::where('meta_key',$key)->first();
     }
 
     public static function getCurrentMonth(){

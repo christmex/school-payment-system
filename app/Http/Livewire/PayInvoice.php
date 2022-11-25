@@ -37,7 +37,6 @@ class PayInvoice extends Component
 
     public $print_id;
 
-
     public $ModelPaymentWay;
     public $PaymentWay;
     public $PaymentDate;
@@ -57,11 +56,12 @@ class PayInvoice extends Component
 
         //Payment Way Model 
         $this->ModelPaymentWay = PaymentWay::all();
+        $setting = Helper::getSetting('is_fine_of_amount_active');
 
         // Invoice
         $this->entry = $entry;
         $this->entryTotal = count($entry);
-
+        // dd($entry);
         foreach ($entry as $key => $value) {
             $this->student_name[$key] = $value->student->student_name;
             $this->student_ids[$key] = $value->student->id;
@@ -78,11 +78,14 @@ class PayInvoice extends Component
             $this->fineAmount = $value->fine_amount >= $this->fineAmount ? $value->fine_amount : $this->fineAmount;
 
             $this->buttonStatus = $value->paid_date;
+            $this->print_id = $value->invoice_group_id;
+            $this->PaymentDate = $value->paid_date;
+            $this->PaymentWay = $value->payment_way_id;
             $this->classroom = $value->student->StudentSchoolHistory->first()->Classroom->classroom_name;
         }
         $this->total = array_sum($this->SubTotal);
-        $this->finalTotal = $this->total + ($this->fineAmount - $this->fineDiscount);
-        $this->fineDiscount = Helper::MoneyFormat($this->fineDiscount);
+        $this->fineDiscount = $setting->meta_value ?  Helper::MoneyFormat($this->fineAmount) : Helper::MoneyFormat($this->fineDiscount);
+        $this->finalTotal = $this->total + ($this->fineAmount - Helper::sanitizeMoneyFormat($this->fineDiscount));
         $this->PaymentDate = date('Y-m-d');
     }
     
