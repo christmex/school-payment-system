@@ -38,7 +38,7 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - saat insert siswa dan buat tagihan, school year nya harus di check dlu apakah aktif ?,untuk mengaktifkan school year di tabel school year harus check  tahun nya,  apakah tahunnya sudah lewat atau belum, kalo sudah lewat ndk boleh di aktifkan,check juga, apakah tahun schoolyear yg aktif sudah berakhir atau tidak, jika belum berakhir tidak boleh di aktifkan yang di atasnya 
 - di bagian list invoice buat kolom berapa lama sudah telat bayar sama nominal denda mungkin
 - tidak bisa tambah kelas baru di student school history jika id siswa dan id school year sudah ada krna siswa cmn bisa terdaftar di satu kelas pertahun ajaran jika berubah siahkan edit 
-- Gunakan livewire saja 
+
 - School funding dan school history hanya bisa di edit saat school year yg sedang aktif
 - ganti payment for month gunakan versi school year month biar bisa di order
 - Gunakan money format di semua yang ada masukan duit
@@ -46,27 +46,17 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - Ada masalah di fine discount klo pemnayaran dilakukan untuk 2 bulan gimana cara taunya kalau bulan ini di kasih discount amountnya berapa karna semua digabung
 - check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
 
-- buat 1 tabel invoice_group gunannya untuk mengelompokkan invoice yang di bayar bersamaan, ini diperlukan saat kita print bukti
-	in invoice_group 
-	-id	
-	-invoice_group_number 
 
-	in invoice tabel add new column => invoice_group_id
 - Tambah indikator loading
 - hitung tiap tiap jenjang di petty cash
 - kasih notif abis pay invoice, gunakan dispach browser di livewire untuk kirim notifikasi, kemudian, di javascript  kita siapkan notfy by backpackforlaravel untuk di trigger
-- pergantian tahun ajaran tidak bisa dilakukan sebelum tahun ajaran dimulai, jikadipindah sebelum tahun ajaran dimulai gagalkan
-- Pas filter nama di bagian invoice harus menggunakan
 - tidak boleh bayar invoice jika masih ada tunggakan, harus bayar tagihan paling  bawahdulu baru bisa bayar tagihan selanjutnyua
-- saat filter nama di bagian invoice jika nulis nama tidak lengkap akan ada error jadi coba di filter lagi
 - buat tour js di web biar kasih tutorial sma user
-
-#NEXT
 - FITUR PRINT DI INVOICE DAN PETTY CASH
 - FITUR KIRIm NOTIFIKASI DISPACT BROWSER WITH LIVEWIRE 
 - FITUR SISWA YANG SUDAH BAYAR DAN BELUM BAYAR INVOICE BULAN INI 
 - FITUR SISWA YANG NUNGGAK
-
+- Cek jika di setting is_fine_active tidak aktif maka otomatis set fine discouint sama dengan fine amount saat review invoice
 
 #LAST WORK
 
@@ -83,11 +73,10 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - Fitur cash keluar [DONE]
 - Fitur cash masuk [DONE]
 - mau ngerjain observer school year , saat save or update kita set school year name otomatis dari school year start dan school year end [DONE]
-
-
-
-
-
+- saat filter nama di bagian invoice jika nulis nama tidak lengkap akan ada error jadi coba di filter lagi [DONE]
+- pergantian tahun ajaran tidak bisa dilakukan sebelum tahun ajaran dimulai, jikadipindah sebelum tahun ajaran dimulai gagalkan [DONE]
+- buat 1 tabel invoice_group gunannya untuk mengelompokkan invoice yang di bayar bersamaan, ini diperlukan saat kita print bukti [DONE]
+- Tambah livewire saja [DONE]
 
 
 
