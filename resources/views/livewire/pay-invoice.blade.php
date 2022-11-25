@@ -39,7 +39,7 @@
     <table class="table table-responsive-sm table-bordered table-striped table-hover table-sm">
         <thead>
             <tr>
-                <th>Payment Way {{$buttonStatus}}</th>
+                <th>Payment Way</th>
                 <th>Payment Date</th>
                 <th>Description (optional)</th>
                 <th>Final Total</th>
