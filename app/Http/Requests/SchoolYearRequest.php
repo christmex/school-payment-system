@@ -41,11 +41,12 @@ class SchoolYearRequest extends FormRequest
                 'required',
                 'integer',
                 'after:school_year_start',
+                'max:'.request()->school_year_start +1,
                 'digits:4',
                 Rule::unique('school_years')->ignore(request()->id)
             ],
             'date_of_fine' => 'required|integer|max:31|min:1',
-            'fine_amount' => 'integer|min:0',
+            'fine_amount' => 'integer|min:0|max_digits:5',
         ];
     }
 
