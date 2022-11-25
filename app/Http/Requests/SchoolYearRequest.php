@@ -26,10 +26,10 @@ class SchoolYearRequest extends FormRequest
     public function rules()
     {
         return [
-            'school_year_name' => [
-                'required',
-                Rule::unique('school_years')->where(fn ($query) => $query->where('school_year_start', request()->school_year_start)->where('school_year_end',request()->school_year_end))->ignore(request()->id)
-            ],
+            // 'school_year_name' => [
+            //     'required',
+            //     Rule::unique('school_years')->where(fn ($query) => $query->where('school_year_start', request()->school_year_start)->where('school_year_end',request()->school_year_end))->ignore(request()->id)
+            // ],
             'school_year_start' => [
                 'required',
                 'integer',

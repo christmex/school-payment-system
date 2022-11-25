@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Student;
+use App\Models\SchoolYear;
 use App\Observers\StudentObserver;
+use App\Observers\SchoolYearObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -31,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
     {
         //
         Student::observe(StudentObserver::class);
+        SchoolYear::observe(SchoolYearObserver::class);
     }
 
     /**

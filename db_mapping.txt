@@ -6,8 +6,7 @@ Fitur
 - Fitur Bayar invoice
 - Fitur print pembayaran
 - Fitur export data
-- Fitur cash keluar [DONE]
-- Fitur cash masuk [DONE]
+
 - Fitur siswa bisa login ke platform ini trus cek nomor virtual account dan lihat payment, masukkan va_spp,va_book di tabel transactional tabel
 - Fitur undo , untuk case salah bayar, lihat pertanyaan nomor 3
 - Fitur Bulk buat tagihan spp, jadikan select bulan di invoice multiple
@@ -28,12 +27,12 @@ Pertanyaan
 Reminder
 - saat mau buat invoice baru, check dulu, apakah bulan,school_year dan student id yg dituju sudh ada ?
 - invoice hanya bisa di edit oleh super admn, itupun jika kesalahan semisal salah pilih siswa, ternyata siswa tersebut belum bayar 
-- cek before di school year, tidak bisa buat tahun ajaran di bawah tahun ini, semisal ini tahun 2022, maka tidak bisa buat school year start di tahun 2021 (DONE)
+
 - Mungkin bakal ada masalah saat tombol pay invoice di klik, akan mengarahkanke halaman costum, disitu ada 
 "trans('backpack::program_costum.pay')" -> resource/views/vendor/backpack/crud/operations/pay_invoice.blade.php , untuk referensi silahkan lihat [https://backpackforlaravel.com/docs/5.x/base-how-to#customize-the-translated-strings-aka-overwrite-the-language-file]
 - check semua fitur search di tiap menu, biasanya yg relationship ngg bsa searchnya
 
-- siswa bisih pilih bulan masuk, karna kadang ada anak masuk di oktober tpi skrng sdh noveber jdi harus di input sesuai bulannya, kemudiansaat insert siswa buat tagihan langsung dari bulan masuk sampai bulan tahun ajaran selesai (DONE)
+
 - untuk denda, jika 4 byulan tunggakan, trus bayar dengan langsung  3 bulan maka ambil bulan yg paling pertama nunggak dendanya,
 lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan di ambil tiap bulan dendanya kalo bayar satu satu
 - saat insert siswa dan buat tagihan, school year nya harus di check dlu apakah aktif ?,untuk mengaktifkan school year di tabel school year harus check  tahun nya,  apakah tahunnya sudah lewat atau belum, kalo sudah lewat ndk boleh di aktifkan,check juga, apakah tahun schoolyear yg aktif sudah berakhir atau tidak, jika belum berakhir tidak boleh di aktifkan yang di atasnya 
@@ -46,7 +45,7 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - Sebelum klik pay invoice di halaman invoice check dulu apakah ada tagihan di bulan sebelumnya ? kalo ada maka tidak bisa dilanjutkan hrus mebayar tagihan di bulan sebelumnya dulu
 - Ada masalah di fine discount klo pemnayaran dilakukan untuk 2 bulan gimana cara taunya kalau bulan ini di kasih discount amountnya berapa karna semua digabung
 - check apakah sudah bayar or belum klo sudah bayar tidak bisa bayar lgi
-- Validasi di bagian preview invoice validasi di personal personal_discount dan fine_discount tidak boleh melebihi amount dan fine amount [DONE]
+
 - buat 1 tabel invoice_group gunannya untuk mengelompokkan invoice yang di bayar bersamaan, ini diperlukan saat kita print bukti
 	in invoice_group 
 	-id	
@@ -69,17 +68,21 @@ lebih untung klo langsung bayar banyak bulan nunggang, daripada satu" karna akan
 - FITUR SISWA YANG NUNGGAK
 
 
+#LAST WORK
 
 
 
 
 
 
-
-
-
-
-
+#DONE 
+- setiap kali mengaktifkan school year maka kita harus menonaktifkan sisanya [DONE]
+- Validasi di bagian preview invoice validasi di personal personal_discount dan fine_discount tidak boleh melebihi amount dan fine amount [DONE]
+- cek before di school year, tidak bisa buat tahun ajaran di bawah tahun ini, semisal ini tahun 2022, maka tidak bisa buat school year start di tahun 2021 [DONE]
+- siswa bisih pilih bulan masuk, karna kadang ada anak masuk di oktober tpi skrng sdh noveber jdi harus di input sesuai bulannya, kemudiansaat insert siswa buat tagihan langsung dari bulan masuk sampai bulan tahun ajaran selesai [DONE]
+- Fitur cash keluar [DONE]
+- Fitur cash masuk [DONE]
+- mau ngerjain observer school year , saat save or update kita set school year name otomatis dari school year start dan school year end [DONE]
 
 
 

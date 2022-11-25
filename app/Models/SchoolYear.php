@@ -24,4 +24,15 @@ class SchoolYear extends Model
         'fine_amount',
         'is_active'
     ];
+
+    
+    // public function setSchoolYearNameAttribute($value)
+    // { 
+    //     if($value == null){
+    //         $this->attributes['school_year_name'] =  $this->school_year_start;
+    //     }
+    //     // if($value == null){
+    //     //     $this->school_year_name =  $this->school_year_start.'/'.$this->school_year_end;
+    //     // }
+    // }
 }

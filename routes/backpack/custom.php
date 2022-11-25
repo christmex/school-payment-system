@@ -21,6 +21,7 @@ Route::group([
     Route::crud('payment', 'PaymentCrudController');
     Route::crud('payment-way', 'PaymentWayCrudController');
     Route::crud('school-level', 'SchoolLevelCrudController');
+    Route::post('school-year/activate', 'SchoolYearCrudController@activate');
     Route::crud('school-year', 'SchoolYearCrudController');
     Route::crud('setting', 'SettingCrudController');
     Route::crud('spp-master', 'SppMasterCrudController');
