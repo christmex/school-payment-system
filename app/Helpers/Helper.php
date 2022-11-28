@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\Setting;
 use App\Models\PettyCash;
+use Illuminate\Support\Str;
 use App\Models\InvoiceGroup;
 
 
@@ -221,6 +222,10 @@ class Helper {
         return Setting::where('meta_key',$key)->first();
     }
 
+    public static function getAllSetting(){
+        return Setting::get(['meta_key','meta_value']);
+    }
+
     public static function getCurrentMonth(){
         return now()->month;
     }
@@ -318,6 +323,50 @@ class Helper {
             if (isset($item[$key]) && $item[$key] == $val)
                 return true;
         return false;
+    }
+
+
+    
+    public static function dateFormatHumanID($date){
+
+        if($date){
+    
+            $explodedate = explode('-',Str::substr($date, 0, 10));
+            
+            // Sabtu, 23 Januari 2021
+            return self::getDayName(date('D', strtotime($date))).', '.$explodedate[2].' '.self::getMonth($explodedate[1]).' '.$explodedate[0];
+        }
+        return NULL;
+        
+    }
+
+    public static function getMonth($month){
+        switch ($month){
+            case 1: return "Januari";break;
+            case 2: return "Februari";break;
+            case 3: return "Maret";break;
+            case 4: return "April";break;
+            case 5: return "Mei";break;
+            case 6: return "Juni";break;
+            case 7: return "Juli";break;
+            case 8: return "Agustus";break;
+            case 9: return "September";break;
+            case 10: return "Oktober";break;
+            case 11: return "November";break;
+            case 12: return "Desember";break;
+        }
+    }
+
+    public static function getDayName($day){
+        switch ($day){
+            case 'Sun' : return 'Minggu'; break;
+            case 'Mon' : return 'Senin'; break;
+            case 'Tue' : return 'Selasa'; break;
+            case 'Wed' : return 'Rabu'; break;
+            case 'Thu' : return 'Kamis'; break;
+            case 'Fri' : return 'Jumat'; break;
+            case 'Sat' : return 'Sabtu'; break;
+        }
     }
 
 }

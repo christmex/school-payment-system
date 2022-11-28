@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Models\PettyCash;
 use App\Models\InvoiceGroup;
 use Illuminate\Http\Request;
@@ -34,13 +35,14 @@ class ReportController extends Controller
         ->orderBy('school_levels.id','asc')
         ->get();
         // $PettyCash = PettyCash::with('SchoolLevel','PaymentWay')->where('debit','>',0)->orderBy('PaymentWay.id','desc')->get();
-        return view('costum.report-petty-cash',compact('PettyCash','currentDate'));
+        $getAllSetting = Helper::getAllSetting();
+        return view('costum.report-petty-cash',compact('PettyCash','currentDate','getAllSetting'));
     }
 
     
 
     public function report_invoice(Request $request){
-        $InvoiceGroup = InvoiceGroup::with('Invoices')->where('id',$request->id)->first();
+        $InvoiceGroup = InvoiceGroup::with('Invoices.Student')->where('id',$request->id)->first();
         // dd($InvoiceGroup->Invoices);
 
         foreach ($InvoiceGroup->Invoices as $key => $value) {
@@ -52,9 +54,10 @@ class ReportController extends Controller
         $total = array_sum($this->SubTotal);
         $fineDiscount = $this->fineDiscount;
         $fineAmount = $this->fineAmount;
+        $getAllSetting = Helper::getAllSetting();
         $finalTotal = $total + ($this->fineAmount - $this->fineDiscount);
+        
 
-
-        return view('costum.report-invoice',compact('InvoiceGroup','total','finalTotal','fineDiscount','fineAmount'));
+        return view('costum.report-invoice',compact('InvoiceGroup','total','finalTotal','fineDiscount','fineAmount','getAllSetting'));
     }
 }

@@ -105,11 +105,27 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\Setting::create([
             'meta_key' => 'school_name',
-            'meta_value' => 'BASIC BATAM CENTER',
+            'meta_value' => 'BASIC Christian School Batam Center',
         ]);
         \App\Models\Setting::create([
             'meta_key' => 'school_short_name',
             'meta_value' => 'BBC',
+        ]);
+        \App\Models\Setting::create([
+            'meta_key' => 'school_site',
+            'meta_value' => 'sekolahbasic.sch.id',
+        ]);
+        \App\Models\Setting::create([
+            'meta_key' => 'school_address',
+            'meta_value' => 'Batam center simpang frangky',
+        ]);
+        \App\Models\Setting::create([
+            'meta_key' => 'school_phone',
+            'meta_value' => '08 ()12',
+        ]);
+        \App\Models\Setting::create([
+            'meta_key' => 'school_email',
+            'meta_value' => 'as@sekolahbasic.sch.id',
         ]);
         // SETTINGS
 
