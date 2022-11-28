@@ -72,13 +72,13 @@
             </table>
         </div>
         <div class="col-lg-12">
-            <p class="font-weight-bold font-italic">Terbilang *Tiga Juta Rupiah</p>
+            <p class="font-weight-bold font-italic">{{Terbilang::make($finalTotal,' rupiah','Terbilang *')}}</p>
         </div>
     </div>
     <div class="row mt-4 text-center">
         <div class="col-lg-6">
-            <p style="margin-bottom: 15%">Penerima</p>
-            <p>_____________</p>
+            <!-- <p style="margin-bottom: 15%">Penerima</p>
+            <p>_____________</p> -->
         </div>
         <div class="col-lg-6">
             <p style="margin-bottom: 15%">Petugas</p>
