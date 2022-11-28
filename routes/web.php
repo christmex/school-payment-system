@@ -19,12 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $Students = Student::with('StudentSchoolHistory.Classroom')->get();
+    // $Students = Student::with('StudentSchoolHistory.Classroom')->get();
     // dd($Students);
-    foreach ($Students as $StudentSchoolHistory) {
+    // foreach ($Students as $StudentSchoolHistory) {
         // dd($StudentSchoolHistory->StudentSchoolHistory->classroom_id);
-        dd($StudentSchoolHistory->StudentSchoolHistory()->Classroom);
-    }
+        // dd($StudentSchoolHistory->StudentSchoolHistory()->Classroom);
+    // }
     // dd($a->school_year);
     // dd(last([1,2,3]));
     // $latest = Invoice::latest()->first();

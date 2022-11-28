@@ -9,22 +9,22 @@
 
   <div class="container">
     <div class="row mt-4">
-        <div class="col-lg-2">
+        <div class="col-2">
             <img src="{{asset('logo_basic.png')}}" alt="" width="70%" class="d-inline">
         </div>
-        <div class="col-lg-6">
-            <h2>{{$getAllSetting->where('meta_key','school_name')->first()->meta_value}}</h2>
+        <div class="col-6">
+            <h3>{{$getAllSetting->where('meta_key','school_name')->first()->meta_value}}</h3>
             <p class="font-weight-bold mb-0">{{$getAllSetting->where('meta_key','school_address')->first()->meta_value}}</p>
             <p class="font-weight-bold mb-0">{{$getAllSetting->where('meta_key','school_phone')->first()->meta_value}} | {{$getAllSetting->where('meta_key','school_email')->first()->meta_value}}</p>
             <p class="font-weight-bold mb-0">{{$getAllSetting->where('meta_key','school_site')->first()->meta_value}}</p>
         </div>
-        <div class="col-lg-4">
+        <div class="col-4">
             <div class="text-right">
                 <p class="font-weight-bold mb-0">Print at : {{Helper::dateFormatHumanID(date('Y-m-d'))}}</p>
                 <p class="mb-0">#PETTYCASH-REPORT</p>
             </div>
         </div>
-        <div class="col-lg-12 mt-4">
+        <div class="col-12 mt-4">
             <table class="table table-responsive-sm table-bordered table-striped table-hover table-sm">
                 <thead>
                     <tr>
